@@ -6,36 +6,54 @@ const CounterLoadingComponent = () => {
   const [isComplete, setIsComplete] = useState(false);
   const [loadingText, setLoadingText] = useState("");
 
-  console.log("counter", counter);
-
-  // Counter animation effect
+  // Counter animation effect with different approach
   useEffect(() => {
-    // If we've reached 18, mark as complete
-    if (counter >= 18) {
+    // Don't set up any more timeouts if we're already complete
+    if (isComplete) {
+      return;
+    }
+
+    // If counter reaches or exceeds 18, mark as complete
+    if (counter > 4) {
       setIsComplete(true);
       setLoadingText("save the date!");
       return;
     }
 
-    // Set up the interval to increment the counter
+    // More controlled incrementation to ensure we reach 18
     const timeout = setTimeout(
       () => {
-        setCounter((prevCount) => {
-          console.log("prevCount", prevCount);
-          const increment = Math.max(1, Math.floor((18 - prevCount) / 6));
-          console.log("increment", increment);
-          return Math.min(prevCount + increment, 18);
-        });
+        // Calculate remaining distance to 18
+        const remaining = 4 - counter;
+
+        // Different increment strategy:
+        // - For early stages (0-6): increment by 2
+        // - For middle stages (6-12): increment by 1 or 2
+        // - For final stages (12-17): increment by 1
+        let increment;
+        if (counter < 4) {
+          increment = Math.min(1, remaining);
+        } else {
+          increment = 1;
+        }
+
+        // Ensure we don't exceed 18
+        const newCounter = Math.min(counter + increment, 4);
+
+        console.log(
+          `Incrementing counter from ${counter} by ${increment} to ${newCounter}`
+        );
+        setCounter(newCounter);
       },
-      counter < 10 ? 200 : 300
+      counter < 2 ? 100 : 200
     );
 
+    // Clean up
     return () => clearTimeout(timeout);
-  }, [counter]);
+  }, [counter, isComplete]);
 
   // Loading text animation
   useEffect(() => {
-    console.log("isComplete", isComplete);
     if (isComplete) return;
 
     const ellipsisInterval = setInterval(() => {
@@ -52,19 +70,9 @@ const CounterLoadingComponent = () => {
 
   return (
     <div className="container">
-      {/* Decorative books */}
-      {/* <div className="book book1"></div>
-      <div className="book book2"></div>
-      <div className="book book3"></div>
-      <div className="book book4"></div> */}
-
       <div className="content">
-        {/* <h1 className="title">ita 2025</h1> */}
-
         {/* Animated Counter */}
         <div className="counterContainer">
-          {/* <div className="counterBgOuter"></div>
-          <div className="counterBgInner"></div> */}
           <div className="counter">
             {counter}
             <div className={`pageFlipContainer ${isComplete ? "hidden" : ""}`}>
@@ -78,27 +86,14 @@ const CounterLoadingComponent = () => {
         {/* Status text */}
         <p className="statusText">{isComplete ? "Save the date!" : ""}</p>
 
-        {/* Progress bar */}
-        {/* <div className="progressContainer">
-          <div
-            className="progressBar"
-            style={{ width: `${progressPercentage}%` }}
-          ></div>
-        </div> */}
-
         {/* Additional info text */}
         <p className="infoText">
-          {counter < 6 && "gathering stories..."}
-          {counter >= 6 && counter < 12 && "preparing author details..."}
-          {counter >= 12 && counter < 18 && "finalizing festival schedule..."}
-          {counter >= 18 && "save the date!"}
+          {counter < 1 && "gathering stories..."}
+          {counter >= 1 && counter < 3 && "preparing author details..."}
+          {/* {counter >= 12 && counter < 18 && "finalizing festival schedule..."} */}
+          {counter >= 4 && "save the date!"}
         </p>
       </div>
-
-      {/* Footer text */}
-      {/* <div className="footer">
-        <p className="footerText">ita 2025</p>
-      </div> */}
     </div>
   );
 };
