@@ -40,31 +40,9 @@
     margin-right: auto;
   }
   
-  .counterBgOuter {
-    position: absolute;
-    top: -32px;
-    right: -32px;
-    bottom: -32px;
-    left: -32px;
-    background-color: #1d1d1d;
-    border-radius: 50%;
-    filter: blur(16px);
-    animation: pulse 3s infinite ease-in-out;
-  }
-  
-  .counterBgInner {
-    position: absolute;
-    top: -16px;
-    right: -16px;
-    bottom: -16px;
-    left: -16px;
-    background-color: rgba(128, 90, 213, 0.2);
-    border-radius: 50%;
-    filter: blur(8px);
-  }
-  
+ 
   .counter {
-    font-size: 15rem;
+    font-size: 15vw;
     font-weight: 700;
     position: relative;
     z-index: 10;
@@ -72,22 +50,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 3rem;
     font-family: 'Roboto Condensed', sans-serif;
   }
   
-  .counter span:first-child {
+  /* .counter span:first-child {
     display: inline-block;
     min-width: 9rem;
     text-align: center;
-  }
+  } */
   
   .counterText {
-    font-size: 15rem;
+    font-size: 15vw;
     font-weight: 700;
-    margin-left: 0.5rem;
     font-family: 'Roboto Condensed', sans-serif;
-    
     /* text-transform: uppercase; */
   }
   
@@ -96,24 +71,7 @@
     margin-bottom: 2rem;
     height: 2rem;
   }
-  
-  .progressContainer {
-    width: 100%;
-    background-color: #4a5568;
-    border-radius: 9999px;
-    height: 10px;
-    margin-bottom: 1.5rem;
-    overflow: hidden;
-  }
-  
-  .progressBar {
-    background: linear-gradient(to right, #9f7aea, #ed64a6, #9f7aea);
-    background-size: 200% 100%;
-    height: 100%;
-    border-radius: 9999px;
-    transition: width 0.3s ease-out;
-    animation: gradientShift 3s infinite ease-in-out;
-  }
+
   
   .infoText {
     font-size: 0.875rem;
@@ -134,56 +92,22 @@
     font-size: 0.875rem;
   }
   
-  .book {
-    position: absolute;
-    width: 20px;
-    height: 30px;
-    animation: my-animation 2s infinite;
-    /* Paused state - add this when debugging */
-    animation-play-state: paused;
-    background-color: #ece5d5;
-    border-radius: 2px;
-    animation: float 3s infinite ease-in-out;
-  }
-  
-  .book1 {
-    top: 20px;
-    left: 80%;
-    transform: rotate(-20deg);
-    animation-delay: 0.2s;
-  }
-  
-  .book2 {
-    top: 40px;
-    left: 20%;
-    transform: rotate(15deg);
-    animation-delay: 0.5s;
-  }
-  
-  .book3 {
-    bottom: 60px;
-    left: 70%;
-    transform: rotate(-10deg);
-    animation-delay: 0.8s;
-  }
-  
-  .book4 {
-    bottom: 30px;
-    left: 30%;
-    transform: rotate(25deg);
-    animation-delay: 1.2s;
-  }
+
+
   
   .pageFlipContainer {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     width: 60px;
     height: 200px;
-    animation: my-animation 2s infinite;
-    /* Paused state - add this when debugging */
-    animation-play-state: paused;
+    margin-left: 100px;
+    margin-right: 40px;
+
+
+ 
     perspective: 1000px;
-    margin: 0 1.5rem;
+    /* margin: 0 1.5rem; */
   }
   
   /* .pageFlipContainer.hidden {
@@ -194,7 +118,7 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: orange;
     border-radius: 3px;
   }
   
@@ -229,4 +153,42 @@
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
-  } 
+  }
+
+  @media only screen and (max-width: 767px) {
+    /* Your mobile-specific styles here */
+    .counter {
+      font-size: 20vw;
+      flex-direction: column;
+    }
+    
+    .counterText {
+      font-size: 20vw;
+      flex-direction: column;
+    }
+
+    .statusText {
+      margin-top: 5rem;
+    }
+
+    .infoText {
+      margin-top: 5rem;
+    }
+
+    .pageFlipContainer {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 5rem;
+      width: 60px;
+      height: 150px;
+      animation: my-animation 2s infinite;
+      /* Paused state - add this when debugging */
+      animation-play-state: paused;
+      perspective: 1000px;
+      /* margin: 0 1.5rem; */
+    }
+  }
+
+
+  
