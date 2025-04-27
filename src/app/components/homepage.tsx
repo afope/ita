@@ -16,7 +16,9 @@ const HomePage = () => {
           <path d="M0 0V48L10 39L20 48V0H0Z" fill="currentColor" />
         </svg>
       </div>
-      <header>01</header>
+      <header>
+        <div>01</div>
+      </header>
       <h1 className="heading">ITA</h1>
       <p className="description">
         The best way for people to connect and commune is over shared interest.

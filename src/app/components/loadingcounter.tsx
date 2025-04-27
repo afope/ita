@@ -4,7 +4,6 @@ import "./loadingcounter.css";
 const CounterLoadingComponent = () => {
   const [counter, setCounter] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
-  const [loadingText, setLoadingText] = useState("");
 
   // Counter animation effect with different approach
   useEffect(() => {
@@ -16,7 +15,6 @@ const CounterLoadingComponent = () => {
     // If counter reaches or exceeds 18, mark as complete
     if (counter > 4) {
       setIsComplete(true);
-      setLoadingText("save the date!");
       return;
     }
 
@@ -53,20 +51,6 @@ const CounterLoadingComponent = () => {
   }, [counter, isComplete]);
 
   // Loading text animation
-  useEffect(() => {
-    if (isComplete) return;
-
-    const ellipsisInterval = setInterval(() => {
-      setLoadingText((prevText) => {
-        if (prevText.endsWith("...")) return "";
-        return prevText + ".";
-      });
-    }, 500);
-
-    return () => clearInterval(ellipsisInterval);
-  }, [isComplete]);
-
-  const progressPercentage = (counter / 18) * 100;
 
   return (
     <div className="container">
