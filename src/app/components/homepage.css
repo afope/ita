@@ -45,3 +45,16 @@ header {
   color: #1d1d1d;
 }
 
+@media only screen and (max-width: 767px) {
+  /* Your mobile-specific styles here */
+
+  .bookmark-icon {
+    margin-left: 10%;
+  }
+
+  .description {
+    width: 80%;
+  }
+}
+
+
