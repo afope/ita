@@ -48,6 +48,14 @@ header {
 @media only screen and (max-width: 767px) {
   /* Your mobile-specific styles here */
 
+  header {
+    margin-right: 50px;
+  }
+
+  .heading {
+    font-size: 45vw;
+  }
+
   .bookmark-icon {
     margin-left: 10%;
   }
