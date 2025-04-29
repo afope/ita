@@ -1,11 +1,20 @@
 "use client";
 
 import EnhancedLoadingCounter from "./components/loadingcounter";
+import HorizontalTransition from "./components/horizontaltransition";
 import { useEffect, useState } from "react";
 import HomePage from "./components/homepage";
+import SignUp from "./components/signup";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+
+  // Define the components you want to transition between
+  const transitionComponents = [
+    { component: HomePage, id: "home" },
+    { component: SignUp, id: "signup" },
+    // Add other components as needed
+  ];
 
   useEffect(() => {
     // Simulate loading process or perform initialization tasks
@@ -24,6 +33,12 @@ export default function Home() {
   ) : (
     <div>
       <HomePage />
+      <SignUp />
     </div>
+
+    // <HorizontalTransition
+    //   components={transitionComponents}
+    //   initialComponent={0} // Start with the homepage
+    // />
   );
 }

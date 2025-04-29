@@ -5,19 +5,19 @@ const HomePage = () => {
 
   return (
     <div className="home-container">
-      <div className="bookmark-icon">
-        <svg
-          width="64"
-          height="144"
-          viewBox="0 0 20 48"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path d="M0 0V48L10 39L20 48V0H0Z" fill="currentColor" />
-        </svg>
-      </div>
       <header>
-        <div>01</div>
+        <div className="bookmark-icon">
+          <svg
+            width="64"
+            height="144"
+            viewBox="0 0 20 48"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M0 0V48L10 39L20 48V0H0Z" fill="currentColor" />
+          </svg>
+        </div>
+        <div className="page-number">01</div>
       </header>
       <h1 className="heading">ITA</h1>
       <p className="description">

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Roboto_Condensed } from "next/font/google";
+
 import "./globals.css";
 
 const robotoCondensed = Roboto_Condensed({
