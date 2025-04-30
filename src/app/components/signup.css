@@ -1,0 +1,22 @@
+input.error {
+  border-color: #f44336;
+  outline-color: #f44336;
+}
+
+.error-message {
+  color: #f44336;
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.success-message {
+  color: #4CAF50;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+} 
