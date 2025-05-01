@@ -11,8 +11,8 @@ export default function Home() {
 
   // Define the components you want to transition between
   const pages = [
-    <HomePage />,
-    <SignUp />,
+    <HomePage key="home" />,
+    <SignUp key="signup" />,
     // Add other components as needed
   ];
 
@@ -34,10 +34,5 @@ export default function Home() {
     <div>
       <HorizontalPageFlip pages={pages} />
     </div>
-
-    // <HorizontalTransition
-    //   components={transitionComponents}
-    //   initialComponent={0} // Start with the homepage
-    // />
   );
 }

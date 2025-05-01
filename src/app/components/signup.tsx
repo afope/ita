@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { submitToGoogleForm } from "../utils/submitToGoogleForm";
 import "./homepage.css";
 
 const SignUp = () => {
@@ -8,7 +7,7 @@ const SignUp = () => {
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "success" | "error"
   >("idle");
-  const [emailError, setEmailError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -20,9 +19,9 @@ const SignUp = () => {
     setEmail(newEmail);
 
     if (newEmail && !validateEmail(newEmail)) {
-      setEmailError("Please enter a valid email address");
+      setErrorMessage("Please enter a valid email address");
     } else {
-      setEmailError("");
+      setErrorMessage("");
     }
   };
 
@@ -30,23 +29,41 @@ const SignUp = () => {
     e.preventDefault();
 
     if (!validateEmail(email)) {
-      setEmailError("Please enter a valid email address");
+      setErrorMessage("Please enter a valid email address");
       return;
     }
 
     setIsSubmitting(true);
     setSubmitStatus("idle");
+    setErrorMessage("");
 
     try {
-      const success = await submitToGoogleForm(email);
-      if (success) {
-        setSubmitStatus("success");
-        setEmail("");
-      } else {
-        setSubmitStatus("error");
+      // Call our server-side API endpoint
+      const response = await fetch("/api/submit-form", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const result = await response.json();
+
+      console.log("response", response);
+
+      if (!response.ok) {
+        throw new Error(result.error || "Something went wrong");
       }
+
+      setSubmitStatus("success");
+      // Optional: Clear the form after successful submission
+      setEmail("");
     } catch (error) {
+      console.error("Submission error:", error);
       setSubmitStatus("error");
+      setErrorMessage(
+        error instanceof Error ? error.message : "Failed to submit form"
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -73,21 +90,23 @@ const SignUp = () => {
         <form onSubmit={handleSubmit}>
           <input
             type="email"
+            id="email"
+            name="email"
             value={email}
             onChange={handleEmailChange}
             placeholder="Enter your email"
             required
-            className={emailError ? "error" : ""}
+            className={errorMessage ? "error" : ""}
           />
-          {emailError && <p className="error-message">{emailError}</p>}
-          <button type="submit" disabled={isSubmitting || !!emailError}>
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
+          <button type="submit" disabled={isSubmitting || !!errorMessage}>
             {isSubmitting ? "Submitting..." : "Submit"}
           </button>
         </form>
         {submitStatus === "success" && (
           <p className="success-message">Thank you for joining the waitlist!</p>
         )}
-        {submitStatus === "error" && (
+        {submitStatus === "error" && !errorMessage && (
           <p className="error-message">
             Something went wrong. Please try again.
           </p>

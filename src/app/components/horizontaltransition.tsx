@@ -69,7 +69,9 @@ export default function HorizontalPageFlip({
         {pages.map((page, index) => (
           <div
             key={index}
-            ref={(el) => (pageRefs.current[index] = el)}
+            ref={(el: HTMLDivElement | null) => {
+              pageRefs.current[index] = el;
+            }}
             className="page-container"
             style={{
               perspective: "1000px",
