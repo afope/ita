@@ -52,7 +52,10 @@ header {
   top: 0;
   left: 5%;
   transform: translateX(-50%);
-  color: #1d1d1d;
+  z-index: 100;
+  width: 64px;
+  height: 144px;
+  color: #000;
 }
 
 .page-number {
@@ -87,8 +90,8 @@ form {
 input {
   width: 80%;
   height: 100px;
-  border: 2px solid orange;
-  outline:2px solid orange;
+  border: 2px dotted orange;
+  outline:none;
   text-align: center;
   margin-bottom: 50px;
   margin-top: 50px;
@@ -254,6 +257,43 @@ button:disabled {
 /* Tablet landscape mode */
 @media screen and (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
  
+}
+
+/* Mobile devices */
+@media screen and (max-width: 768px) {
+  .bookmark-icon {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-50%);
+    z-index: 100;
+    width: 48px;
+    height: 96px;
+  }
+}
+
+/* Tablet landscape */
+@media screen and (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
+  .bookmark-icon {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-50%);
+    z-index: 100;
+    width: 64px;
+    height: 144px;
+  }
+}
+
+/* Ensure fixed positioning works on mobile */
+@media screen and (max-width: 1024px) {
+  .bookmark-icon {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0;
+    transform: translateX(-50%) !important;
+    z-index: 100 !important;
+  }
 }
 
 
