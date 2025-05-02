@@ -9,36 +9,8 @@ interface HorizontalPageFlipProps {
 
 export default function HorizontalPageFlip({ pages }: HorizontalPageFlipProps) {
   const [currentPage, setCurrentPage] = useState(0);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const pageRefs = useRef<Array<HTMLDivElement | null>>([]);
-
-  // Minimum swipe distance required to trigger page change
-  const minSwipeDistance = 50;
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
-
-    if (isLeftSwipe) {
-      setCurrentPage((prev) => Math.min(prev + 1, pages.length - 1));
-    } else if (isRightSwipe) {
-      setCurrentPage((prev) => Math.max(prev - 1, 0));
-    }
-  };
 
   // Handle scroll events
   useEffect(() => {
@@ -79,13 +51,7 @@ export default function HorizontalPageFlip({ pages }: HorizontalPageFlipProps) {
   }, [currentPage, pages.length]);
 
   return (
-    <div
-      ref={containerRef}
-      className="h-screen w-screen overflow-hidden"
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-    >
+    <div ref={containerRef} className="h-screen w-screen overflow-hidden">
       <div
         className="flex h-full w-full transition-transform duration-700 ease-in-out"
         style={{ transform: `translateX(-${currentPage * 100}%)` }}
@@ -104,20 +70,6 @@ export default function HorizontalPageFlip({ pages }: HorizontalPageFlipProps) {
           >
             <div className="h-full w-full bg-white shadow-lg">{page}</div>
           </div>
-        ))}
-      </div>
-
-      {/* Optional navigation indicators */}
-      <div className="fixed bottom-6 left-0 right-0 flex justify-center gap-2">
-        {pages.map((_, index) => (
-          <button
-            key={index}
-            className={`h-3 w-3 rounded-full ${
-              index === currentPage ? "bg-blue-500" : "bg-gray-300"
-            }`}
-            onClick={() => setCurrentPage(index)}
-            aria-label={`Go to page ${index + 1}`}
-          />
         ))}
       </div>
     </div>
