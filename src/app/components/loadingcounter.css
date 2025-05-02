@@ -194,5 +194,36 @@
     }
   }
 
+  @media screen and (max-height: 500px) and (orientation: landscape) {
+    .counter {
+      margin-top: 100px;
+      font-size: 50px;
+    }
+
+    .counterText {
+      font-size: 50px;
+    }
+
+    .pageFlipContainer {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 5rem;
+      width: 60px;
+      height: 100px;
+      animation: my-animation 2s infinite;
+      /* Paused state - add this when debugging */
+      animation-play-state: paused;
+      perspective: 1000px;
+      /* margin: 0 1.5rem; */
+    }
+
+    .infoText {
+      font-size: 20px;
+      margin-top:10px
+    }
+  
+  }
+
 
   
