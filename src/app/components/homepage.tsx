@@ -19,15 +19,17 @@ const HomePage = () => {
         </div>
         <div className="page-number">01</div>
       </header>
-      <h1 className="heading">ITA</h1>
-      <p className="description">
-        The best way for people to connect and commune is over shared interest.
-        Lagos being the creative center that it is and home to some of the most
-        eruptive (and subversive, perhaps) creativity in the world, would be the
-        perfect place for people to gather over a shared love of words, their
-        power, their beauty, their unparalleled ability to subvert, change, and
-        redirect.
-      </p>
+      <div className="content-container">
+        <h1 className="heading">ITA</h1>
+        <p className="description">
+          The best way for people to connect and commune is over shared
+          interest. Lagos being the creative center that it is and home to some
+          of the most eruptive (and subversive, perhaps) creativity in the
+          world, would be the perfect place for people to gather over a shared
+          love of words, their power, their beauty, their unparalleled ability
+          to subvert, change, and redirect.
+        </p>
+      </div>
     </div>
   );
 };

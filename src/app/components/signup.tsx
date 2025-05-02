@@ -86,7 +86,7 @@ const SignUp = () => {
         <div className="page-number">02</div>
       </header>
       <div className="signup-container">
-        <h1 className="signup-heading">Join the Waitlist</h1>
+        <h1 className="signup-heading">join the Waitlist</h1>
         <form onSubmit={handleSubmit}>
           <input
             type="email"

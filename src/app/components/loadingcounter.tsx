@@ -13,7 +13,7 @@ const CounterLoadingComponent = () => {
     }
 
     // If counter reaches or exceeds 18, mark as complete
-    if (counter > 4) {
+    if (counter > 7) {
       setIsComplete(true);
       return;
     }
@@ -22,21 +22,21 @@ const CounterLoadingComponent = () => {
     const timeout = setTimeout(
       () => {
         // Calculate remaining distance to 18
-        const remaining = 4 - counter;
+        const remaining = 7 - counter;
 
         // Different increment strategy:
         // - For early stages (0-6): increment by 2
         // - For middle stages (6-12): increment by 1 or 2
         // - For final stages (12-17): increment by 1
         let increment;
-        if (counter < 4) {
+        if (counter < 7) {
           increment = Math.min(1, remaining);
         } else {
           increment = 1;
         }
 
         // Ensure we don't exceed 18
-        const newCounter = Math.min(counter + increment, 4);
+        const newCounter = Math.min(counter + increment, 7);
 
         console.log(
           `Incrementing counter from ${counter} by ${increment} to ${newCounter}`
@@ -63,7 +63,7 @@ const CounterLoadingComponent = () => {
               <div className="pageBase"></div>
               <div className="page"></div>
             </div>
-            <span className="counterText">november</span>
+            <span className="counterText">december</span>
           </div>
         </div>
 
@@ -73,9 +73,9 @@ const CounterLoadingComponent = () => {
         {/* Additional info text */}
         <p className="infoText">
           {counter < 1 && "gathering stories..."}
-          {counter >= 1 && counter < 3 && "preparing author details..."}
+          {counter >= 1 && counter < 4 && "preparing author details..."}
           {/* {counter >= 12 && counter < 18 && "finalizing festival schedule..."} */}
-          {counter >= 4 && "save the date!"}
+          {counter >= 7 && "save the date!"}
         </p>
       </div>
     </div>

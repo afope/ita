@@ -4,7 +4,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* justify-content: center; */
+    justify-content: center;
     font-family: 'Roboto Condensed', system-ui, -apple-system, sans-serif;
     position: relative;
     overflow: hidden;
@@ -24,9 +24,7 @@ header {
     margin-right: 200px;
 }
 
-.page-number {
-    margin-top: 50px;
-}
+
 
 .heading {
     font-size: 20rem;
@@ -42,12 +40,24 @@ header {
     color: #1d1d1d;
 }
 
+.content-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .bookmark-icon {
   position: absolute;
   top: 0;
   left: 5%;
   transform: translateX(-50%);
   color: #1d1d1d;
+}
+
+.page-number {
+  position: absolute;
+  top: 10%;
 }
 
 .signup-container {
@@ -80,6 +90,7 @@ input {
   outline: 10px dotted orange;
   text-align: center;
   margin-bottom: 50px;
+  margin-top: 50px;
   font-size: 2rem;
 
   /* border-radius: 10px; */
@@ -145,7 +156,6 @@ button:disabled {
     width: 80%;
   }
 
-  form {
-    width:80%;
-  }
+
+  
 }
