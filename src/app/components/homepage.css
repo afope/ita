@@ -95,7 +95,7 @@ input {
   text-align: center;
   margin-bottom: 50px;
   margin-top: 50px;
-  font-size: 2rem;
+  font-size: 20px;
 
   /* border-radius: 10px; */
 }
@@ -116,7 +116,8 @@ button {
 }
 
 .error-message {
-  color: #f44336;
+  color: darkred;
+  text-decoration: line-through;
   margin-top: 1rem;
   text-align: center;
 }
@@ -162,6 +163,11 @@ button:disabled {
 
   svg {
     height: 100px;
+  }
+
+  input {
+    margin-bottom: 20px;
+    margin-top: 20px;
   }
 
 
