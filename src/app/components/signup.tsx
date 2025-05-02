@@ -86,7 +86,7 @@ const SignUp = () => {
         <div className="page-number">02</div>
       </header>
       <div className="signup-container">
-        <h1 className="signup-heading">join the Waitlist</h1>
+        <h1 className="signup-heading">join the waitlist</h1>
         <form onSubmit={handleSubmit}>
           <input
             type="email"
@@ -94,21 +94,21 @@ const SignUp = () => {
             name="email"
             value={email}
             onChange={handleEmailChange}
-            placeholder="Enter your email"
+            placeholder="enter your email"
             required
             className={errorMessage ? "error" : ""}
           />
           {errorMessage && <p className="error-message">{errorMessage}</p>}
           <button type="submit" disabled={isSubmitting || !!errorMessage}>
-            {isSubmitting ? "Submitting..." : "Submit"}
+            {isSubmitting ? "submitting..." : "submit"}
           </button>
         </form>
         {submitStatus === "success" && (
-          <p className="success-message">Thank you for joining the waitlist!</p>
+          <p className="success-message">thank you for joining the waitlist!</p>
         )}
         {submitStatus === "error" && !errorMessage && (
           <p className="error-message">
-            Something went wrong. Please try again.
+            something went wrong. please try again.
           </p>
         )}
       </div>

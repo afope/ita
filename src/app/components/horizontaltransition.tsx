@@ -12,6 +12,15 @@ export default function HorizontalPageFlip({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const pageRefs = useRef<Array<HTMLDivElement | null>>([]);
 
+  // Touch event handling
+  const touchStartY = useRef<number>(0);
+  const touchEndY = useRef<number>(0);
+  const minSwipeDistance = 30; // Minimum distance required for a swipe (in pixels)
+
+  // To prevent rapid multiple scrolls
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const isScrollingRef = useRef<boolean>(false);
+
   // Set up the page refs array
   useEffect(() => {
     pageRefs.current = pageRefs.current.slice(0, pages.length);
@@ -59,9 +68,52 @@ export default function HorizontalPageFlip({
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [currentPage, pages.length]);
+  // Handle touch start event
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>): void => {
+    touchStartY.current = e.touches[0].clientY;
+  };
+  // Handle touch move event - prevent default to avoid scrolling the page
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>): void => {
+    e.preventDefault();
+  };
+
+  // Handle touch end event
+  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>): void => {
+    // Don't process touch events while we're already scrolling
+    if (isScrollingRef.current) return;
+
+    touchEndY.current = e.changedTouches[0].clientY;
+
+    // Calculate distance (vertical scrolling)
+    const distance = touchStartY.current - touchEndY.current;
+
+    // Check if swipe distance exceeds minimum
+    if (Math.abs(distance) > minSwipeDistance) {
+      isScrollingRef.current = true;
+
+      if (distance > 0 && currentPage < pages.length - 1) {
+        // Swipe up - next page
+        setCurrentPage(currentPage + 1);
+      } else if (distance < 0 && currentPage > 0) {
+        // Swipe down - previous page
+        setCurrentPage(currentPage - 1);
+      }
+
+      // Reset scrolling flag after animation is complete
+      scrollTimeoutRef.current = setTimeout(() => {
+        isScrollingRef.current = false;
+      }, 700); // Match this to your animation duration
+    }
+  };
 
   return (
-    <div ref={containerRef} className="h-screen w-screen overflow-hidden">
+    <div
+      ref={containerRef}
+      className="h-screen w-screen overflow-hidden"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
       <div
         className="flex h-full w-full transition-transform duration-700 ease-in-out"
         style={{ transform: `translateX(-${currentPage * 100}%)` }}
