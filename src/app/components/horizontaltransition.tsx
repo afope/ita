@@ -39,9 +39,9 @@ export default function HorizontalPageFlip({ pages }: HorizontalPageFlipProps) {
   // Handle keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent): void => {
-      if (e.key === "ArrowRight" && currentPage < pages.length - 1) {
+      if (e.key === "ArrowDown" && currentPage < pages.length - 1) {
         setCurrentPage(currentPage + 1);
-      } else if (e.key === "ArrowLeft" && currentPage > 0) {
+      } else if (e.key === "ArrowUp" && currentPage > 0) {
         setCurrentPage(currentPage - 1);
       }
     };

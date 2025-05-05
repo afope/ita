@@ -110,16 +110,17 @@ button {
 }
 
 .success-message {
-  color: #4CAF50;
-  margin-top: 1rem;
+  color: darkblue;
   text-align: center;
+  text-transform: lowercase;
+
 }
 
 .error-message {
-  color: darkred;
+  color: darkblue;
   text-decoration: line-through;
-  margin-top: 1rem;
   text-align: center;
+  text-transform: lowercase;
 }
 
 button:disabled {
