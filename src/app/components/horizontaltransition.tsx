@@ -13,7 +13,7 @@ export default function HorizontalPageFlip({ pages }: HorizontalPageFlipProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const pageRefs = useRef<Array<HTMLDivElement | null>>([]);
   const [touchStartY, setTouchStartY] = useState(0);
-  const [isScrolling, setIsScrolling] = useState(false);
+  // const [isScrolling, setIsScrolling] = useState(false);
 
   useEffect(() => {
     const preventDefaultScroll = (e: WheelEvent | TouchEvent) =>
@@ -33,12 +33,12 @@ export default function HorizontalPageFlip({ pages }: HorizontalPageFlipProps) {
 
   // Handle scroll events
   useEffect(() => {
-    let scrollTimeout: NodeJS.Timeout;
+    // let scrollTimeout: NodeJS.Timeout;
 
     const handleWheel = (e: WheelEvent): void => {
       e.preventDefault();
 
-      setIsScrolling(true);
+      // setIsScrolling(true);
 
       if (e.deltaY > 0 && currentPage < pages.length - 1) {
         setCurrentPage(currentPage + 1);
@@ -46,9 +46,9 @@ export default function HorizontalPageFlip({ pages }: HorizontalPageFlipProps) {
         setCurrentPage(currentPage - 1);
       }
 
-      scrollTimeout = setTimeout(() => {
-        setIsScrolling(false);
-      }, 800);
+      // scrollTimeout = setTimeout(() => {
+      //   setIsScrolling(false);
+      // }, 800);
     };
 
     const handleTouchStart = (e: TouchEvent) => {
@@ -56,20 +56,29 @@ export default function HorizontalPageFlip({ pages }: HorizontalPageFlipProps) {
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (isScrolling) return;
+      // if (isScrolling) return;
 
       const touchY = e.touches[0].clientY;
       const diff = touchStartY - touchY;
 
+      console.log("touchY", touchY);
+      console.log("touchStartY", touchStartY);
+
       // Only trigger page change if swipe is significant
       // if (Math.abs(diff) < 50) return;
 
-      setIsScrolling(true);
+      // setIsScrolling(true);
+      console.log("diff", diff);
+      console.log("currentPage", currentPage);
+      // console.log("isScrolling", isScrolling);
 
       if (diff > 0 && currentPage < pages.length - 1) {
         // Swipe up, go to next page
+        console.log("up");
         setCurrentPage(currentPage + 1);
-      } else {
+      } else if (diff < 0 && currentPage > 0) {
+        console.log("down");
+
         // Swipe down, go to previous page
         setCurrentPage(currentPage - 1);
       }
@@ -77,9 +86,9 @@ export default function HorizontalPageFlip({ pages }: HorizontalPageFlipProps) {
       // Update touch position
       setTouchStartY(touchY);
 
-      scrollTimeout = setTimeout(() => {
-        setIsScrolling(false);
-      }, 800);
+      // scrollTimeout = setTimeout(() => {
+      //   setIsScrolling(false);
+      // }, 800);
     };
 
     const container = containerRef.current;
@@ -96,10 +105,10 @@ export default function HorizontalPageFlip({ pages }: HorizontalPageFlipProps) {
         container.removeEventListener("wheel", handleWheel);
         window.removeEventListener("touchstart", handleTouchStart);
         window.removeEventListener("touchmove", handleTouchMove);
-        clearTimeout(scrollTimeout);
+        // clearTimeout(scrollTimeout);
       }
     };
-  }, [currentPage, isScrolling, pages.length, touchStartY]);
+  }, [currentPage, pages.length, touchStartY]);
 
   // Handle keyboard navigation
   useEffect(() => {
