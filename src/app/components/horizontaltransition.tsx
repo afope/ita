@@ -69,7 +69,7 @@ export default function HorizontalPageFlip({ pages }: HorizontalPageFlipProps) {
       if (diff > 0 && currentPage < pages.length - 1) {
         // Swipe up, go to next page
         setCurrentPage(currentPage + 1);
-      } else if (diff < 0 && currentPage > 0) {
+      } else {
         // Swipe down, go to previous page
         setCurrentPage(currentPage - 1);
       }
