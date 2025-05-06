@@ -55,7 +55,7 @@ export default function HorizontalPageFlip({ pages }: HorizontalPageFlipProps) {
       setTouchStartY(e.touches[0].clientY);
     };
 
-    const handleTouchMove = (e) => {
+    const handleTouchMove = (e: { touches: { clientY: number }[] }) => {
       if (isScrolling) return;
 
       const touchY = e.touches[0].clientY;
