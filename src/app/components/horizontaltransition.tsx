@@ -11,6 +11,7 @@ export default function HorizontalPageFlip({ pages }: HorizontalPageFlipProps) {
   const [currentPage, setCurrentPage] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const pageRefs = useRef<Array<HTMLDivElement | null>>([]);
+  // const [touchStartY, setTouchStartY] = useState(0);
 
   // Handle scroll events
   useEffect(() => {
@@ -24,9 +25,20 @@ export default function HorizontalPageFlip({ pages }: HorizontalPageFlipProps) {
       }
     };
 
+    const handleTouch = (e: TouchEvent): void => {
+      e.preventDefault();
+
+      if (e.touches[0].clientY > 0 && currentPage < pages.length - 1) {
+        setCurrentPage(currentPage + 1);
+      } else if (e.touches[0].clientY < 0 && currentPage > 0) {
+        setCurrentPage(currentPage - 1);
+      }
+    };
+
     const container = containerRef.current;
     if (container) {
       container.addEventListener("wheel", handleWheel, { passive: false });
+      container.addEventListener("touchstart", handleTouch, { passive: false });
     }
 
     return () => {
