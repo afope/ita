@@ -62,16 +62,16 @@ export default function HorizontalPageFlip({ pages }: HorizontalPageFlipProps) {
       const diff = touchStartY - touchY;
 
       // Only trigger page change if swipe is significant
-      if (Math.abs(diff) < 50) return;
+      // if (Math.abs(diff) < 50) return;
 
       setIsScrolling(true);
 
       if (diff > 0 && currentPage < pages.length - 1) {
         // Swipe up, go to next page
-        setCurrentPage((prevPage) => prevPage + 1);
+        setCurrentPage(currentPage + 1);
       } else if (diff < 0 && currentPage > 0) {
         // Swipe down, go to previous page
-        setCurrentPage((prevPage) => prevPage - 1);
+        setCurrentPage(currentPage - 1);
       }
 
       // Update touch position
