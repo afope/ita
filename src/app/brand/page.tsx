@@ -30,7 +30,7 @@ const voices = [
     family: "JetBrains Mono",
     use: "Labels, coordinates, dates, data. Always uppercase, tracked out, small.",
     className: "spec-mono",
-    sample: "MILIKI / 07.12.2026",
+    sample: "LAGOS / 07.12.2026",
   },
 ];
 

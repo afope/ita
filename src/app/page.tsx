@@ -19,7 +19,7 @@ const tickerItems = [
   "innovation labs",
   "interactive installations",
   "ita conversations",
-  `${literaryEvent.venue} ${literaryEvent.dateLabel}`,
+  `${literaryEvent.name} ${literaryEvent.dateLabel}`,
 ];
 
 export default function Home() {
@@ -49,8 +49,8 @@ export default function Home() {
               <a href="#studio" className="button button-signal">
                 work with the studio
               </a>
-              <a href="#miliki" className="button button-ghost">
-                {literaryEvent.venue.toLowerCase()} / {literaryEvent.dateLabel.toLowerCase()}
+              <a href="#literary" className="button button-ghost">
+                {literaryEvent.name} / {literaryEvent.dateLabel.toLowerCase()}
               </a>
             </div>
           </div>
@@ -175,15 +175,15 @@ export default function Home() {
           </div>
 
           {/* Featured event */}
-          <article id="miliki" className="event" data-reveal>
+          <article id="literary" className="event" data-reveal>
             <div className="event-main">
               <p className="mono event-label">
                 <span className="node" /> next edition / literary
               </p>
-              <h3 className="event-venue">{literaryEvent.venue}</h3>
-              <p className="event-title">
-                ita conversations: <em>a literary evening</em>
-              </p>
+              <h3 className="event-name">
+                literary <em>conversations</em>
+              </h3>
+              <p className="event-title">{literaryEvent.subtitle}</p>
 
               <dl className="event-facts mono">
                 <div>
@@ -193,7 +193,9 @@ export default function Home() {
                 <div>
                   <dt>venue</dt>
                   <dd>
-                    {literaryEvent.venue}, {literaryEvent.city}
+                    {literaryEvent.showVenue
+                      ? `${literaryEvent.venue}, ${literaryEvent.city}`
+                      : `${literaryEvent.city}, announced soon`}
                   </dd>
                 </div>
                 <div>
@@ -254,9 +256,9 @@ export default function Home() {
             </h2>
             <div>
               <p className="join-lede">
-                Be first to hear about ita conversations, the{" "}
-                {literaryEvent.venue} evening in December, and new work from the
-                studio.
+                Be first to hear about literary conversations this December,
+                where it&apos;s happening, who&apos;s reading, and new work from
+                the studio.
               </p>
               <Waitlist />
             </div>

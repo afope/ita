@@ -73,8 +73,12 @@ export const conversations = {
 };
 
 export const literaryEvent = {
-  title: "ita conversations: a literary evening",
+  name: "literary conversations",
+  subtitle: "ita conversations, edition 01",
+  // The venue stays private until announced. Set `showVenue: true` to
+  // print it in the event details.
   venue: "MILIKI",
+  showVenue: false,
   city: "Lagos",
   // ISO date used for the countdown. Update once the date is final.
   date: "2026-12-07T18:00:00+01:00",
