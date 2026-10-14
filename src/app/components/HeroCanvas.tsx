@@ -2,10 +2,16 @@
 
 import { useEffect, useRef } from "react";
 
+type Word = { junction: number; pair: [string, string]; born: number };
+
+const WORD_LIFE = 4.2;
+const MAX_WORDS = 3;
+
 // A living street plan: measured horizontals (technology) crossed by
 // drifting, hand-drawn verticals (art). Every crossing is an ìta — a
 // junction — and junctions light up as signals and the pointer pass by.
-export default function HeroCanvas() {
+// Now and then a junction surfaces a word pair: technology crossed with art.
+export default function HeroCanvas({ words }: { words: [string, string][] }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -16,6 +22,9 @@ export default function HeroCanvas() {
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
+    const rootStyle = getComputedStyle(document.documentElement);
+    const serifFont = rootStyle.getPropertyValue("--font-serif") || "Georgia";
+    const monoFont = rootStyle.getPropertyValue("--font-mono") || "monospace";
 
     // Deterministic jitter so the plan looks drawn, not random each load.
     let seed = 7;
@@ -24,7 +33,7 @@ export default function HeroCanvas() {
       return seed / 2147483647;
     };
 
-    const pointer = { x: 0.72, y: 0.42, tx: 0.72, ty: 0.42 };
+    const pointer = { x: 0.72, y: 0.42, tx: 0.72, ty: 0.42, active: false };
     let width = 0;
     let height = 0;
     let frame = 0;
@@ -32,6 +41,11 @@ export default function HeroCanvas() {
     let cols: { x: number; phase: number; amp: number }[] = [];
     let pulses: { axis: "h" | "v"; line: number; pos: number; speed: number }[] =
       [];
+    let junctions: { x: number; y: number }[] = [];
+    let active: Word[] = [];
+    let nextPair = Math.floor(Math.random() * words.length);
+    let lastSpawn = -Infinity;
+    let clock = 0;
 
     const layout = () => {
       seed = 7;
@@ -55,6 +69,7 @@ export default function HeroCanvas() {
           speed: (0.04 + rand() * 0.08) * (rand() > 0.5 ? 1 : -1),
         };
       });
+      active = [];
     };
 
     const resize = () => {
@@ -65,6 +80,7 @@ export default function HeroCanvas() {
       canvas.height = height * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       layout();
+      measureKeepOut();
     };
 
     const colX = (c: (typeof cols)[number], y: number, t: number) => {
@@ -78,8 +94,111 @@ export default function HeroCanvas() {
       );
     };
 
+    // Words never cover the hero copy. Keep-out boxes follow the actual
+    // lines of text and buttons, so the empty space beside a short line
+    // can still hold a word.
+    let keepOut: DOMRect[] = [];
+    const measureKeepOut = () => {
+      const base = canvas.getBoundingClientRect();
+      const hero = canvas.parentElement;
+      if (!hero) return;
+      const rects: DOMRect[] = [];
+      hero
+        .querySelectorAll<HTMLElement>(".hero-inner > *, .hero-meta, .scroll-cue")
+        .forEach((el) => {
+          if (el.matches(".hero-actions")) {
+            el.querySelectorAll("a").forEach((a) =>
+              rects.push(a.getBoundingClientRect())
+            );
+            return;
+          }
+          const range = document.createRange();
+          range.selectNodeContents(el);
+          rects.push(...Array.from(range.getClientRects()));
+        });
+      keepOut = rects
+        .filter((r) => r.width > 0)
+        .map(
+          (r) =>
+            new DOMRect(
+              r.left - base.left - 20,
+              r.top - base.top - 16,
+              r.width + 40,
+              r.height + 32
+            )
+        );
+    };
+
+    const LABEL_WIDTH = 150;
+    const labelFlips = (x: number) => x + 14 + LABEL_WIDTH > width - 12;
+
+    const inWordZone = ({ x, y }: { x: number; y: number }) => {
+      if (y < 100 || y > height - 40 || x < 16 || x > width - 16) return false;
+      const flip = labelFlips(x);
+      const box = {
+        left: flip ? x - 14 - LABEL_WIDTH : x - 8,
+        right: flip ? x + 8 : x + 14 + LABEL_WIDTH,
+        top: y - 40,
+        bottom: y + 28,
+      };
+      return !keepOut.some(
+        (r) =>
+          box.left < r.right &&
+          box.right > r.left &&
+          box.top < r.bottom &&
+          box.bottom > r.top
+      );
+    };
+
+    const spawn = (preferred?: number) => {
+      if (!words.length || active.length >= MAX_WORDS) return;
+      const taken = new Set(active.map((w) => w.junction));
+      let index = preferred;
+      if (index === undefined) {
+        const free = junctions
+          .map((_, i) => i)
+          .filter((i) => !taken.has(i) && inWordZone(junctions[i]));
+        if (!free.length) return;
+        index = free[Math.floor(Math.random() * free.length)];
+      }
+      if (taken.has(index) || !inWordZone(junctions[index])) return;
+      active.push({ junction: index, pair: words[nextPair], born: clock });
+      nextPair = (nextPair + 1) % words.length;
+      lastSpawn = clock;
+    };
+
+    const drawWord = (word: Word) => {
+      const j = junctions[word.junction];
+      if (!j) return;
+      const age = clock - word.born;
+      const alpha = reduceMotion
+        ? 1
+        : Math.min(1, age / 0.6, Math.max(0, (WORD_LIFE - age) / 0.8));
+      const rise = reduceMotion ? 0 : (1 - Math.min(1, age / 0.6)) * 6;
+      const [tech, art] = word.pair;
+
+      ctx.font = `italic 24px ${serifFont}`;
+      const artWidth = ctx.measureText(art).width;
+      ctx.font = `11px ${monoFont}`;
+      const techWidth = ctx.measureText(tech.toUpperCase()).width;
+      const flip =
+        labelFlips(j.x) || j.x + 14 + Math.max(artWidth, techWidth) > width - 12;
+      ctx.textAlign = flip ? "right" : "left";
+      const x = flip ? j.x - 14 : j.x + 14;
+
+      ctx.fillStyle = `rgba(242, 239, 230, ${alpha})`;
+      ctx.font = `italic 24px ${serifFont}`;
+      ctx.fillText(art, x, j.y - 10 + rise);
+
+      ctx.fillStyle = `rgba(255, 200, 31, ${alpha * 0.85})`;
+      ctx.font = `11px ${monoFont}`;
+      ctx.fillText(tech.toUpperCase(), x, j.y + 20 + rise);
+      ctx.textAlign = "left";
+    };
+
     const render = (time: number) => {
-      const t = reduceMotion ? 0 : time / 1000;
+      clock = time / 1000;
+      const t = reduceMotion ? 0 : clock;
       pointer.x += (pointer.tx - pointer.x) * 0.06;
       pointer.y += (pointer.ty - pointer.y) * 0.06;
       ctx.clearRect(0, 0, width, height);
@@ -112,7 +231,6 @@ export default function HeroCanvas() {
         if (p.axis === "h") {
           x = p.pos * width;
           y = rows[p.line % rows.length];
-          ctx.strokeStyle = "rgba(108, 108, 255, 0.9)";
           const tail = Math.sign(p.speed) * -60;
           const grad = ctx.createLinearGradient(x + tail, y, x, y);
           grad.addColorStop(0, "rgba(108, 108, 255, 0)");
@@ -134,12 +252,25 @@ export default function HeroCanvas() {
       }
 
       // Junctions.
+      if (!reduceMotion) {
+        active = active.filter((w) => clock - w.born < WORD_LIFE);
+      }
+      const lit = new Set(active.map((w) => w.junction));
       const px = pointer.x * width;
       const py = pointer.y * height;
+      junctions = [];
       for (const y of rows) {
         for (const c of cols) {
           const x = colX(c, y, t);
-          let heat = Math.exp(-((x - px) ** 2 + (y - py) ** 2) / 26000);
+          const index = junctions.length;
+          junctions.push({ x, y });
+
+          const near = (x - px) ** 2 + (y - py) ** 2;
+          if (pointer.active && near < 40 * 40 && clock - lastSpawn > 0.9) {
+            spawn(index);
+          }
+
+          let heat = lit.has(index) ? 1 : Math.exp(-near / 26000);
           for (const s of pulsePoints) {
             heat = Math.max(
               heat,
@@ -159,6 +290,10 @@ export default function HeroCanvas() {
         }
       }
 
+      // A slow idle rhythm keeps words surfacing for touch and still visitors.
+      if (!reduceMotion && clock - lastSpawn > 2.8) spawn();
+      active.forEach(drawWord);
+
       if (!reduceMotion) frame = requestAnimationFrame(render);
     };
 
@@ -166,23 +301,43 @@ export default function HeroCanvas() {
       const rect = canvas.getBoundingClientRect();
       pointer.tx = (e.clientX - rect.left) / rect.width;
       pointer.ty = (e.clientY - rect.top) / rect.height;
+      pointer.active = true;
+    };
+
+    const onScroll = () => {
+      if (!reduceMotion && clock - lastSpawn > 0.6) spawn();
     };
 
     const onResize = () => {
       resize();
-      if (reduceMotion) render(0);
+      if (reduceMotion) {
+        render(0);
+        spawn();
+        spawn();
+        render(0);
+      }
     };
 
     resize();
     render(0);
+    if (reduceMotion) {
+      // A still composition: two words placed once, no motion.
+      spawn();
+      spawn();
+      render(0);
+    }
+    // Line boxes shift once the web fonts swap in.
+    document.fonts?.ready.then(measureKeepOut);
     window.addEventListener("resize", onResize);
     window.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener("resize", onResize);
       window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("scroll", onScroll);
     };
-  }, []);
+  }, [words]);
 
   return <canvas ref={canvasRef} className="hero-canvas" aria-hidden="true" />;
 }

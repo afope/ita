@@ -5,7 +5,14 @@ import HeroCanvas from "./components/HeroCanvas";
 import Nav from "./components/Nav";
 import Reveal from "./components/Reveal";
 import Waitlist from "./components/Waitlist";
-import { conversations, idea, literaryEvent, site, studio } from "./content";
+import {
+  conversations,
+  idea,
+  junctionWords,
+  literaryEvent,
+  site,
+  studio,
+} from "./content";
 
 const tickerItems = [
   "spatial prototypes",
@@ -26,7 +33,7 @@ export default function Home() {
       <main id="top">
         {/* ── Hero ─────────────────────────────────────────── */}
         <header className="hero">
-          <HeroCanvas />
+          <HeroCanvas words={junctionWords} />
           <div className="hero-inner">
             <p className="eyebrow mono">
               <span className="node" /> {site.expansion}

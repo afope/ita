@@ -113,3 +113,22 @@ export const palette = [
     role: "Pages, programmes, words. Light sections and primary text on dark.",
   },
 ];
+
+// Word pairs that surface at junctions in the hero: a technology word
+// crossed with an art word. Add or swap freely.
+export const junctionWords: [string, string][] = [
+  ["sensor", "verse"],
+  ["prototype", "poem"],
+  ["signal", "story"],
+  ["code", "cloth"],
+  ["grid", "gesture"],
+  ["circuit", "chorus"],
+  ["render", "rhythm"],
+  ["interface", "margin"],
+  ["data", "chapter"],
+  ["system", "spirit"],
+  ["danfo", "ìta"],
+  ["Ita Faji", "gather"],
+  ["light", "language"],
+  ["model", "memory"],
+];
