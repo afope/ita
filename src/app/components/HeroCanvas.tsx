@@ -222,7 +222,11 @@ export default function HeroCanvas({ words }: { words: [string, string][] }) {
         ctx.stroke();
       }
 
-      // Signals travelling the streets.
+      // Signals travelling the streets: indigo, or paper in the ink palette.
+      const signal =
+        document.documentElement.dataset.palette === "ink"
+          ? "242, 239, 230"
+          : "108, 108, 255";
       const pulsePoints: { x: number; y: number }[] = [];
       for (const p of pulses) {
         if (!reduceMotion) p.pos = (p.pos + p.speed / 60 + 1) % 1;
@@ -233,8 +237,8 @@ export default function HeroCanvas({ words }: { words: [string, string][] }) {
           y = rows[p.line % rows.length];
           const tail = Math.sign(p.speed) * -60;
           const grad = ctx.createLinearGradient(x + tail, y, x, y);
-          grad.addColorStop(0, "rgba(108, 108, 255, 0)");
-          grad.addColorStop(1, "rgba(108, 108, 255, 0.9)");
+          grad.addColorStop(0, `rgba(${signal}, 0)`);
+          grad.addColorStop(1, `rgba(${signal}, 0.9)`);
           ctx.strokeStyle = grad;
           ctx.lineWidth = 2;
           ctx.beginPath();

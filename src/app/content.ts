@@ -7,6 +7,10 @@ export const site = {
   city: "Lagos",
   // Leave empty to hide the direct email link; the waitlist form still works.
   contactEmail: "",
+  // Shows a small switch for comparing the colour and ink & paper palettes.
+  // Set to false (and pick a default below) before launch.
+  showPaletteToggle: true,
+  defaultPalette: "colour" as "colour" | "ink",
 };
 
 export const idea = {

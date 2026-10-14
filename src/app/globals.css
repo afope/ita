@@ -8,6 +8,8 @@
   --danfo: #ffc81f;
   --paper: #f2efe6;
   --paper-2: #e7e2d4;
+  --ink-rgb: 8, 9, 28;
+  --glow-rgb: 59, 59, 255;
 
   /* Contextual tokens, re-pointed by each surface below. */
   --bg: var(--ink);
@@ -157,7 +159,7 @@ em {
   justify-content: space-between;
   gap: 24px;
   padding: 14px var(--gutter);
-  background: rgba(8, 9, 28, 0.72);
+  background: rgba(var(--ink-rgb), 0.72);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(242, 239, 230, 0.08);
@@ -203,7 +205,7 @@ em {
   overflow: hidden;
   isolation: isolate;
   background:
-    radial-gradient(ellipse 60% 50% at 80% 30%, rgba(59, 59, 255, 0.28), transparent 70%),
+    radial-gradient(ellipse 60% 50% at 80% 30%, rgba(var(--glow-rgb), 0.28), transparent 70%),
     var(--ink);
 }
 
@@ -212,7 +214,7 @@ em {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(90deg, var(--ink) 0%, rgba(8, 9, 28, 0.75) 40%, transparent 75%);
+  background: linear-gradient(90deg, var(--ink) 0%, rgba(var(--ink-rgb), 0.75) 40%, transparent 75%);
   pointer-events: none;
 }
 
@@ -348,8 +350,8 @@ em {
 .section-paper {
   --bg: var(--paper);
   --fg: var(--ink);
-  --fg-dim: rgba(8, 9, 28, 0.66);
-  --line: rgba(8, 9, 28, 0.16);
+  --fg-dim: rgba(var(--ink-rgb), 0.66);
+  --line: rgba(var(--ink-rgb), 0.16);
   color-scheme: light;
 }
 
@@ -636,7 +638,7 @@ em {
   margin-top: 96px;
   padding: clamp(24px, 3vw, 40px);
   border: 1px solid var(--line);
-  background: linear-gradient(100deg, rgba(59, 59, 255, 0.35), transparent 70%);
+  background: linear-gradient(100deg, rgba(var(--glow-rgb), 0.35), transparent 70%);
 }
 
 .section-cta p {
@@ -669,8 +671,8 @@ em {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(8, 9, 28, 0.18) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(8, 9, 28, 0.18) 1px, transparent 1px);
+    linear-gradient(rgba(var(--ink-rgb), 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--ink-rgb), 0.18) 1px, transparent 1px);
   background-size: 28px 28px;
   -webkit-mask-image: linear-gradient(120deg, black, transparent 60%);
   mask-image: linear-gradient(120deg, black, transparent 60%);
@@ -769,7 +771,7 @@ em {
   flex-direction: column;
   gap: 32px;
   padding: clamp(32px, 5vw, 64px) clamp(28px, 4vw, 48px);
-  background: rgba(8, 9, 28, 0.22);
+  background: rgba(var(--ink-rgb), 0.22);
 }
 
 .author {
@@ -915,6 +917,111 @@ em {
   color: var(--danfo);
 }
 
+/* ── Ink & paper palette ─────────────────────────────
+   A monochrome variant: true ink on paper, with Danfo yellow as the only
+   colour. Indigo collapses into ink, so every indigo surface becomes ink. */
+:root[data-palette="ink"] {
+  --ink: #0d0d0c;
+  --ink-2: #171716;
+  --ink-rgb: 13, 13, 12;
+  --glow-rgb: 242, 239, 230;
+  --indigo: var(--ink);
+  --indigo-glow: var(--paper);
+}
+
+[data-palette="ink"] .hero {
+  background:
+    radial-gradient(ellipse 60% 50% at 80% 30%, rgba(242, 239, 230, 0.07), transparent 70%),
+    var(--ink);
+}
+
+[data-palette="ink"] .section-cta {
+  background: linear-gradient(100deg, rgba(255, 200, 31, 0.12), transparent 70%);
+}
+
+/* Cards invert to paper on hover: ink on paper. */
+[data-palette="ink"] .card:hover {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+[data-palette="ink"] .card:hover p,
+[data-palette="ink"] .card:hover .card-top {
+  color: rgba(var(--ink-rgb), 0.72);
+}
+
+[data-palette="ink"] .event::before {
+  background-image:
+    linear-gradient(rgba(242, 239, 230, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(242, 239, 230, 0.06) 1px, transparent 1px);
+}
+
+[data-palette="ink"] .event-side {
+  background: rgba(242, 239, 230, 0.03);
+}
+
+[data-palette="ink"] .countdown-unit,
+[data-palette="ink"] .waitlist-row,
+[data-palette="ink"] .form-success {
+  background: rgba(242, 239, 230, 0.05);
+  border: 1px solid rgba(242, 239, 230, 0.14);
+}
+
+[data-palette="ink"] .waitlist-row:focus-within {
+  border-color: var(--danfo);
+}
+
+[data-palette="ink"] .section-paper .section-title em,
+[data-palette="ink"] .definition-word,
+[data-palette="ink"] .crossing-demo em {
+  color: var(--ink);
+}
+
+[data-palette="ink"] .definition-list li::before,
+[data-palette="ink"] .principle .mono {
+  color: rgba(var(--ink-rgb), 0.6);
+}
+
+/* Review-only switch for comparing palettes. */
+.palette-toggle {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  background: rgba(var(--ink-rgb), 0.86);
+  border: 1px solid rgba(242, 239, 230, 0.18);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.palette-toggle span {
+  padding: 0 8px;
+  color: rgba(242, 239, 230, 0.55);
+}
+
+.palette-toggle button {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 10px;
+  border: 0;
+  background: transparent;
+  color: rgba(242, 239, 230, 0.75);
+  cursor: pointer;
+}
+
+.palette-toggle button[aria-pressed="true"] {
+  background: var(--danfo);
+  color: #0d0d0c;
+}
+
 /* ── Reveal on scroll ────────────────────────────────── */
 .reveal-ready [data-reveal] {
   opacity: 0;
@@ -975,7 +1082,7 @@ em {
   }
 
   .hero::after {
-    background: linear-gradient(0deg, var(--ink) 10%, rgba(8, 9, 28, 0.6) 60%, transparent);
+    background: linear-gradient(0deg, var(--ink) 10%, rgba(var(--ink-rgb), 0.6) 60%, transparent);
   }
 
   .hero-meta {

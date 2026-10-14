@@ -274,3 +274,7 @@
     grid-template-columns: 1fr;
   }
 }
+
+[data-palette="ink"] .tile-mark {
+  --indigo: var(--paper);
+}
