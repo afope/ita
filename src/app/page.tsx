@@ -1,38 +1,263 @@
-"use client";
+import Countdown from "./components/Countdown";
+import Crossed from "./components/Crossed";
+import Footer from "./components/Footer";
+import HeroCanvas from "./components/HeroCanvas";
+import Nav from "./components/Nav";
+import Reveal from "./components/Reveal";
+import Waitlist from "./components/Waitlist";
+import { conversations, idea, literaryEvent, site, studio } from "./content";
 
-import EnhancedLoadingCounter from "./components/loadingcounter";
-import { useEffect, useState } from "react";
-import HomePage from "./components/homepage";
-import SignUp from "./components/signup";
-import HorizontalPageFlip from "./components/horizontaltransition";
+const tickerItems = [
+  "spatial prototypes",
+  "innovation labs",
+  "interactive installations",
+  "ita conversations",
+  `${literaryEvent.venue} ${literaryEvent.dateLabel}`,
+];
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true);
+  const author = literaryEvent.featuredAuthor;
 
-  // Define the components you want to transition between
-  const pages = [
-    <HomePage key="home" />,
-    <SignUp key="signup" />,
-    // Add other components as needed
-  ];
+  return (
+    <>
+      <Reveal />
+      <Nav />
 
-  useEffect(() => {
-    // Simulate loading process or perform initialization tasks
-    const timer = setTimeout(() => {
-      setIsLoading(false); // Switch to homepage when loading is complete
-    }, 3000); // Adjust timing as needed
+      <main id="top">
+        {/* ── Hero ─────────────────────────────────────────── */}
+        <header className="hero">
+          <HeroCanvas />
+          <div className="hero-inner">
+            <p className="eyebrow mono">
+              <span className="node" /> {site.expansion}
+            </p>
+            <h1 className="hero-title">
+              The junction where technology <em>meets</em> art.
+            </h1>
+            <p className="hero-lede">
+              Spatial prototypes for innovation labs and organisations — and
+              conversations that bring Lagos together around ideas.
+            </p>
+            <div className="hero-actions">
+              <a href="#studio" className="button button-signal">
+                work with the studio
+              </a>
+              <a href="#miliki" className="button button-ghost">
+                {literaryEvent.venue.toLowerCase()} / {literaryEvent.dateLabel.toLowerCase()}
+              </a>
+            </div>
+          </div>
+          <div className="hero-meta mono">
+            <span>6.45°N 3.39°E</span>
+            <span>lagos / nigeria</span>
+          </div>
+          <a href="#idea" className="scroll-cue mono" aria-label="Scroll to the idea">
+            scroll <span>↓</span>
+          </a>
+        </header>
 
-    return () => clearTimeout(timer);
-  }, []);
+        <div className="ticker" aria-hidden="true">
+          <div className="ticker-track">
+            {[...tickerItems, ...tickerItems, ...tickerItems].map((item, i) => (
+              <span key={i}>
+                {item} <i className="ticker-node" />
+              </span>
+            ))}
+          </div>
+        </div>
 
-  // Conditionally render loader or homepage based on loading state
-  return isLoading ? (
-    <div className="flex items-center justify-center h-screen">
-      <EnhancedLoadingCounter />
-    </div>
-  ) : (
-    <div>
-      <HorizontalPageFlip pages={pages} />
-    </div>
+        {/* ── 01 Idea ──────────────────────────────────────── */}
+        <section id="idea" className="section section-paper">
+          <div className="section-head" data-reveal>
+            <span className="section-index mono">01</span>
+            <span className="section-kicker mono">the idea</span>
+          </div>
+
+          <div className="definition" data-reveal>
+            <p className="definition-word">
+              {idea.word}
+              <span className="mono">{idea.pronunciation} · n.</span>
+            </p>
+            <ol className="definition-list">
+              {idea.definitions.map((d) => (
+                <li key={d}>{d}</li>
+              ))}
+            </ol>
+          </div>
+
+          <div className="principles">
+            {idea.principles.map((p, i) => (
+              <article key={p.title} className="principle" data-reveal>
+                <span className="mono">0{i + 1}</span>
+                <h3>
+                  <Crossed text={p.title} />
+                </h3>
+                <p>{p.body}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        {/* ── 02 Studio ────────────────────────────────────── */}
+        <section id="studio" className="section section-ink">
+          <div className="section-head" data-reveal>
+            <span className="section-index mono">02</span>
+            <span className="section-kicker mono">studio / spatial prototyping</span>
+          </div>
+
+          <div className="split" data-reveal>
+            <h2 className="section-title">
+              <Crossed text={studio.headline} />
+            </h2>
+            <p className="section-intro">{studio.intro}</p>
+          </div>
+
+          <div className="cards">
+            {studio.services.map((service) => (
+              <article key={service.code} className="card" data-reveal>
+                <div className="card-top mono">
+                  <span>{service.code}</span>
+                  <span className="card-cross" aria-hidden="true" />
+                </div>
+                <h3>{service.title}</h3>
+                <p>{service.body}</p>
+              </article>
+            ))}
+          </div>
+
+          <ol className="process" data-reveal aria-label="How we work">
+            {studio.process.map((step, i) => (
+              <li key={step}>
+                <span className="mono">0{i + 1}</span>
+                {step}
+              </li>
+            ))}
+          </ol>
+
+          <div className="section-cta" data-reveal>
+            <p>
+              Have a future you need to <em>stand inside</em>?
+            </p>
+            {site.contactEmail ? (
+              <a
+                href={`mailto:${site.contactEmail}?subject=Spatial%20prototype%20enquiry`}
+                className="button button-signal"
+              >
+                start a project
+              </a>
+            ) : (
+              <a href="#join" className="button button-signal">
+                get in touch
+              </a>
+            )}
+          </div>
+        </section>
+
+        {/* ── 03 Conversations ─────────────────────────────── */}
+        <section id="conversations" className="section section-paper">
+          <div className="section-head" data-reveal>
+            <span className="section-index mono">03</span>
+            <span className="section-kicker mono">ita conversations / public programme</span>
+          </div>
+
+          <div className="split" data-reveal>
+            <h2 className="section-title">
+              <Crossed text={conversations.headline} />
+            </h2>
+            <p className="section-intro">{conversations.intro}</p>
+          </div>
+
+          {/* Featured event */}
+          <article id="miliki" className="event" data-reveal>
+            <div className="event-main">
+              <p className="mono event-label">
+                <span className="node" /> next edition / literary
+              </p>
+              <h3 className="event-venue">{literaryEvent.venue}</h3>
+              <p className="event-title">
+                ita conversations: <em>a literary evening</em>
+              </p>
+
+              <dl className="event-facts mono">
+                <div>
+                  <dt>date</dt>
+                  <dd>{literaryEvent.dateLabel}</dd>
+                </div>
+                <div>
+                  <dt>venue</dt>
+                  <dd>
+                    {literaryEvent.venue}, {literaryEvent.city}
+                  </dd>
+                </div>
+                <div>
+                  <dt>entry</dt>
+                  <dd>waitlist open</dd>
+                </div>
+              </dl>
+
+              <Countdown target={literaryEvent.date} />
+            </div>
+
+            <div className="event-side">
+              <div className="author">
+                <p className="mono author-label">featured author</p>
+                {author.confirmed ? (
+                  <>
+                    <p className="author-name">{author.name}</p>
+                    <p className="author-bio">{author.bio}</p>
+                  </>
+                ) : (
+                  <>
+                    <p className="author-name">
+                      to be <em>announced</em>
+                    </p>
+                    <p className="author-bio">
+                      A celebrated voice in Nigerian fiction. Join the list to
+                      hear first.
+                    </p>
+                  </>
+                )}
+              </div>
+
+              <ol className="programme">
+                {literaryEvent.programme.map((item, i) => (
+                  <li key={item}>
+                    <span className="mono">{String(i + 1).padStart(2, "0")}</span>
+                    {item}
+                  </li>
+                ))}
+              </ol>
+
+              <a href="#join" className="button button-signal">
+                save your seat
+              </a>
+            </div>
+          </article>
+        </section>
+
+        {/* ── 04 Join ──────────────────────────────────────── */}
+        <section id="join" className="section section-indigo">
+          <div className="section-head" data-reveal>
+            <span className="section-index mono">04</span>
+            <span className="section-kicker mono">the list</span>
+          </div>
+          <div className="join-body" data-reveal>
+            <h2 className="section-title">
+              Meet us at the <em>junction</em>.
+            </h2>
+            <div>
+              <p className="join-lede">
+                Be first to hear about ita conversations, the{" "}
+                {literaryEvent.venue} evening in December, and new work from the
+                studio.
+              </p>
+              <Waitlist />
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+    </>
   );
 }
