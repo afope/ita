@@ -80,6 +80,17 @@ export default function Minimal() {
           <p className="lede" data-reveal>
             {studio.short}
           </p>
+          <ul className="offer-list">
+            {studio.offers.map((offer) => (
+              <li key={offer.title} data-reveal>
+                <h3>
+                  <Crossed text={offer.title} />
+                </h3>
+                <p>{offer.body}</p>
+                <span className="mono">{offer.meta}</span>
+              </li>
+            ))}
+          </ul>
           <p className="process-line" data-reveal>
             {studio.process.map((step, i) => (
               <span key={step}>

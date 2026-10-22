@@ -10,7 +10,7 @@ export default function Footer() {
       <Link href="/brand" className="mono footer-link">
         brand guidelines
       </Link>
-      <span className="mono">{site.city.toLowerCase()} / 6.45°N 3.39°E</span>
+      <span className="mono">{site.reach.toLowerCase()}</span>
     </footer>
   );
 }

@@ -52,6 +52,53 @@
   align-items: end;
 }
 
+/* Offers: three plain rows, divided by the rule. */
+.offer-list {
+  list-style: none;
+  margin-top: 80px;
+  border-top: 1px solid var(--line);
+}
+
+.offer-list li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) 250px;
+  gap: 16px 48px;
+  align-items: baseline;
+  padding: 32px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.offer-list h3 {
+  font-size: clamp(26px, 2.6vw, 36px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.offer-list h3 em {
+  color: var(--signal);
+}
+
+.offer-list p {
+  color: var(--fg-dim);
+  font-size: 17px;
+}
+
+.offer-list .mono {
+  color: var(--fg-dim);
+  text-align: right;
+}
+
+@media (max-width: 800px) {
+  .offer-list li {
+    grid-template-columns: 1fr;
+  }
+
+  .offer-list .mono {
+    text-align: left;
+  }
+}
+
 /* Process as one quiet line of junctions. */
 .process-line {
   display: flex;

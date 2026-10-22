@@ -542,7 +542,7 @@ em {
 
 .card-top {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   color: var(--fg-dim);
   margin-bottom: 88px;
@@ -583,6 +583,18 @@ em {
 .card:hover .card-cross {
   transform: rotate(45deg);
   transition: transform 0.4s;
+}
+
+.card-meta {
+  color: var(--fg-dim);
+}
+
+.card h3 em {
+  color: var(--signal);
+}
+
+.card:hover h3 em {
+  color: var(--ink);
 }
 
 .card h3 {

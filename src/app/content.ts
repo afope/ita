@@ -5,6 +5,7 @@ export const site = {
   name: "ita",
   expansion: "intersection of technology and art",
   city: "Lagos",
+  reach: "based in Lagos, working worldwide",
   // Leave empty to hide the direct email link; the waitlist form still works.
   contactEmail: "",
   // Shows a small switch for comparing the colour and ink & paper palettes.
@@ -39,27 +40,27 @@ export const idea = {
 
 export const studio = {
   intro:
-    "ita is a studio for spatial prototypes. We help innovation labs and organisations test ideas in physical space before they are built — rooms that respond, objects that listen, and environments that let people feel the future instead of reading about it.",
+    "ita is a spatial prototyping studio, based in Lagos and working worldwide. We help innovation labs and organisations test ideas in physical space before they are built — rooms that respond, objects that listen, and environments that let people feel the future instead of reading about it — with the people who will actually live in it.",
   headline: "Prototypes you can *stand inside*.",
   // One-sentence version for the pared-back layout.
   short:
-    "We build spatial prototypes for innovation labs and organisations: rooms, objects and installations people can walk into before anything is built.",
-  services: [
+    "We build spatial prototypes for innovation labs and organisations worldwide: rooms, objects and installations people can walk into before anything is built, tested with the people who will actually use them.",
+  // What clients can buy. Durations are starting points; adjust freely.
+  offers: [
     {
-      title: "Spatial prototypes",
-      body: "Walk-through, touchable versions of products, services and experiences — built fast enough to learn from, real enough to believe in.",
+      title: "Test it in *Lagos*",
+      body: "Send us an idea, product or service. We build a spatial prototype and test it with the people who will actually use it in Lagos, then deliver film, findings and recommendations. You never need to travel.",
+      meta: "remote · 3–4 weeks",
     },
     {
-      title: "Interactive installations",
-      body: "Sensors, light, sound and code woven into space. Installations that react to the people moving through them.",
+      title: "Prototype *sprint*",
+      body: "One idea turned into a walk-through prototype and tested with real people. Physical in our Lagos studio or as a filmed digital walk-through, with a short report at the end.",
+      meta: "remote or on site · 2–3 weeks",
     },
     {
-      title: "Innovation lab environments",
-      body: "Designing the rooms where teams invent: flexible, instrumented spaces that make experimentation the default.",
-    },
-    {
-      title: "Speculative design sprints",
-      body: "Short, intense engagements that turn a strategic question into a tangible artefact your organisation can gather around.",
+      title: "Installations & *residencies*",
+      body: "Interactive installations for festivals, museums, brands and biennales. We travel to build them with you.",
+      meta: "worldwide · by commission",
     },
   ],
   process: ["Listen", "Sketch in space", "Prototype", "Test with people", "Hand over"],

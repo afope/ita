@@ -34,8 +34,9 @@ export default function Home() {
               The junction where technology <em>meets</em> art.
             </h1>
             <p className="hero-lede">
-              Spatial prototypes for innovation labs and organisations — and
-              conversations that bring Lagos together around ideas.
+              Spatial prototypes for innovation labs and organisations
+              worldwide — and conversations that bring Lagos together around
+              ideas.
             </p>
             <div className="hero-actions">
               <a href="#studio" className="button button-signal">
@@ -105,13 +106,16 @@ export default function Home() {
           </div>
 
           <div className="cards">
-            {studio.services.map((service) => (
-              <article key={service.title} className="card" data-reveal>
+            {studio.offers.map((offer) => (
+              <article key={offer.title} className="card" data-reveal>
                 <div className="card-top">
+                  <span className="mono card-meta">{offer.meta}</span>
                   <span className="card-cross" aria-hidden="true" />
                 </div>
-                <h3>{service.title}</h3>
-                <p>{service.body}</p>
+                <h3>
+                  <Crossed text={offer.title} />
+                </h3>
+                <p>{offer.body}</p>
               </article>
             ))}
           </div>
@@ -127,7 +131,8 @@ export default function Home() {
 
           <div className="section-cta" data-reveal>
             <p>
-              Have a future you need to <em>stand inside</em>?
+              Wherever you are, have a future you need to{" "}
+              <em>stand inside</em>?
             </p>
             {site.contactEmail ? (
               <a
