@@ -72,10 +72,15 @@ edges.forEach((e, i) => {
 const junctionPts = lagos.junctions.map(([x, y]) => ({ x: x / S, y: y / S }));
 const shore = lagos.shore.map(toPoints);
 // The island's west shore around Balogun Street anchors the composition.
-const focus = (() => {
-  const balogun = lagos.labels.find((l) => l.name === "Balogun Street");
-  return balogun ? { x: balogun.x / S, y: balogun.y / S } : { x: 0.1, y: 0.3 };
-})();
+const focus = { x: 0.079, y: 0.28 };
+// Places with a single point (squares, stops) are placed before streets,
+// which have many points to choose from.
+const labels = lagos.labels
+  .map((l) => ({
+    name: l.name.toUpperCase(),
+    pts: l.pts.map(([x, y]) => ({ x: x / S, y: y / S })),
+  }))
+  .sort((a, b) => a.pts.length - b.pts.length);
 
 const pointAlong = (edge: (typeof edges)[number], dist: number): Point => {
   const { pts, lengths } = edge;
@@ -131,7 +136,7 @@ export default function HeroCanvas({ words }: { words: [string, string][] }) {
       const narrow = width < 700;
       const scale = width * (narrow ? 2.6 : 1.45);
       const fx = width * (narrow ? 0.34 : 0.56);
-      const fy = height * (narrow ? 0.2 : 0.62);
+      const fy = height * (narrow ? 0.2 : 0.5);
       view = { scale, ox: fx - focus.x * scale, oy: fy - focus.y * scale };
       junctions = junctionPts.map(toScreen);
     };
@@ -227,15 +232,22 @@ export default function HeroCanvas({ words }: { words: [string, string][] }) {
     const LABEL_WIDTH = 150;
     const labelFlips = (x: number) => x + 14 + LABEL_WIDTH > width - 12;
 
+    type Box = { left: number; right: number; top: number; bottom: number };
+    const overlaps = (a: Box, b: Box) =>
+      a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+    // Street names placed on the last frame; words stay off them.
+    let placed: Box[] = [];
+
     const inWordZone = ({ x, y }: Point) => {
       if (y < 100 || y > height - 40 || x < 16 || x > width - 16) return false;
       const flip = labelFlips(x);
-      return clear({
+      const box = {
         left: flip ? x - 14 - LABEL_WIDTH : x - 8,
         right: flip ? x + 8 : x + 14 + LABEL_WIDTH,
         top: y - 40,
         bottom: y + 28,
-      });
+      };
+      return clear(box) && !placed.some((p) => overlaps(box, p));
     };
 
     // Streets are dense, so words keep their distance from each other.
@@ -330,15 +342,32 @@ export default function HeroCanvas({ words }: { words: [string, string][] }) {
         ctx.stroke();
       }
 
-      // Street names, where they don't collide with the copy.
+      // Street names: each takes the first point along its street that is
+      // on screen and clear of the copy and the other names.
       ctx.font = `10px ${monoFont}`;
       ctx.fillStyle = theme.label;
-      for (const l of lagos.labels) {
-        const s = toScreen({ x: l.x / S, y: l.y / S });
-        const w = ctx.measureText(l.name.toUpperCase()).width;
-        if (s.x < 8 || s.x + w > width - 8 || s.y < 90 || s.y > height - 30) continue;
-        if (!clear({ left: s.x - 4, right: s.x + w + 4, top: s.y - 14, bottom: s.y + 4 })) continue;
-        ctx.fillText(l.name.toUpperCase(), s.x + 6, s.y - 6);
+      // A name sits to the right of its point, or to the left if needed.
+      placed = [];
+      for (const l of labels) {
+        const w = ctx.measureText(l.name).width + 12;
+        const spot = l.pts
+          .map(toScreen)
+          .flatMap((s) => [
+            { x: s.x + 6, box: { left: s.x, right: s.x + w, top: s.y - 18, bottom: s.y } },
+            { x: s.x - w + 6, box: { left: s.x - w, right: s.x, top: s.y - 18, bottom: s.y } },
+          ])
+          .find(
+            ({ box }) =>
+              box.left >= 8 &&
+              box.right <= width - 8 &&
+              box.top >= 90 &&
+              box.bottom <= height - 30 &&
+              clear(box) &&
+              !placed.some((o) => overlaps(box, o))
+          );
+        if (!spot) continue;
+        ctx.fillText(l.name, spot.x, spot.box.bottom - 6);
+        placed.push(spot.box);
       }
 
       // Signals travelling the real street network.

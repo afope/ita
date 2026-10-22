@@ -324,19 +324,73 @@ em {
 }
 
 .section-head {
+  --pulse: var(--signal);
   display: flex;
   align-items: center;
   gap: 16px;
   padding-bottom: 18px;
   margin-bottom: clamp(40px, 6vw, 72px);
-  border-bottom: 1px solid var(--line);
   position: relative;
+}
+
+/* The section rule is a street: it draws out from the junction marker when
+   the section arrives, then a signal travels along it every few seconds. */
+.section-head::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background:
+    linear-gradient(90deg, transparent, var(--pulse), transparent) no-repeat,
+    linear-gradient(var(--line), var(--line)) no-repeat;
+  background-size: 160px 2px, 100% 1px;
+  background-position: -160px 100%, 0 100%;
+  transform-origin: left;
+  animation: rule-signal 7s ease-in-out 1.8s infinite;
+}
+
+.reveal-ready .section-head::after {
+  transform: scaleX(0);
+}
+
+.reveal-ready .section-head.is-visible::after {
+  transform: scaleX(1);
+  transition: transform 1.4s cubic-bezier(0.65, 0, 0.35, 1) 0.2s;
+}
+
+@keyframes rule-signal {
+  0% {
+    background-position: -160px 100%, 0 100%;
+  }
+  55%,
+  100% {
+    background-position: calc(100% + 160px) 100%, 0 100%;
+  }
+}
+
+.section-paper .section-head {
+  --pulse: var(--field);
+}
+
+.section-field .section-head {
+  --pulse: var(--ink);
+}
+
+[data-palette="ink"] .section-paper .section-head {
+  --pulse: var(--ink);
+}
+
+[data-palette="ink"] .section-field .section-head {
+  --pulse: var(--signal);
 }
 
 /* A junction marker where the section rule meets the index. */
 .section-head::before {
   content: "";
   position: absolute;
+  z-index: 1;
   left: 0;
   bottom: -5px;
   width: 9px;
