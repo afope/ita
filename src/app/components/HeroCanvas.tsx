@@ -98,7 +98,14 @@ const pointAlong = (edge: (typeof edges)[number], dist: number): Point => {
 // real street crossing is an ìta — a junction — and junctions light up as
 // signals travel the network and the pointer passes by. Now and then a
 // junction surfaces a word pair: technology crossed with art.
-export default function HeroCanvas({ words }: { words: [string, string][] }) {
+// `quiet` shows one word at a time, less often, for the pared-back layout.
+export default function HeroCanvas({
+  words,
+  quiet = false,
+}: {
+  words: [string, string][];
+  quiet?: boolean;
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -259,7 +266,7 @@ export default function HeroCanvas({ words }: { words: [string, string][] }) {
       });
 
     const spawn = (preferred?: number) => {
-      if (!words.length || active.length >= MAX_WORDS) return;
+      if (!words.length || active.length >= (quiet ? 1 : MAX_WORDS)) return;
       let index = preferred;
       if (index === undefined) {
         const free = junctions
@@ -419,7 +426,7 @@ export default function HeroCanvas({ words }: { words: [string, string][] }) {
       });
 
       // A slow idle rhythm keeps words surfacing for touch and still visitors.
-      if (!reduceMotion && clock - lastSpawn > 2.8) spawn();
+      if (!reduceMotion && clock - lastSpawn > (quiet ? 6 : 2.8)) spawn();
       active.forEach((w) => drawWord(w, theme));
 
       if (!reduceMotion) frame = requestAnimationFrame(render);
@@ -463,7 +470,7 @@ export default function HeroCanvas({ words }: { words: [string, string][] }) {
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("scroll", onScroll);
     };
-  }, [words]);
+  }, [words, quiet]);
 
   return <canvas ref={canvasRef} className="hero-canvas" aria-hidden="true" />;
 }

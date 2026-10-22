@@ -41,6 +41,9 @@ export const studio = {
   intro:
     "ita is a studio for spatial prototypes. We help innovation labs and organisations test ideas in physical space before they are built — rooms that respond, objects that listen, and environments that let people feel the future instead of reading about it.",
   headline: "Prototypes you can *stand inside*.",
+  // One-sentence version for the pared-back layout.
+  short:
+    "We build spatial prototypes for innovation labs and organisations: rooms, objects and installations people can walk into before anything is built.",
   services: [
     {
       title: "Spatial prototypes",
@@ -64,6 +67,8 @@ export const studio = {
 
 export const conversations = {
   headline: "Ideas need a *square* to meet in.",
+  short:
+    "Gatherings where writers, artists and technologists meet Lagos over a shared love of ideas.",
   intro:
     "ita conversations is our public programme — gatherings where writers, artists and technologists meet audiences over a shared love of ideas. The best way for people to connect and commune is over shared interest. Lagos, the creative whirlpool that it is, is the most unassuming place to gather over a love of words: their power, their beauty, their unparalleled ability to subvert, change and redirect.",
 };
