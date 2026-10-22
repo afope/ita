@@ -7,6 +7,31 @@ type Word = { junction: number; pair: [string, string]; born: number };
 const WORD_LIFE = 4.2;
 const MAX_WORDS = 3;
 
+// Canvas colours per palette. In colour the hero sits on bright orange, so
+// streets and labels are ink; in ink & paper they are light.
+const themes = {
+  colour: {
+    street: "rgba(13, 13, 14, 0.16)",
+    idle: "rgba(13, 13, 14, 0.4)",
+    art: "242, 239, 230",
+    tech: "13, 13, 14",
+    horizontal: "92, 230, 210",
+    vertical: "rgba(242, 239, 230, 0.95)",
+  },
+  ink: {
+    street: "rgba(242, 239, 230, 0.09)",
+    idle: "rgba(242, 239, 230, 0.28)",
+    art: "242, 239, 230",
+    tech: "92, 230, 210",
+    horizontal: "242, 239, 230",
+    vertical: "rgba(242, 239, 230, 0.7)",
+  },
+};
+const currentTheme = () =>
+  document.documentElement.dataset.palette === "ink"
+    ? themes.ink
+    : themes.colour;
+
 // A living street plan: measured horizontals (technology) crossed by
 // drifting, hand-drawn verticals (art). Every crossing is an ìta — a
 // junction — and junctions light up as signals and the pointer pass by.
@@ -186,11 +211,12 @@ export default function HeroCanvas({ words }: { words: [string, string][] }) {
       ctx.textAlign = flip ? "right" : "left";
       const x = flip ? j.x - 14 : j.x + 14;
 
-      ctx.fillStyle = `rgba(242, 239, 230, ${alpha})`;
+      const theme = currentTheme();
+      ctx.fillStyle = `rgba(${theme.art}, ${alpha})`;
       ctx.font = `italic 24px ${serifFont}`;
       ctx.fillText(art, x, j.y - 10 + rise);
 
-      ctx.fillStyle = `rgba(92, 230, 210, ${alpha * 0.9})`;
+      ctx.fillStyle = `rgba(${theme.tech}, ${alpha * 0.9})`;
       ctx.font = `11px ${monoFont}`;
       ctx.fillText(tech.toUpperCase(), x, j.y + 20 + rise);
       ctx.textAlign = "left";
@@ -202,10 +228,11 @@ export default function HeroCanvas({ words }: { words: [string, string][] }) {
       pointer.x += (pointer.tx - pointer.x) * 0.06;
       pointer.y += (pointer.ty - pointer.y) * 0.06;
       ctx.clearRect(0, 0, width, height);
+      const theme = currentTheme();
 
       // Streets.
       ctx.lineWidth = 1;
-      ctx.strokeStyle = "rgba(242, 239, 230, 0.09)";
+      ctx.strokeStyle = theme.street;
       for (const y of rows) {
         ctx.beginPath();
         ctx.moveTo(0, y);
@@ -222,12 +249,8 @@ export default function HeroCanvas({ words }: { words: [string, string][] }) {
         ctx.stroke();
       }
 
-      // Signals travelling the streets: Lagoon along the measured
-      // horizontals, Laterite down the drawn verticals (paper in ink mode).
-      const signal =
-        document.documentElement.dataset.palette === "ink"
-          ? "242, 239, 230"
-          : "92, 230, 210";
+      // Signals travelling the streets.
+      const signal = theme.horizontal;
       const pulsePoints: { x: number; y: number }[] = [];
       for (const p of pulses) {
         if (!reduceMotion) p.pos = (p.pos + p.speed / 60 + 1) % 1;
@@ -250,10 +273,7 @@ export default function HeroCanvas({ words }: { words: [string, string][] }) {
           const c = cols[p.line % cols.length];
           y = p.pos * height;
           x = colX(c, y, t);
-          ctx.fillStyle =
-            signal === "92, 230, 210"
-              ? "rgba(255, 90, 31, 0.95)"
-              : "rgba(242, 239, 230, 0.7)";
+          ctx.fillStyle = theme.vertical;
           ctx.fillRect(x - 1.5, y - 10, 3, 20);
         }
         pulsePoints.push({ x, y });
@@ -291,8 +311,8 @@ export default function HeroCanvas({ words }: { words: [string, string][] }) {
           ctx.rotate(Math.PI / 4);
           ctx.fillStyle =
             heat > 0.15
-              ? `rgba(92, 230, 210, ${0.35 + heat * 0.65})`
-              : "rgba(242, 239, 230, 0.28)";
+              ? `rgba(92, 230, 210, ${0.6 + heat * 0.4})`
+              : theme.idle;
           ctx.fillRect(-size / 2, -size / 2, size, size);
           ctx.restore();
         }

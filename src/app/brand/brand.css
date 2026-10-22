@@ -53,7 +53,7 @@
 .brand-big {
   font-size: clamp(140px, 22vw, 320px);
   line-height: 0.8;
-  color: var(--field-glow);
+  color: var(--field);
 }
 
 .brand-copy {

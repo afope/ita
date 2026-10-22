@@ -3,13 +3,11 @@
   --ink: #0d0d0e;
   --ink-2: #161618;
   --field: #ff5a1f; /* Laterite: warm, the art side */
-  --field-deep: #c2410c;
-  --field-glow: #ff8a5c;
   --signal: #5ce6d2; /* Lagoon: cool, the technology side */
   --paper: #f2efe6;
   --paper-2: #e7e2d4;
   --ink-rgb: 13, 13, 14;
-  --glow-rgb: 255, 90, 31;
+  --glow-rgb: 242, 239, 230;
 
   /* Contextual tokens, re-pointed by each surface below. */
   --bg: var(--ink);
@@ -205,7 +203,7 @@ em {
   overflow: hidden;
   isolation: isolate;
   background:
-    radial-gradient(ellipse 60% 50% at 80% 30%, rgba(var(--glow-rgb), 0.28), transparent 70%),
+    radial-gradient(ellipse 60% 50% at 80% 30%, rgba(242, 239, 230, 0.06), transparent 70%),
     var(--ink);
 }
 
@@ -638,7 +636,9 @@ em {
   margin-top: 96px;
   padding: clamp(24px, 3vw, 40px);
   border: 1px solid var(--line);
-  background: linear-gradient(100deg, rgba(var(--glow-rgb), 0.35), transparent 70%);
+  background: var(--field);
+  border-color: transparent;
+  color: var(--ink);
 }
 
 .section-cta p {
@@ -649,7 +649,7 @@ em {
 }
 
 .section-cta em {
-  color: var(--signal);
+  color: var(--ink);
 }
 
 /* ── Event ───────────────────────────────────────────── */
@@ -774,7 +774,6 @@ em {
   flex-direction: column;
   gap: 32px;
   padding: clamp(32px, 5vw, 64px) clamp(28px, 4vw, 48px);
-  background: rgba(var(--ink-rgb), 0.22);
 }
 
 .author {
@@ -948,9 +947,7 @@ em {
   background: var(--ink);
 }
 
-.event-side {
-  background: rgba(var(--ink-rgb), 0.07);
-}
+
 
 .card:hover,
 .card:hover .card-top {
@@ -961,10 +958,99 @@ em {
   color: rgba(var(--ink-rgb), 0.8);
 }
 
-/* Small orange text on paper uses the deeper tone for legibility. */
+/* Bright orange is too light for small text on paper; labels use ink. */
 .definition-list li::before,
 .principle .mono {
-  color: var(--field-deep);
+  color: rgba(var(--ink-rgb), 0.6);
+}
+
+/* ── Orange hero ─────────────────────────────────────
+   Bright orange carries the first impression. Ink type for legibility, the
+   serif crossing in paper, Lagoon for buttons and live junctions. */
+.hero {
+  background: var(--field);
+  color: var(--ink);
+}
+
+:root:not([data-palette="ink"]) .hero::after {
+  background: linear-gradient(90deg, var(--field) 0%, rgba(255, 90, 31, 0.7) 40%, transparent 75%);
+}
+
+/* A see-through ink bar would turn brown over orange, so the nav is solid. */
+.nav {
+  background: var(--ink);
+}
+
+.hero .eyebrow,
+.hero-lede,
+.hero-meta,
+.scroll-cue {
+  color: rgba(var(--ink-rgb), 0.78);
+}
+
+.hero .eyebrow .node {
+  background: var(--ink);
+}
+
+.hero-title em {
+  color: var(--paper);
+}
+
+.hero .button-ghost {
+  --line: rgba(var(--ink-rgb), 0.35);
+  --fg: var(--ink);
+}
+
+.hero .button-ghost:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.hero .button-signal:hover {
+  background: var(--ink);
+  color: var(--signal);
+}
+
+@media (max-width: 700px) {
+  :root:not([data-palette="ink"]) .hero::after {
+    background: linear-gradient(0deg, var(--field) 10%, rgba(255, 90, 31, 0.6) 60%, transparent);
+  }
+}
+
+/* In ink & paper the hero returns to ink. */
+[data-palette="ink"] .hero {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+[data-palette="ink"] .hero::after {
+  background: linear-gradient(90deg, var(--ink) 0%, rgba(var(--ink-rgb), 0.75) 40%, transparent 75%);
+}
+
+[data-palette="ink"] .hero .eyebrow,
+[data-palette="ink"] .hero-lede,
+[data-palette="ink"] .hero-meta,
+[data-palette="ink"] .scroll-cue {
+  color: rgba(242, 239, 230, 0.7);
+}
+
+[data-palette="ink"] .hero .eyebrow .node {
+  background: var(--signal);
+}
+
+[data-palette="ink"] .hero-title em {
+  color: var(--signal);
+}
+
+[data-palette="ink"] .hero .button-ghost {
+  --line: rgba(242, 239, 230, 0.14);
+  --fg: var(--paper);
+}
+
+@media (max-width: 700px) {
+  [data-palette="ink"] .hero::after {
+    background: linear-gradient(0deg, var(--ink) 10%, rgba(var(--ink-rgb), 0.6) 60%, transparent);
+  }
 }
 
 /* ── Ink & paper palette ─────────────────────────────
@@ -976,7 +1062,6 @@ em {
   --ink-rgb: 13, 13, 12;
   --glow-rgb: 242, 239, 230;
   --field: var(--ink);
-  --field-glow: var(--paper);
 }
 
 [data-palette="ink"] .hero {
@@ -986,7 +1071,36 @@ em {
 }
 
 [data-palette="ink"] .section-cta {
-  background: linear-gradient(100deg, rgba(255, 200, 31, 0.12), transparent 70%);
+  background: rgba(242, 239, 230, 0.05);
+  border-color: rgba(242, 239, 230, 0.14);
+  color: var(--paper);
+}
+
+[data-palette="ink"] .section-cta em {
+  color: var(--signal);
+}
+
+/* Orange surfaces become ink here, so text and accents go back to light. */
+[data-palette="ink"] .section-field,
+[data-palette="ink"] .event {
+  --fg: var(--paper);
+  --fg-dim: rgba(242, 239, 230, 0.72);
+  --line: rgba(242, 239, 230, 0.2);
+  color: var(--paper);
+}
+
+[data-palette="ink"] .section-field .section-title em,
+[data-palette="ink"] .event-name em,
+[data-palette="ink"] .event-facts dt,
+[data-palette="ink"] .author-label,
+[data-palette="ink"] .programme .mono,
+[data-palette="ink"] .section-field .form-error {
+  color: var(--signal);
+}
+
+[data-palette="ink"] .section-field .section-head::before,
+[data-palette="ink"] .event .node {
+  background: var(--signal);
 }
 
 /* Cards invert to paper on hover: ink on paper. */
