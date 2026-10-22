@@ -47,8 +47,14 @@ export default function Home() {
             </div>
           </div>
           <div className="hero-meta mono">
-            <span>6.45°N 3.39°E</span>
-            <span>lagos / nigeria</span>
+            <span>lagos island / 6.45°N 3.39°E</span>
+            <a
+              href="https://www.openstreetmap.org/copyright"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              map © openstreetmap contributors
+            </a>
           </div>
           <a href="#idea" className="scroll-cue mono" aria-label="Scroll to the idea">
             scroll <span>↓</span>

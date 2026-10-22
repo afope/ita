@@ -274,6 +274,10 @@ em {
   color: rgba(242, 239, 230, 0.5);
 }
 
+.hero-meta a:hover {
+  text-decoration: underline;
+}
+
 .scroll-cue {
   position: absolute;
   left: var(--gutter);
@@ -1197,7 +1201,13 @@ em {
     background: linear-gradient(0deg, var(--ink) 10%, rgba(var(--ink-rgb), 0.6) 60%, transparent);
   }
 
+  /* The map credit stays visible on phones. */
   .hero-meta {
+    bottom: 28px;
+    font-size: 10px;
+  }
+
+  .hero-meta span {
     display: none;
   }
 

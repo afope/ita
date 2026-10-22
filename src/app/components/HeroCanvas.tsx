@@ -1,30 +1,38 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import lagos from "../data/lagos-island.json";
 
 type Word = { junction: number; pair: [string, string]; born: number };
+type Point = { x: number; y: number };
 
 const WORD_LIFE = 4.2;
 const MAX_WORDS = 3;
+const PULSES = 14;
+const TRAIL = 12;
 
 // Canvas colours per palette. In colour the hero sits on bright orange, so
 // streets and labels are ink; in ink & paper they are light.
 const themes = {
   colour: {
-    street: "rgba(13, 13, 14, 0.16)",
-    idle: "rgba(13, 13, 14, 0.4)",
+    street: "rgba(13, 13, 14, 0.2)",
+    major: "rgba(13, 13, 14, 0.38)",
+    shore: "rgba(13, 13, 14, 0.45)",
+    idle: "rgba(13, 13, 14, 0.42)",
+    label: "rgba(13, 13, 14, 0.62)",
     art: "242, 239, 230",
     tech: "13, 13, 14",
-    horizontal: "92, 230, 210",
-    vertical: "rgba(242, 239, 230, 0.95)",
+    pulses: ["92, 230, 210", "242, 239, 230"],
   },
   ink: {
-    street: "rgba(242, 239, 230, 0.09)",
-    idle: "rgba(242, 239, 230, 0.28)",
+    street: "rgba(242, 239, 230, 0.1)",
+    major: "rgba(242, 239, 230, 0.22)",
+    shore: "rgba(242, 239, 230, 0.32)",
+    idle: "rgba(242, 239, 230, 0.3)",
+    label: "rgba(242, 239, 230, 0.5)",
     art: "242, 239, 230",
     tech: "92, 230, 210",
-    horizontal: "242, 239, 230",
-    vertical: "rgba(242, 239, 230, 0.7)",
+    pulses: ["92, 230, 210", "242, 239, 230"],
   },
 };
 const currentTheme = () =>
@@ -32,10 +40,59 @@ const currentTheme = () =>
     ? themes.ink
     : themes.colour;
 
-// A living street plan: measured horizontals (technology) crossed by
-// drifting, hand-drawn verticals (art). Every crossing is an ìta — a
-// junction — and junctions light up as signals and the pointer pass by.
-// Now and then a junction surfaces a word pair: technology crossed with art.
+// The street graph of Lagos Island, in map units (0..1 across the width).
+// Edges run junction to junction, so signals can travel the real network.
+const S = lagos.scale;
+const toPoints = (flat: number[]) => {
+  const pts: Point[] = [];
+  for (let i = 0; i < flat.length; i += 2) {
+    pts.push({ x: flat[i] / S, y: flat[i + 1] / S });
+  }
+  return pts;
+};
+const edges = lagos.edges.map(([major, ...flat]) => {
+  const pts = toPoints(flat);
+  const lengths = [0];
+  for (let i = 1; i < pts.length; i++) {
+    lengths.push(
+      lengths[i - 1] +
+        Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y)
+    );
+  }
+  return { major: major === 1, pts, lengths, length: lengths[lengths.length - 1] };
+});
+const keyOf = (p: Point) => `${Math.round(p.x * S)},${Math.round(p.y * S)}`;
+const atNode = new Map<string, number[]>();
+edges.forEach((e, i) => {
+  for (const end of [e.pts[0], e.pts[e.pts.length - 1]]) {
+    const k = keyOf(end);
+    atNode.set(k, [...(atNode.get(k) ?? []), i]);
+  }
+});
+const junctionPts = lagos.junctions.map(([x, y]) => ({ x: x / S, y: y / S }));
+const shore = lagos.shore.map(toPoints);
+// The island's west shore around Balogun Street anchors the composition.
+const focus = (() => {
+  const balogun = lagos.labels.find((l) => l.name === "Balogun Street");
+  return balogun ? { x: balogun.x / S, y: balogun.y / S } : { x: 0.1, y: 0.3 };
+})();
+
+const pointAlong = (edge: (typeof edges)[number], dist: number): Point => {
+  const { pts, lengths } = edge;
+  let i = 1;
+  while (i < lengths.length - 1 && lengths[i] < dist) i++;
+  const span = lengths[i] - lengths[i - 1] || 1;
+  const t = Math.min(1, Math.max(0, (dist - lengths[i - 1]) / span));
+  return {
+    x: pts[i - 1].x + (pts[i].x - pts[i - 1].x) * t,
+    y: pts[i - 1].y + (pts[i].y - pts[i - 1].y) * t,
+  };
+};
+
+// The hero is a living map of Lagos Island, drawn from OpenStreetMap. Every
+// real street crossing is an ìta — a junction — and junctions light up as
+// signals travel the network and the pointer passes by. Now and then a
+// junction surfaces a word pair: technology crossed with art.
 export default function HeroCanvas({ words }: { words: [string, string][] }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -51,50 +108,64 @@ export default function HeroCanvas({ words }: { words: [string, string][] }) {
     const serifFont = rootStyle.getPropertyValue("--font-serif") || "Georgia";
     const monoFont = rootStyle.getPropertyValue("--font-mono") || "monospace";
 
-    // Deterministic jitter so the plan looks drawn, not random each load.
-    let seed = 7;
-    const rand = () => {
-      seed = (seed * 16807) % 2147483647;
-      return seed / 2147483647;
-    };
-
-    const pointer = { x: 0.72, y: 0.42, tx: 0.72, ty: 0.42, active: false };
+    const pointer = { x: -1, y: -1, active: false };
     let width = 0;
     let height = 0;
     let frame = 0;
-    let rows: number[] = [];
-    let cols: { x: number; phase: number; amp: number }[] = [];
-    let pulses: { axis: "h" | "v"; line: number; pos: number; speed: number }[] =
-      [];
-    let junctions: { x: number; y: number }[] = [];
+    let view = { scale: 1, ox: 0, oy: 0 };
+    let junctions: Point[] = [];
     let active: Word[] = [];
     let nextPair = Math.floor(Math.random() * words.length);
     let lastSpawn = -Infinity;
     let clock = 0;
+    let lastTime = 0;
 
-    const layout = () => {
-      seed = 7;
-      const rowCount = Math.max(5, Math.round(height / 120));
-      const colCount = Math.max(5, Math.round(width / 140));
-      rows = Array.from(
-        { length: rowCount },
-        (_, i) => ((i + 0.5 + (rand() - 0.5) * 0.5) / rowCount) * height
-      );
-      cols = Array.from({ length: colCount }, (_, i) => ({
-        x: ((i + 0.5 + (rand() - 0.5) * 0.6) / colCount) * width,
-        phase: rand() * Math.PI * 2,
-        amp: 8 + rand() * 18,
-      }));
-      pulses = Array.from({ length: 12 }, () => {
-        const axis = rand() > 0.5 ? "h" : "v";
-        return {
-          axis,
-          line: Math.floor(rand() * (axis === "h" ? rowCount : colCount)),
-          pos: rand(),
-          speed: (0.04 + rand() * 0.08) * (rand() > 0.5 ? 1 : -1),
-        };
-      });
-      active = [];
+    const toScreen = (p: Point): Point => ({
+      x: view.ox + p.x * view.scale,
+      y: view.oy + p.y * view.scale,
+    });
+
+    // Place the map so the open water west of the island sits behind the
+    // copy and the streets fill the rest of the hero.
+    const fit = () => {
+      const narrow = width < 700;
+      const scale = width * (narrow ? 2.6 : 1.45);
+      const fx = width * (narrow ? 0.34 : 0.56);
+      const fy = height * (narrow ? 0.2 : 0.62);
+      view = { scale, ox: fx - focus.x * scale, oy: fy - focus.y * scale };
+      junctions = junctionPts.map(toScreen);
+    };
+
+    const pulses = Array.from({ length: PULSES }, (_, i) => ({
+      edge: Math.floor(Math.random() * edges.length),
+      forward: Math.random() > 0.5,
+      dist: 0,
+      speed: 0.035 + Math.random() * 0.045,
+      colour: i % 3 === 0 ? 1 : 0,
+      trail: [] as Point[],
+    }));
+    pulses.forEach((p) => (p.dist = Math.random() * edges[p.edge].length));
+
+    const advance = (p: (typeof pulses)[number], dt: number) => {
+      p.dist += p.speed * dt;
+      const edge = edges[p.edge];
+      if (p.dist < edge.length) return;
+      // At the junction, turn onto another street that meets it.
+      const end = p.forward ? edge.pts[edge.pts.length - 1] : edge.pts[0];
+      const options = (atNode.get(keyOf(end)) ?? []).filter((i) => i !== p.edge);
+      const next = options.length
+        ? options[Math.floor(Math.random() * options.length)]
+        : Math.floor(Math.random() * edges.length);
+      const nextEdge = edges[next];
+      p.forward = keyOf(nextEdge.pts[0]) === keyOf(end) || !options.length;
+      p.edge = next;
+      p.dist = 0;
+      if (!options.length) p.trail = [];
+    };
+
+    const pulsePosition = (p: (typeof pulses)[number]) => {
+      const edge = edges[p.edge];
+      return toScreen(pointAlong(edge, p.forward ? p.dist : edge.length - p.dist));
     };
 
     const resize = () => {
@@ -104,24 +175,14 @@ export default function HeroCanvas({ words }: { words: [string, string][] }) {
       canvas.width = width * dpr;
       canvas.height = height * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      layout();
+      fit();
       measureKeepOut();
+      active = [];
     };
 
-    const colX = (c: (typeof cols)[number], y: number, t: number) => {
-      const px = pointer.x * width;
-      const py = pointer.y * height;
-      const d = ((c.x - px) ** 2 + (y - py) ** 2) / (width * width * 0.02);
-      return (
-        c.x +
-        Math.sin(y * 0.006 + c.phase + t * 0.35) * c.amp +
-        (px - c.x) * Math.exp(-d) * 0.35
-      );
-    };
-
-    // Words never cover the hero copy. Keep-out boxes follow the actual
-    // lines of text and buttons, so the empty space beside a short line
-    // can still hold a word.
+    // Words and labels never cover the hero copy. Keep-out boxes follow the
+    // actual lines of text and buttons, so the empty space beside a short
+    // line can still hold a word.
     let keepOut: DOMRect[] = [];
     const measureKeepOut = () => {
       const base = canvas.getBoundingClientRect();
@@ -154,45 +215,54 @@ export default function HeroCanvas({ words }: { words: [string, string][] }) {
         );
     };
 
-    const LABEL_WIDTH = 150;
-    const labelFlips = (x: number) => x + 14 + LABEL_WIDTH > width - 12;
-
-    const inWordZone = ({ x, y }: { x: number; y: number }) => {
-      if (y < 100 || y > height - 40 || x < 16 || x > width - 16) return false;
-      const flip = labelFlips(x);
-      const box = {
-        left: flip ? x - 14 - LABEL_WIDTH : x - 8,
-        right: flip ? x + 8 : x + 14 + LABEL_WIDTH,
-        top: y - 40,
-        bottom: y + 28,
-      };
-      return !keepOut.some(
+    const clear = (box: { left: number; right: number; top: number; bottom: number }) =>
+      !keepOut.some(
         (r) =>
           box.left < r.right &&
           box.right > r.left &&
           box.top < r.bottom &&
           box.bottom > r.top
       );
+
+    const LABEL_WIDTH = 150;
+    const labelFlips = (x: number) => x + 14 + LABEL_WIDTH > width - 12;
+
+    const inWordZone = ({ x, y }: Point) => {
+      if (y < 100 || y > height - 40 || x < 16 || x > width - 16) return false;
+      const flip = labelFlips(x);
+      return clear({
+        left: flip ? x - 14 - LABEL_WIDTH : x - 8,
+        right: flip ? x + 8 : x + 14 + LABEL_WIDTH,
+        top: y - 40,
+        bottom: y + 28,
+      });
     };
+
+    // Streets are dense, so words keep their distance from each other.
+    const roomy = (i: number) =>
+      active.every((w) => {
+        const a = junctions[w.junction];
+        const b = junctions[i];
+        return Math.abs(a.x - b.x) > 180 || Math.abs(a.y - b.y) > 70;
+      });
 
     const spawn = (preferred?: number) => {
       if (!words.length || active.length >= MAX_WORDS) return;
-      const taken = new Set(active.map((w) => w.junction));
       let index = preferred;
       if (index === undefined) {
         const free = junctions
           .map((_, i) => i)
-          .filter((i) => !taken.has(i) && inWordZone(junctions[i]));
+          .filter((i) => roomy(i) && inWordZone(junctions[i]));
         if (!free.length) return;
         index = free[Math.floor(Math.random() * free.length)];
       }
-      if (taken.has(index) || !inWordZone(junctions[index])) return;
+      if (!roomy(index) || !inWordZone(junctions[index])) return;
       active.push({ junction: index, pair: words[nextPair], born: clock });
       nextPair = (nextPair + 1) % words.length;
       lastSpawn = clock;
     };
 
-    const drawWord = (word: Word) => {
+    const drawWord = (word: Word, theme: (typeof themes)["colour"]) => {
       const j = junctions[word.junction];
       if (!j) return;
       const age = clock - word.born;
@@ -211,7 +281,6 @@ export default function HeroCanvas({ words }: { words: [string, string][] }) {
       ctx.textAlign = flip ? "right" : "left";
       const x = flip ? j.x - 14 : j.x + 14;
 
-      const theme = currentTheme();
       ctx.fillStyle = `rgba(${theme.art}, ${alpha})`;
       ctx.font = `italic 24px ${serifFont}`;
       ctx.fillText(art, x, j.y - 10 + rise);
@@ -222,61 +291,78 @@ export default function HeroCanvas({ words }: { words: [string, string][] }) {
       ctx.textAlign = "left";
     };
 
+    const strokePath = (pts: Point[]) => {
+      ctx.beginPath();
+      pts.forEach((p, i) => {
+        const s = toScreen(p);
+        if (i === 0) ctx.moveTo(s.x, s.y);
+        else ctx.lineTo(s.x, s.y);
+      });
+      ctx.stroke();
+    };
+
     const render = (time: number) => {
       clock = time / 1000;
-      const t = reduceMotion ? 0 : clock;
-      pointer.x += (pointer.tx - pointer.x) * 0.06;
-      pointer.y += (pointer.ty - pointer.y) * 0.06;
-      ctx.clearRect(0, 0, width, height);
+      const dt = reduceMotion ? 0 : Math.min(0.05, clock - lastTime);
+      lastTime = clock;
       const theme = currentTheme();
+      ctx.clearRect(0, 0, width, height);
 
-      // Streets.
-      ctx.lineWidth = 1;
-      ctx.strokeStyle = theme.street;
-      for (const y of rows) {
+      // Shoreline, then streets: major roads heavier than side streets.
+      ctx.lineJoin = "round";
+      ctx.setLineDash([2, 5]);
+      ctx.lineWidth = 1.2;
+      ctx.strokeStyle = theme.shore;
+      shore.forEach(strokePath);
+      ctx.setLineDash([]);
+      for (const major of [false, true]) {
+        ctx.lineWidth = major ? 1.6 : 1;
+        ctx.strokeStyle = major ? theme.major : theme.street;
         ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(width, y);
-        ctx.stroke();
-      }
-      for (const c of cols) {
-        ctx.beginPath();
-        for (let y = 0; y <= height; y += 12) {
-          const x = colX(c, y, t);
-          if (y === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
+        for (const e of edges) {
+          if (e.major !== major) continue;
+          e.pts.forEach((p, i) => {
+            const s = toScreen(p);
+            if (i === 0) ctx.moveTo(s.x, s.y);
+            else ctx.lineTo(s.x, s.y);
+          });
         }
         ctx.stroke();
       }
 
-      // Signals travelling the streets.
-      const signal = theme.horizontal;
-      const pulsePoints: { x: number; y: number }[] = [];
+      // Street names, where they don't collide with the copy.
+      ctx.font = `10px ${monoFont}`;
+      ctx.fillStyle = theme.label;
+      for (const l of lagos.labels) {
+        const s = toScreen({ x: l.x / S, y: l.y / S });
+        const w = ctx.measureText(l.name.toUpperCase()).width;
+        if (s.x < 8 || s.x + w > width - 8 || s.y < 90 || s.y > height - 30) continue;
+        if (!clear({ left: s.x - 4, right: s.x + w + 4, top: s.y - 14, bottom: s.y + 4 })) continue;
+        ctx.fillText(l.name.toUpperCase(), s.x + 6, s.y - 6);
+      }
+
+      // Signals travelling the real street network.
+      const pulsePoints: Point[] = [];
       for (const p of pulses) {
-        if (!reduceMotion) p.pos = (p.pos + p.speed / 60 + 1) % 1;
-        let x: number;
-        let y: number;
-        if (p.axis === "h") {
-          x = p.pos * width;
-          y = rows[p.line % rows.length];
-          const tail = Math.sign(p.speed) * -60;
-          const grad = ctx.createLinearGradient(x + tail, y, x, y);
-          grad.addColorStop(0, `rgba(${signal}, 0)`);
-          grad.addColorStop(1, `rgba(${signal}, 0.9)`);
-          ctx.strokeStyle = grad;
-          ctx.lineWidth = 2;
+        advance(p, dt);
+        const pos = pulsePosition(p);
+        p.trail.push(pos);
+        if (p.trail.length > TRAIL) p.trail.shift();
+        const rgb = theme.pulses[p.colour];
+        ctx.lineWidth = 2;
+        for (let i = 1; i < p.trail.length; i++) {
+          const a = p.trail[i - 1];
+          const b = p.trail[i];
+          if (Math.hypot(b.x - a.x, b.y - a.y) > 40) continue;
+          ctx.strokeStyle = `rgba(${rgb}, ${(i / p.trail.length) * 0.9})`;
           ctx.beginPath();
-          ctx.moveTo(x + tail, y);
-          ctx.lineTo(x, y);
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
           ctx.stroke();
-        } else {
-          const c = cols[p.line % cols.length];
-          y = p.pos * height;
-          x = colX(c, y, t);
-          ctx.fillStyle = theme.vertical;
-          ctx.fillRect(x - 1.5, y - 10, 3, 20);
         }
-        pulsePoints.push({ x, y });
+        ctx.fillStyle = `rgba(${rgb}, 1)`;
+        ctx.fillRect(pos.x - 2, pos.y - 2, 4, 4);
+        pulsePoints.push(pos);
       }
 
       // Junctions.
@@ -284,51 +370,36 @@ export default function HeroCanvas({ words }: { words: [string, string][] }) {
         active = active.filter((w) => clock - w.born < WORD_LIFE);
       }
       const lit = new Set(active.map((w) => w.junction));
-      const px = pointer.x * width;
-      const py = pointer.y * height;
-      junctions = [];
-      for (const y of rows) {
-        for (const c of cols) {
-          const x = colX(c, y, t);
-          const index = junctions.length;
-          junctions.push({ x, y });
+      junctions.forEach((j, index) => {
+        if (j.x < -10 || j.x > width + 10 || j.y < -10 || j.y > height + 10) return;
+        const near = pointer.active ? (j.x - pointer.x) ** 2 + (j.y - pointer.y) ** 2 : Infinity;
+        if (near < 30 * 30 && clock - lastSpawn > 0.9) spawn(index);
 
-          const near = (x - px) ** 2 + (y - py) ** 2;
-          if (pointer.active && near < 40 * 40 && clock - lastSpawn > 0.9) {
-            spawn(index);
-          }
-
-          let heat = lit.has(index) ? 1 : Math.exp(-near / 26000);
-          for (const s of pulsePoints) {
-            heat = Math.max(
-              heat,
-              Math.exp(-((x - s.x) ** 2 + (y - s.y) ** 2) / 900)
-            );
-          }
-          const size = 2.5 + heat * 7;
-          ctx.save();
-          ctx.translate(x, y);
-          ctx.rotate(Math.PI / 4);
-          ctx.fillStyle =
-            heat > 0.15
-              ? `rgba(92, 230, 210, ${0.6 + heat * 0.4})`
-              : theme.idle;
-          ctx.fillRect(-size / 2, -size / 2, size, size);
-          ctx.restore();
+        let heat = lit.has(index) ? 1 : Math.exp(-near / 9000);
+        for (const s of pulsePoints) {
+          heat = Math.max(heat, Math.exp(-((j.x - s.x) ** 2 + (j.y - s.y) ** 2) / 500));
         }
-      }
+        const size = 2.2 + heat * 6.5;
+        ctx.save();
+        ctx.translate(j.x, j.y);
+        ctx.rotate(Math.PI / 4);
+        ctx.fillStyle =
+          heat > 0.15 ? `rgba(92, 230, 210, ${0.6 + heat * 0.4})` : theme.idle;
+        ctx.fillRect(-size / 2, -size / 2, size, size);
+        ctx.restore();
+      });
 
       // A slow idle rhythm keeps words surfacing for touch and still visitors.
       if (!reduceMotion && clock - lastSpawn > 2.8) spawn();
-      active.forEach(drawWord);
+      active.forEach((w) => drawWord(w, theme));
 
       if (!reduceMotion) frame = requestAnimationFrame(render);
     };
 
     const onPointerMove = (e: PointerEvent) => {
       const rect = canvas.getBoundingClientRect();
-      pointer.tx = (e.clientX - rect.left) / rect.width;
-      pointer.ty = (e.clientY - rect.top) / rect.height;
+      pointer.x = e.clientX - rect.left;
+      pointer.y = e.clientY - rect.top;
       pointer.active = true;
     };
 
@@ -336,24 +407,22 @@ export default function HeroCanvas({ words }: { words: [string, string][] }) {
       if (!reduceMotion && clock - lastSpawn > 0.6) spawn();
     };
 
-    const onResize = () => {
-      resize();
-      if (reduceMotion) {
-        render(0);
-        spawn();
-        spawn();
-        render(0);
-      }
-    };
-
-    resize();
-    render(0);
-    if (reduceMotion) {
+    const still = () => {
       // A still composition: two words placed once, no motion.
+      render(0);
       spawn();
       spawn();
       render(0);
-    }
+    };
+
+    const onResize = () => {
+      resize();
+      if (reduceMotion) still();
+    };
+
+    resize();
+    if (reduceMotion) still();
+    else frame = requestAnimationFrame(render);
     // Line boxes shift once the web fonts swap in.
     document.fonts?.ready.then(measureKeepOut);
     window.addEventListener("resize", onResize);
