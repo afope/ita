@@ -5,43 +5,23 @@ export const site = {
   name: "ita",
   expansion: "intersection of technology and art",
   reach: "Amsterdam & Lagos, working worldwide",
-  // Leave empty to hide the direct email link; the waitlist form still works.
-  contactEmail: "",
-  // Shows a small switch for comparing the colour and ink & paper palettes.
-  // Set to false (and pick a default below) before launch.
-  showPaletteToggle: true,
-  defaultPalette: "colour" as "colour" | "ink",
+  // Enquiry links open an email to this address; waitlist sign-ups are
+  // delivered here too (see README: Formspree).
+  contactEmail: "hello@ita.ng",
 };
 
 export const idea = {
   word: "ìta",
   pronunciation: "/ee·tah/",
   definitions: [
-    "In Lagos, the junction — the open square where streets cross and people gather. Ita Faji. Ita Balogun.",
+    "In Lagos, the junction — the open square where streets cross and people gather.",
     "The intersection of technology and art.",
     "A studio between Amsterdam and Lagos that builds spatial prototypes, and a stage for conversations.",
-  ],
-  principles: [
-    {
-      title: "Build to *feel*",
-      body: "Decks describe the future. Prototypes let you stand inside it. We make ideas physical early, so people can react with their bodies, not just their opinions.",
-    },
-    {
-      title: "Gather in the *open*",
-      body: "Every ìta is public ground. Our work is designed to be walked through, argued over and shared — never sealed off in a lab.",
-    },
-    {
-      title: "Two cities, one *junction*",
-      body: "We work between Amsterdam and Lagos: two cities built on water, trade and invention. We design between them, for everywhere.",
-    },
   ],
 };
 
 export const studio = {
-  intro:
-    "ita is a spatial prototyping studio between Amsterdam and Lagos, working worldwide. We help innovation labs and organisations test ideas in physical space before they are built — rooms that respond, objects that listen, and environments that let people feel the future instead of reading about it — with the people who will actually live in it.",
   headline: "Prototypes you can *stand inside*.",
-  // One-sentence version for the pared-back layout.
   short:
     "We build spatial prototypes for innovation labs and organisations worldwide: rooms, objects and installations people can walk into before anything is built, tested with the people who will actually use them.",
   // What clients can buy. Durations are starting points; adjust freely.
@@ -69,34 +49,21 @@ export const conversations = {
   headline: "Ideas need a *square* to meet in.",
   short:
     "Gatherings where writers, artists and technologists meet Lagos over a shared love of ideas.",
-  intro:
-    "ita conversations is our public programme — gatherings where writers, artists and technologists meet audiences over a shared love of ideas. The best way for people to connect and commune is over shared interest. Lagos, the creative whirlpool that it is, is the most unassuming place to gather over a love of words: their power, their beauty, their unparalleled ability to subvert, change and redirect.",
 };
 
 export const literaryEvent = {
   name: "literary conversations",
-  subtitle: "ita conversations, edition 01",
   // The venue stays private until announced. Set `showVenue: true` to
   // print it in the event details.
   venue: "MILIKI",
   showVenue: false,
   city: "Lagos",
-  // ISO date used for the countdown. Update once the date is final.
-  date: "2026-12-07T18:00:00+01:00",
-  dateLabel: "07 December 2026",
   // Keep `confirmed: false` until the author has agreed. While unconfirmed the
   // site only says a featured author will be announced; the name stays private.
   featuredAuthor: {
     name: "Damilare Kuku",
     confirmed: false,
-    bio: "Author of Nearly All the Men in Lagos Are Mad.",
   },
-  programme: [
-    "Reading by the featured author",
-    "In conversation: words, Lagos and the future",
-    "Audience Q&A",
-    "Book signing and gathering",
-  ],
 };
 
 // Brand system, used by the /brand guidelines page.

@@ -5,9 +5,7 @@
   --field: #ff5a1f; /* Laterite: warm, the art side */
   --signal: #5ce6d2; /* Lagoon: cool, the technology side */
   --paper: #f2efe6;
-  --paper-2: #e7e2d4;
   --ink-rgb: 13, 13, 14;
-  --glow-rgb: 242, 239, 230;
 
   /* Contextual tokens, re-pointed by each surface below. */
   --bg: var(--ink);
@@ -131,17 +129,6 @@ em {
   transform: rotate(225deg);
 }
 
-.button-ghost {
-  border-color: var(--line);
-  color: var(--fg);
-  background: transparent;
-}
-
-.button-ghost:hover {
-  border-color: var(--signal);
-  color: var(--signal);
-}
-
 .button:disabled {
   opacity: 0.6;
   cursor: wait;
@@ -212,7 +199,7 @@ em {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(90deg, var(--ink) 0%, rgba(var(--ink-rgb), 0.75) 40%, transparent 75%);
+  background: linear-gradient(90deg, var(--field) 0%, rgba(255, 90, 31, 0.7) 40%, transparent 75%);
   pointer-events: none;
 }
 
@@ -228,13 +215,6 @@ em {
   max-width: 1040px;
 }
 
-.eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: rgba(242, 239, 230, 0.7);
-}
-
 .hero-title {
   font-size: clamp(52px, 8.4vw, 136px);
   line-height: 0.95;
@@ -246,14 +226,6 @@ em {
 .hero-title em {
   color: var(--signal);
   font-size: 1.08em;
-}
-
-.hero-lede {
-  max-width: 540px;
-  margin-top: 32px;
-  font-size: clamp(18px, 1.6vw, 21px);
-  font-weight: 300;
-  color: rgba(242, 239, 230, 0.74);
 }
 
 .hero-actions {
@@ -278,24 +250,6 @@ em {
   text-decoration: underline;
 }
 
-.scroll-cue {
-  position: absolute;
-  left: var(--gutter);
-  bottom: 32px;
-  color: rgba(242, 239, 230, 0.5);
-}
-
-.scroll-cue span {
-  display: inline-block;
-  animation: bob 1.8s ease-in-out infinite;
-}
-
-@keyframes bob {
-  50% {
-    transform: translateY(5px);
-  }
-}
-
 /* ── Sections ────────────────────────────────────────── */
 .section {
   position: relative;
@@ -314,13 +268,6 @@ em {
   --fg-dim: rgba(var(--ink-rgb), 0.66);
   --line: rgba(var(--ink-rgb), 0.16);
   color-scheme: light;
-}
-
-.section-field {
-  --bg: var(--field);
-  --fg: var(--paper);
-  --fg-dim: rgba(242, 239, 230, 0.8);
-  --line: rgba(242, 239, 230, 0.32);
 }
 
 .section-head {
@@ -374,18 +321,6 @@ em {
   --pulse: var(--field);
 }
 
-.section-field .section-head {
-  --pulse: var(--ink);
-}
-
-[data-palette="ink"] .section-paper .section-head {
-  --pulse: var(--ink);
-}
-
-[data-palette="ink"] .section-field .section-head {
-  --pulse: var(--signal);
-}
-
 /* A junction marker where the section rule meets the index. */
 .section-head::before {
   content: "";
@@ -420,21 +355,6 @@ em {
 
 .section-ink .section-title em {
   color: var(--signal);
-}
-
-.section-intro {
-  font-size: clamp(18px, 1.6vw, 21px);
-  font-weight: 300;
-  line-height: 1.55;
-  color: var(--fg-dim);
-}
-
-.split {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: clamp(32px, 6vw, 96px);
-  align-items: end;
-  margin-bottom: clamp(56px, 8vw, 96px);
 }
 
 /* Idea: dictionary entry */
@@ -485,380 +405,11 @@ em {
   font-family: var(--mono);
   font-size: 13px;
   padding-top: 0.5em;
-  color: var(--field);
-}
-
-.principles {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  margin-top: clamp(64px, 9vw, 120px);
-  border-top: 1px solid var(--line);
-}
-
-.principle {
-  padding: 28px 28px 8px 0;
-}
-
-.principle + .principle {
-  padding-left: 28px;
-  border-left: 1px solid var(--line);
-}
-
-.principle h3 {
-  font-size: clamp(28px, 2.8vw, 40px);
-  line-height: 1;
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  margin: 18px 0 14px;
-}
-
-.principle p {
-  color: var(--fg-dim);
-  font-size: 17px;
-}
-
-/* Studio cards */
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  border-top: 1px solid var(--line);
-  border-left: 1px solid var(--line);
-}
-
-.card {
-  position: relative;
-  padding: 28px 24px 40px;
-  min-height: 300px;
-  border-right: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  transition: background 0.35s;
-  overflow: hidden;
-}
-
-.card:hover {
-  background: var(--field);
-}
-
-.card-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: var(--fg-dim);
-  margin-bottom: 88px;
-}
-
-/* A tiny junction in each card corner that turns on hover. */
-.card-cross {
-  position: relative;
-  width: 18px;
-  height: 18px;
-}
-
-.card-cross::before,
-.card-cross::after {
-  content: "";
-  position: absolute;
-  background: currentColor;
-}
-
-.card-cross::before {
-  left: 0;
-  right: 0;
-  top: 8.5px;
-  height: 1px;
-}
-
-.card-cross::after {
-  top: 0;
-  bottom: 0;
-  left: 8.5px;
-  width: 1px;
-}
-
-.card:hover .card-top {
-  color: var(--signal);
-}
-
-.card:hover .card-cross {
-  transform: rotate(45deg);
-  transition: transform 0.4s;
-}
-
-.card-meta {
-  color: var(--fg-dim);
-}
-
-.card h3 em {
-  color: var(--signal);
-}
-
-.card:hover h3 em {
-  color: var(--ink);
-}
-
-.card h3 {
-  font-size: 30px;
-  line-height: 1.02;
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  margin-bottom: 14px;
-}
-
-.card p {
-  color: var(--fg-dim);
-  font-size: 17px;
-}
-
-.card:hover p {
-  color: rgba(242, 239, 230, 0.86);
-}
-
-.process {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 72px;
-  border-top: 1px dashed var(--line);
-}
-
-.process li {
-  flex: 1 1 160px;
-  padding: 20px 16px 0 0;
-  font-size: 22px;
-  letter-spacing: -0.02em;
-  position: relative;
-}
-
-.process li::before {
-  content: "";
-  position: absolute;
-  top: -5px;
-  left: 0;
-  width: 9px;
-  height: 9px;
-  background: var(--signal);
-  transform: rotate(45deg);
-}
-
-.process li .mono {
-  display: block;
-  color: var(--fg-dim);
-  margin-bottom: 4px;
-}
-
-.section-cta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  margin-top: 96px;
-  padding: clamp(24px, 3vw, 40px);
-  border: 1px solid var(--line);
-  background: var(--field);
-  border-color: transparent;
-  color: var(--ink);
-}
-
-.section-cta p {
-  font-size: clamp(26px, 3.2vw, 44px);
-  font-weight: 500;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-}
-
-.section-cta em {
-  color: var(--ink);
-}
-
-/* ── Event ───────────────────────────────────────────── */
-.event {
-  --fg: var(--paper);
-  --fg-dim: rgba(242, 239, 230, 0.72);
-  --line: rgba(242, 239, 230, 0.22);
-  position: relative;
-  display: grid;
-  grid-template-columns: 1.35fr 1fr;
-  background: var(--field);
-  color: var(--paper);
-  overflow: hidden;
-}
-
-/* A resist-dye pattern: a dense field of tiny junctions. */
-.event::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(var(--ink-rgb), 0.18) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(var(--ink-rgb), 0.18) 1px, transparent 1px);
-  background-size: 28px 28px;
-  -webkit-mask-image: linear-gradient(120deg, black, transparent 60%);
-  mask-image: linear-gradient(120deg, black, transparent 60%);
-  pointer-events: none;
-}
-
-.event > * {
-  position: relative;
-}
-
-.event-main {
-  padding: clamp(32px, 5vw, 64px);
-  border-right: 1px solid var(--line);
-}
-
-.event-label {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: var(--fg-dim);
-}
-
-.event-name {
-  font-size: clamp(56px, 7.4vw, 120px);
-  line-height: 0.9;
-  font-weight: 700;
-  letter-spacing: -0.05em;
-  margin: 28px 0 18px -0.03em;
-}
-
-.event-name em {
-  display: block;
-  font-weight: 400;
-  color: var(--signal);
-  letter-spacing: -0.02em;
-}
-
-.event-title {
-  font-size: clamp(22px, 2.4vw, 32px);
-  letter-spacing: -0.02em;
-}
-
-.event-facts {
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  justify-content: start;
-  gap: 12px 40px;
-  margin: 40px 0;
-}
-
-.event-facts dt {
-  color: var(--signal);
-  margin-bottom: 4px;
-}
-
-.event-facts dd {
-  font-size: 13px;
-}
-
-.countdown {
-  display: flex;
-  gap: 8px;
-}
-
-.countdown-unit {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 78px;
-  padding: 14px 8px 10px;
-  background: var(--ink);
-}
-
-.countdown-value {
-  font-family: var(--mono);
-  font-size: clamp(26px, 3vw, 38px);
-  font-variant-numeric: tabular-nums;
-  line-height: 1;
-  color: var(--signal);
-}
-
-.countdown-label {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(242, 239, 230, 0.6);
-  margin-top: 6px;
-}
-
-.countdown-done {
-  font-family: var(--mono);
-  color: var(--signal);
-  text-transform: uppercase;
-}
-
-.event-side {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  padding: clamp(32px, 5vw, 64px) clamp(28px, 4vw, 48px);
-}
-
-.author {
-  padding-bottom: 28px;
-  border-bottom: 1px solid var(--line);
-}
-
-.author-label {
-  color: var(--signal);
-  margin-bottom: 14px;
-}
-
-.author-name {
-  font-size: clamp(36px, 4vw, 56px);
-  line-height: 0.98;
-  font-weight: 500;
-  letter-spacing: -0.035em;
-}
-
-.author-bio {
-  margin-top: 14px;
-  color: var(--fg-dim);
-  font-size: 16px;
-}
-
-.programme {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  flex: 1;
-}
-
-.programme li {
-  display: flex;
-  gap: 14px;
-  align-items: baseline;
-  font-size: 18px;
-}
-
-.programme .mono {
-  color: var(--signal);
-}
-
-.event-side .button {
-  align-self: flex-start;
+  /* Bright orange is too light for small text on paper; labels use ink. */
+  color: rgba(var(--ink-rgb), 0.6);
 }
 
 /* ── Join ────────────────────────────────────────────── */
-.join-body {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(32px, 6vw, 96px);
-  align-items: end;
-}
-
-.section-field .section-title em {
-  color: var(--signal);
-}
-
-.join-lede {
-  font-size: clamp(18px, 1.6vw, 21px);
-  font-weight: 300;
-  margin-bottom: 28px;
-}
 
 .form-label {
   display: block;
@@ -939,50 +490,6 @@ em {
   color: var(--signal);
 }
 
-/* ── Orange surfaces ─────────────────────────────────
-   On Laterite, ink carries the text and accents; Lagoon stays for the
-   signal objects (buttons, countdown digits on their ink chips). */
-.section-field,
-.event {
-  --fg: var(--ink);
-  --fg-dim: rgba(var(--ink-rgb), 0.74);
-  --line: rgba(var(--ink-rgb), 0.2);
-  color: var(--ink);
-}
-
-.section-field .section-title em,
-.section-field .section-head::before,
-.event .node,
-.event-name em,
-.event-facts dt,
-.author-label,
-.programme .mono,
-.section-field .form-error {
-  color: var(--ink);
-  background-color: transparent;
-}
-
-.section-field .section-head::before,
-.event .node {
-  background: var(--ink);
-}
-
-
-
-.card:hover,
-.card:hover .card-top {
-  color: var(--ink);
-}
-
-.card:hover p {
-  color: rgba(var(--ink-rgb), 0.8);
-}
-
-/* Bright orange is too light for small text on paper; labels use ink. */
-.definition-list li::before {
-  color: rgba(var(--ink-rgb), 0.6);
-}
-
 /* ── Orange hero ─────────────────────────────────────
    Bright orange carries the first impression. Ink type for legibility, the
    serif crossing in paper, Lagoon for buttons and live junctions. */
@@ -991,217 +498,22 @@ em {
   color: var(--ink);
 }
 
-:root:not([data-palette="ink"]) .hero::after {
-  background: linear-gradient(90deg, var(--field) 0%, rgba(255, 90, 31, 0.7) 40%, transparent 75%);
-}
-
 /* A see-through ink bar would turn brown over orange, so the nav is solid. */
 .nav {
   background: var(--ink);
 }
 
-.hero .eyebrow,
-.hero-lede,
-.hero-meta,
-.scroll-cue {
+.hero-meta {
   color: rgba(var(--ink-rgb), 0.78);
-}
-
-.hero .eyebrow .node {
-  background: var(--ink);
 }
 
 .hero-title em {
   color: var(--paper);
 }
 
-.hero .button-ghost {
-  --line: rgba(var(--ink-rgb), 0.35);
-  --fg: var(--ink);
-}
-
-.hero .button-ghost:hover {
-  border-color: var(--ink);
-  color: var(--ink);
-}
-
 .hero .button-signal:hover {
   background: var(--ink);
   color: var(--signal);
-}
-
-@media (max-width: 700px) {
-  :root:not([data-palette="ink"]) .hero::after {
-    background: linear-gradient(0deg, var(--field) 10%, rgba(255, 90, 31, 0.6) 60%, transparent);
-  }
-}
-
-/* In ink & paper the hero returns to ink. */
-[data-palette="ink"] .hero {
-  background: var(--ink);
-  color: var(--paper);
-}
-
-[data-palette="ink"] .hero::after {
-  background: linear-gradient(90deg, var(--ink) 0%, rgba(var(--ink-rgb), 0.75) 40%, transparent 75%);
-}
-
-[data-palette="ink"] .hero .eyebrow,
-[data-palette="ink"] .hero-lede,
-[data-palette="ink"] .hero-meta,
-[data-palette="ink"] .scroll-cue {
-  color: rgba(242, 239, 230, 0.7);
-}
-
-[data-palette="ink"] .hero .eyebrow .node {
-  background: var(--signal);
-}
-
-[data-palette="ink"] .hero-title em {
-  color: var(--signal);
-}
-
-[data-palette="ink"] .hero .button-ghost {
-  --line: rgba(242, 239, 230, 0.14);
-  --fg: var(--paper);
-}
-
-@media (max-width: 700px) {
-  [data-palette="ink"] .hero::after {
-    background: linear-gradient(0deg, var(--ink) 10%, rgba(var(--ink-rgb), 0.6) 60%, transparent);
-  }
-}
-
-/* ── Ink & paper palette ─────────────────────────────
-   A monochrome variant: true ink on paper, with Lagoon aqua as the only
-   colour. Laterite collapses into ink, so every orange surface becomes ink. */
-:root[data-palette="ink"] {
-  --ink: #0d0d0c;
-  --ink-2: #171716;
-  --ink-rgb: 13, 13, 12;
-  --glow-rgb: 242, 239, 230;
-  --field: var(--ink);
-}
-
-[data-palette="ink"] .hero {
-  background:
-    radial-gradient(ellipse 60% 50% at 80% 30%, rgba(242, 239, 230, 0.07), transparent 70%),
-    var(--ink);
-}
-
-[data-palette="ink"] .section-cta {
-  background: rgba(242, 239, 230, 0.05);
-  border-color: rgba(242, 239, 230, 0.14);
-  color: var(--paper);
-}
-
-[data-palette="ink"] .section-cta em {
-  color: var(--signal);
-}
-
-/* Orange surfaces become ink here, so text and accents go back to light. */
-[data-palette="ink"] .section-field,
-[data-palette="ink"] .event {
-  --fg: var(--paper);
-  --fg-dim: rgba(242, 239, 230, 0.72);
-  --line: rgba(242, 239, 230, 0.2);
-  color: var(--paper);
-}
-
-[data-palette="ink"] .section-field .section-title em,
-[data-palette="ink"] .event-name em,
-[data-palette="ink"] .event-facts dt,
-[data-palette="ink"] .author-label,
-[data-palette="ink"] .programme .mono,
-[data-palette="ink"] .section-field .form-error {
-  color: var(--signal);
-}
-
-[data-palette="ink"] .section-field .section-head::before,
-[data-palette="ink"] .event .node {
-  background: var(--signal);
-}
-
-/* Cards invert to paper on hover: ink on paper. */
-[data-palette="ink"] .card:hover {
-  background: var(--paper);
-  color: var(--ink);
-}
-
-[data-palette="ink"] .card:hover p,
-[data-palette="ink"] .card:hover .card-top {
-  color: rgba(var(--ink-rgb), 0.72);
-}
-
-[data-palette="ink"] .event::before {
-  background-image:
-    linear-gradient(rgba(242, 239, 230, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(242, 239, 230, 0.06) 1px, transparent 1px);
-}
-
-[data-palette="ink"] .event-side {
-  background: rgba(242, 239, 230, 0.03);
-}
-
-[data-palette="ink"] .countdown-unit,
-[data-palette="ink"] .waitlist-row,
-[data-palette="ink"] .form-success {
-  background: rgba(242, 239, 230, 0.05);
-  border: 1px solid rgba(242, 239, 230, 0.14);
-}
-
-[data-palette="ink"] .waitlist-row:focus-within {
-  border-color: var(--signal);
-}
-
-[data-palette="ink"] .section-paper .section-title em,
-[data-palette="ink"] .definition-word,
-[data-palette="ink"] .crossing-demo em {
-  color: var(--ink);
-}
-
-[data-palette="ink"] .definition-list li::before {
-  color: rgba(var(--ink-rgb), 0.6);
-}
-
-/* Review-only switch for comparing palettes. */
-.palette-toggle {
-  position: fixed;
-  left: 50%;
-  bottom: 16px;
-  transform: translateX(-50%);
-  white-space: nowrap;
-  z-index: 60;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 4px;
-  background: rgba(var(--ink-rgb), 0.86);
-  border: 1px solid rgba(242, 239, 230, 0.18);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-.palette-toggle span {
-  padding: 0 8px;
-  color: rgba(242, 239, 230, 0.55);
-}
-
-.palette-toggle button {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 8px 10px;
-  border: 0;
-  background: transparent;
-  color: rgba(242, 239, 230, 0.75);
-  cursor: pointer;
-}
-
-.palette-toggle button[aria-pressed="true"] {
-  background: var(--signal);
-  color: #0d0d0c;
 }
 
 /* ── Reveal on scroll ────────────────────────────────── */
@@ -1218,34 +530,9 @@ em {
 
 /* ── Responsive ──────────────────────────────────────── */
 @media (max-width: 960px) {
-  .split,
-  .definition,
-  .join-body {
+  .definition {
     grid-template-columns: 1fr;
     align-items: start;
-  }
-
-  .principles {
-    grid-template-columns: 1fr;
-  }
-
-  .principle,
-  .principle + .principle {
-    padding: 28px 0 8px;
-    border-left: 0;
-  }
-
-  .principle + .principle {
-    border-top: 1px solid var(--line);
-  }
-
-  .event {
-    grid-template-columns: 1fr;
-  }
-
-  .event-main {
-    border-right: 0;
-    border-bottom: 1px solid var(--line);
   }
 }
 
@@ -1264,7 +551,7 @@ em {
   }
 
   .hero::after {
-    background: linear-gradient(0deg, var(--ink) 10%, rgba(var(--ink-rgb), 0.6) 60%, transparent);
+    background: linear-gradient(0deg, var(--field) 10%, rgba(255, 90, 31, 0.6) 60%, transparent);
   }
 
   /* The map credit stays visible on phones. */
@@ -1275,15 +562,6 @@ em {
 
   .hero-meta span {
     display: none;
-  }
-
-  .event-facts {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .countdown-unit {
-    min-width: 0;
-    flex: 1;
   }
 
   .waitlist-row {

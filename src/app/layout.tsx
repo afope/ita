@@ -1,8 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 
-import PaletteToggle from "./components/PaletteToggle";
-import { site } from "./content";
 import "./globals.css";
 
 // Technology voice.
@@ -46,15 +44,8 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${spaceGrotesk.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable}`}
-      data-palette={site.defaultPalette === "ink" ? "ink" : undefined}
-      suppressHydrationWarning
     >
-      <body>
-        {children}
-        {site.showPaletteToggle && (
-          <PaletteToggle initial={site.defaultPalette} />
-        )}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

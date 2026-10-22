@@ -1,20 +1,20 @@
 /* Pared-back layout: more space, fewer elements, one accent per view. */
 
-.minimal .hero-inner {
+.home .hero-inner {
   max-width: 980px;
 }
 
-.minimal .hero-title {
+.home .hero-title {
   margin-top: 0;
 }
 
-.minimal .hero-actions {
+.home .hero-actions {
   align-items: center;
   gap: 28px;
   margin-top: 48px;
 }
 
-.minimal .section {
+.home .section {
   padding-block: clamp(120px, 16vw, 220px);
 }
 
@@ -34,7 +34,7 @@
   opacity: 0.6;
 }
 
-.minimal .section-title {
+.home .section-title {
   max-width: 14ch;
 }
 
@@ -48,7 +48,7 @@
 }
 
 /* The idea: the dictionary entry alone, given room. */
-.minimal #idea .definition {
+.home #idea .definition {
   align-items: end;
 }
 
@@ -127,7 +127,7 @@
 .quiet-event {
   display: flex;
   flex-wrap: wrap;
-  align-items: end;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 40px;
   margin-top: 80px;
@@ -165,6 +165,19 @@
   font-size: 20px;
 }
 
+.join-note {
+  margin-top: 24px;
+  color: var(--fg-dim);
+  font-size: 16px;
+}
+
+.join-note .text-link {
+  margin-left: 6px;
+  color: var(--fg);
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
 .quiet-join {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -172,11 +185,6 @@
   align-items: end;
 }
 
-[data-palette="ink"] .quiet-event {
-  background: rgba(242, 239, 230, 0.05);
-  border: 1px solid rgba(242, 239, 230, 0.14);
-  color: var(--paper);
-}
 
 @media (max-width: 960px) {
   .quiet-join {

@@ -11,34 +11,18 @@ const MAX_WORDS = 3;
 const PULSES = 14;
 const TRAIL = 12;
 
-// Canvas colours per palette. In colour the hero sits on bright orange, so
-// streets and labels are ink; in ink & paper they are light.
-const themes = {
-  colour: {
-    street: "rgba(13, 13, 14, 0.2)",
-    major: "rgba(13, 13, 14, 0.38)",
-    shore: "rgba(13, 13, 14, 0.45)",
-    idle: "rgba(13, 13, 14, 0.42)",
-    label: "rgba(13, 13, 14, 0.62)",
-    art: "242, 239, 230",
-    tech: "13, 13, 14",
-    pulses: ["92, 230, 210", "242, 239, 230"],
-  },
-  ink: {
-    street: "rgba(242, 239, 230, 0.1)",
-    major: "rgba(242, 239, 230, 0.22)",
-    shore: "rgba(242, 239, 230, 0.32)",
-    idle: "rgba(242, 239, 230, 0.3)",
-    label: "rgba(242, 239, 230, 0.5)",
-    art: "242, 239, 230",
-    tech: "92, 230, 210",
-    pulses: ["92, 230, 210", "242, 239, 230"],
-  },
+// Canvas colours: the hero sits on bright orange, so streets and labels
+// are ink, signals are Lagoon and paper.
+const theme = {
+  street: "rgba(13, 13, 14, 0.2)",
+  major: "rgba(13, 13, 14, 0.38)",
+  shore: "rgba(13, 13, 14, 0.45)",
+  idle: "rgba(13, 13, 14, 0.42)",
+  label: "rgba(13, 13, 14, 0.62)",
+  art: "242, 239, 230",
+  tech: "13, 13, 14",
+  pulses: ["92, 230, 210", "242, 239, 230"],
 };
-const currentTheme = () =>
-  document.documentElement.dataset.palette === "ink"
-    ? themes.ink
-    : themes.colour;
 
 // The street graph of Lagos Island, in map units (0..1 across the width).
 // Edges run junction to junction, so signals can travel the real network.
@@ -281,7 +265,7 @@ export default function HeroCanvas({
       lastSpawn = clock;
     };
 
-    const drawWord = (word: Word, theme: (typeof themes)["colour"]) => {
+    const drawWord = (word: Word) => {
       const j = junctions[word.junction];
       if (!j) return;
       const age = clock - word.born;
@@ -324,7 +308,6 @@ export default function HeroCanvas({
       clock = time / 1000;
       const dt = reduceMotion ? 0 : Math.min(0.05, clock - lastTime);
       lastTime = clock;
-      const theme = currentTheme();
       ctx.clearRect(0, 0, width, height);
 
       // Shoreline, then streets: major roads heavier than side streets.
@@ -427,7 +410,7 @@ export default function HeroCanvas({
 
       // A slow idle rhythm keeps words surfacing for touch and still visitors.
       if (!reduceMotion && clock - lastSpawn > (quiet ? 6 : 2.8)) spawn();
-      active.forEach((w) => drawWord(w, theme));
+      active.forEach(drawWord);
 
       if (!reduceMotion) frame = requestAnimationFrame(render);
     };

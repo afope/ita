@@ -7,6 +7,9 @@ export default function Footer() {
     <footer className="footer">
       <Wordmark className="footer-logo" />
       <span className="mono">{site.expansion}</span>
+      <a href={`mailto:${site.contactEmail}`} className="mono footer-link">
+        {site.contactEmail}
+      </a>
       <Link href="/brand" className="mono footer-link">
         brand guidelines
       </Link>
