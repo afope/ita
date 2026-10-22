@@ -292,47 +292,6 @@ em {
   }
 }
 
-/* ── Ticker: a signal stripe across the page ────────── */
-.ticker {
-  overflow: hidden;
-  background: var(--signal);
-  color: var(--ink);
-  border-block: 6px solid var(--ink);
-  box-shadow: 0 -1px 0 var(--ink), 0 1px 0 var(--ink);
-  padding: 14px 0;
-}
-
-.ticker-track {
-  display: flex;
-  align-items: center;
-  width: max-content;
-  gap: 28px;
-  font-size: clamp(18px, 2vw, 26px);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  white-space: nowrap;
-  animation: ticker 45s linear infinite;
-}
-
-.ticker-track span {
-  display: inline-flex;
-  align-items: center;
-  gap: 28px;
-}
-
-.ticker-node {
-  width: 9px;
-  height: 9px;
-  background: var(--ink);
-  transform: rotate(45deg);
-}
-
-@keyframes ticker {
-  to {
-    transform: translateX(-33.333%);
-  }
-}
-
 /* ── Sections ────────────────────────────────────────── */
 .section {
   position: relative;
@@ -384,11 +343,6 @@ em {
 
 .section-paper .section-head::before {
   background: var(--field);
-}
-
-.section-index {
-  font-weight: 500;
-  color: var(--fg);
 }
 
 .section-kicker {
@@ -493,10 +447,6 @@ em {
   border-left: 1px solid var(--line);
 }
 
-.principle .mono {
-  color: var(--field);
-}
-
 .principle h3 {
   font-size: clamp(28px, 2.8vw, 40px);
   line-height: 1;
@@ -534,7 +484,7 @@ em {
 
 .card-top {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   color: var(--fg-dim);
   margin-bottom: 88px;
@@ -959,8 +909,7 @@ em {
 }
 
 /* Bright orange is too light for small text on paper; labels use ink. */
-.definition-list li::before,
-.principle .mono {
+.definition-list li::before {
   color: rgba(var(--ink-rgb), 0.6);
 }
 
@@ -1141,8 +1090,7 @@ em {
   color: var(--ink);
 }
 
-[data-palette="ink"] .definition-list li::before,
-[data-palette="ink"] .principle .mono {
+[data-palette="ink"] .definition-list li::before {
   color: rgba(var(--ink-rgb), 0.6);
 }
 

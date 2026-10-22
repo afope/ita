@@ -43,22 +43,18 @@ export const studio = {
   headline: "Prototypes you can *stand inside*.",
   services: [
     {
-      code: "SP-01",
       title: "Spatial prototypes",
       body: "Walk-through, touchable versions of products, services and experiences — built fast enough to learn from, real enough to believe in.",
     },
     {
-      code: "SP-02",
       title: "Interactive installations",
       body: "Sensors, light, sound and code woven into space. Installations that react to the people moving through them.",
     },
     {
-      code: "SP-03",
       title: "Innovation lab environments",
       body: "Designing the rooms where teams invent: flexible, instrumented spaces that make experimentation the default.",
     },
     {
-      code: "SP-04",
       title: "Speculative design sprints",
       body: "Short, intense engagements that turn a strategic question into a tangible artefact your organisation can gather around.",
     },

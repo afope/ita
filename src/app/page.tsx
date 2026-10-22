@@ -14,14 +14,6 @@ import {
   studio,
 } from "./content";
 
-const tickerItems = [
-  "spatial prototypes",
-  "innovation labs",
-  "interactive installations",
-  "ita conversations",
-  `${literaryEvent.name} ${literaryEvent.dateLabel}`,
-];
-
 export default function Home() {
   const author = literaryEvent.featuredAuthor;
 
@@ -63,20 +55,9 @@ export default function Home() {
           </a>
         </header>
 
-        <div className="ticker" aria-hidden="true">
-          <div className="ticker-track">
-            {[...tickerItems, ...tickerItems, ...tickerItems].map((item, i) => (
-              <span key={i}>
-                {item} <i className="ticker-node" />
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* ── 01 Idea ──────────────────────────────────────── */}
+        {/* ── Idea ──────────────────────────────────────── */}
         <section id="idea" className="section section-paper">
           <div className="section-head" data-reveal>
-            <span className="section-index mono">01</span>
             <span className="section-kicker mono">the idea</span>
           </div>
 
@@ -93,9 +74,8 @@ export default function Home() {
           </div>
 
           <div className="principles">
-            {idea.principles.map((p, i) => (
+            {idea.principles.map((p) => (
               <article key={p.title} className="principle" data-reveal>
-                <span className="mono">0{i + 1}</span>
                 <h3>
                   <Crossed text={p.title} />
                 </h3>
@@ -105,10 +85,9 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── 02 Studio ────────────────────────────────────── */}
+        {/* ── Studio ────────────────────────────────────── */}
         <section id="studio" className="section section-ink">
           <div className="section-head" data-reveal>
-            <span className="section-index mono">02</span>
             <span className="section-kicker mono">studio / spatial prototyping</span>
           </div>
 
@@ -121,9 +100,8 @@ export default function Home() {
 
           <div className="cards">
             {studio.services.map((service) => (
-              <article key={service.code} className="card" data-reveal>
-                <div className="card-top mono">
-                  <span>{service.code}</span>
+              <article key={service.title} className="card" data-reveal>
+                <div className="card-top">
                   <span className="card-cross" aria-hidden="true" />
                 </div>
                 <h3>{service.title}</h3>
@@ -160,10 +138,9 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── 03 Conversations ─────────────────────────────── */}
+        {/* ── Conversations ─────────────────────────────── */}
         <section id="conversations" className="section section-paper">
           <div className="section-head" data-reveal>
-            <span className="section-index mono">03</span>
             <span className="section-kicker mono">ita conversations / public programme</span>
           </div>
 
@@ -244,10 +221,9 @@ export default function Home() {
           </article>
         </section>
 
-        {/* ── 04 Join ──────────────────────────────────────── */}
+        {/* ── Join ──────────────────────────────────────── */}
         <section id="join" className="section section-field">
           <div className="section-head" data-reveal>
-            <span className="section-index mono">04</span>
             <span className="section-kicker mono">the list</span>
           </div>
           <div className="join-body" data-reveal>
