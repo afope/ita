@@ -20,7 +20,7 @@ export function Wordmark({ className }: { className?: string }) {
         y="21"
         width="10"
         height="10"
-        fill="var(--node, #FFC81F)"
+        fill="var(--node, #5CE6D2)"
         transform="rotate(45 34 26)"
       />
       {/* a */}
@@ -30,22 +30,22 @@ export function Wordmark({ className }: { className?: string }) {
   );
 }
 
-// The junction mark: a measured horizontal (technology) crossed by a
-// hand-drawn vertical (art), meeting at the gathering node.
+// The junction mark: a measured Lagoon horizontal (technology) crossed by a
+// hand-drawn Laterite vertical (art), meeting at a paper node.
 export function Mark({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 64 64" aria-hidden="true">
-      <rect x="4" y="27" width="56" height="10" fill="var(--indigo, #3B3BFF)" />
+      <rect x="4" y="27" width="56" height="10" fill="var(--signal, #5CE6D2)" />
       <path
         d="M28 4C24 18 36 24 31 32C26 40 34 48 29 60H39C44 48 36 40 41 32C46 24 34 18 38 4Z"
-        fill="currentColor"
+        fill="var(--field, #FF5A1F)"
       />
       <rect
         x="25"
         y="25"
         width="14"
         height="14"
-        fill="var(--node, #FFC81F)"
+        fill="var(--mark-node, #F2EFE6)"
         transform="rotate(45 32 32)"
       />
     </svg>

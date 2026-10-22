@@ -1,15 +1,15 @@
 /* ita brand tokens — see /brand for the system these come from. */
 :root {
-  --ink: #08091c;
-  --ink-2: #10122b;
-  --indigo: #3b3bff;
-  --indigo-deep: #1f1fb8;
-  --indigo-glow: #6c6cff;
-  --danfo: #ffc81f;
+  --ink: #0d0d0e;
+  --ink-2: #161618;
+  --field: #ff5a1f; /* Laterite: warm, the art side */
+  --field-deep: #c2410c;
+  --field-glow: #ff8a5c;
+  --signal: #5ce6d2; /* Lagoon: cool, the technology side */
   --paper: #f2efe6;
   --paper-2: #e7e2d4;
-  --ink-rgb: 8, 9, 28;
-  --glow-rgb: 59, 59, 255;
+  --ink-rgb: 13, 13, 14;
+  --glow-rgb: 255, 90, 31;
 
   /* Contextual tokens, re-pointed by each surface below. */
   --bg: var(--ink);
@@ -59,12 +59,12 @@ em {
 }
 
 ::selection {
-  background: var(--danfo);
+  background: var(--signal);
   color: var(--ink);
 }
 
 :focus-visible {
-  outline: 2px solid var(--danfo);
+  outline: 2px solid var(--signal);
   outline-offset: 3px;
 }
 
@@ -81,7 +81,7 @@ em {
   display: inline-block;
   width: 8px;
   height: 8px;
-  background: var(--danfo);
+  background: var(--signal);
   transform: rotate(45deg);
   flex-shrink: 0;
   animation: pulse 2.4s ease-in-out infinite;
@@ -112,7 +112,7 @@ em {
 }
 
 .button-signal {
-  background: var(--danfo);
+  background: var(--signal);
   color: var(--ink);
 }
 
@@ -140,8 +140,8 @@ em {
 }
 
 .button-ghost:hover {
-  border-color: var(--danfo);
-  color: var(--danfo);
+  border-color: var(--signal);
+  color: var(--signal);
 }
 
 .button:disabled {
@@ -187,7 +187,7 @@ em {
 }
 
 .nav-links a:hover {
-  color: var(--danfo);
+  color: var(--signal);
 }
 
 .nav-cta {
@@ -246,7 +246,7 @@ em {
 }
 
 .hero-title em {
-  color: var(--danfo);
+  color: var(--signal);
   font-size: 1.08em;
 }
 
@@ -294,10 +294,10 @@ em {
   }
 }
 
-/* ── Ticker: a danfo stripe across the page ──────────── */
+/* ── Ticker: a signal stripe across the page ────────── */
 .ticker {
   overflow: hidden;
-  background: var(--danfo);
+  background: var(--signal);
   color: var(--ink);
   border-block: 6px solid var(--ink);
   box-shadow: 0 -1px 0 var(--ink), 0 1px 0 var(--ink);
@@ -355,8 +355,8 @@ em {
   color-scheme: light;
 }
 
-.section-indigo {
-  --bg: var(--indigo);
+.section-field {
+  --bg: var(--field);
   --fg: var(--paper);
   --fg-dim: rgba(242, 239, 230, 0.8);
   --line: rgba(242, 239, 230, 0.32);
@@ -380,12 +380,12 @@ em {
   bottom: -5px;
   width: 9px;
   height: 9px;
-  background: var(--danfo);
+  background: var(--signal);
   transform: rotate(45deg);
 }
 
 .section-paper .section-head::before {
-  background: var(--indigo);
+  background: var(--field);
 }
 
 .section-index {
@@ -405,11 +405,11 @@ em {
 }
 
 .section-paper .section-title em {
-  color: var(--indigo);
+  color: var(--field);
 }
 
 .section-ink .section-title em {
-  color: var(--danfo);
+  color: var(--signal);
 }
 
 .section-intro {
@@ -441,7 +441,7 @@ em {
   font-size: clamp(120px, 20vw, 300px);
   line-height: 0.8;
   letter-spacing: -0.03em;
-  color: var(--indigo);
+  color: var(--field);
 }
 
 .definition-word .mono {
@@ -475,7 +475,7 @@ em {
   font-family: var(--mono);
   font-size: 13px;
   padding-top: 0.5em;
-  color: var(--indigo);
+  color: var(--field);
 }
 
 .principles {
@@ -496,7 +496,7 @@ em {
 }
 
 .principle .mono {
-  color: var(--indigo);
+  color: var(--field);
 }
 
 .principle h3 {
@@ -531,7 +531,7 @@ em {
 }
 
 .card:hover {
-  background: var(--indigo);
+  background: var(--field);
 }
 
 .card-top {
@@ -571,7 +571,7 @@ em {
 }
 
 .card:hover .card-top {
-  color: var(--danfo);
+  color: var(--signal);
 }
 
 .card:hover .card-cross {
@@ -619,7 +619,7 @@ em {
   left: 0;
   width: 9px;
   height: 9px;
-  background: var(--danfo);
+  background: var(--signal);
   transform: rotate(45deg);
 }
 
@@ -649,7 +649,7 @@ em {
 }
 
 .section-cta em {
-  color: var(--danfo);
+  color: var(--signal);
 }
 
 /* ── Event ───────────────────────────────────────────── */
@@ -660,12 +660,12 @@ em {
   position: relative;
   display: grid;
   grid-template-columns: 1.35fr 1fr;
-  background: var(--indigo);
+  background: var(--field);
   color: var(--paper);
   overflow: hidden;
 }
 
-/* Adire-inspired resist pattern: a dense field of tiny junctions. */
+/* A resist-dye pattern: a dense field of tiny junctions. */
 .event::before {
   content: "";
   position: absolute;
@@ -706,7 +706,7 @@ em {
 .event-name em {
   display: block;
   font-weight: 400;
-  color: var(--danfo);
+  color: var(--signal);
   letter-spacing: -0.02em;
 }
 
@@ -724,7 +724,7 @@ em {
 }
 
 .event-facts dt {
-  color: var(--danfo);
+  color: var(--signal);
   margin-bottom: 4px;
 }
 
@@ -751,7 +751,7 @@ em {
   font-size: clamp(26px, 3vw, 38px);
   font-variant-numeric: tabular-nums;
   line-height: 1;
-  color: var(--danfo);
+  color: var(--signal);
 }
 
 .countdown-label {
@@ -765,7 +765,7 @@ em {
 
 .countdown-done {
   font-family: var(--mono);
-  color: var(--danfo);
+  color: var(--signal);
   text-transform: uppercase;
 }
 
@@ -783,7 +783,7 @@ em {
 }
 
 .author-label {
-  color: var(--danfo);
+  color: var(--signal);
   margin-bottom: 14px;
 }
 
@@ -816,7 +816,7 @@ em {
 }
 
 .programme .mono {
-  color: var(--danfo);
+  color: var(--signal);
 }
 
 .event-side .button {
@@ -831,8 +831,8 @@ em {
   align-items: end;
 }
 
-.section-indigo .section-title em {
-  color: var(--danfo);
+.section-field .section-title em {
+  color: var(--signal);
 }
 
 .join-lede {
@@ -855,7 +855,7 @@ em {
 }
 
 .waitlist-row:focus-within {
-  border-color: var(--danfo);
+  border-color: var(--signal);
 }
 
 .waitlist input {
@@ -883,18 +883,18 @@ em {
   margin-top: 12px;
   font-family: var(--mono);
   font-size: 13px;
-  color: var(--danfo);
+  color: var(--signal);
 }
 
 .form-success {
   padding: 24px;
   background: var(--ink);
-  border-left: 4px solid var(--danfo);
+  border-left: 4px solid var(--signal);
   font-size: 20px;
 }
 
 .form-success .mono {
-  color: var(--danfo);
+  color: var(--signal);
   margin-right: 8px;
 }
 
@@ -917,19 +917,66 @@ em {
 }
 
 .footer-link:hover {
-  color: var(--danfo);
+  color: var(--signal);
+}
+
+/* ── Orange surfaces ─────────────────────────────────
+   On Laterite, ink carries the text and accents; Lagoon stays for the
+   signal objects (buttons, countdown digits on their ink chips). */
+.section-field,
+.event {
+  --fg: var(--ink);
+  --fg-dim: rgba(var(--ink-rgb), 0.74);
+  --line: rgba(var(--ink-rgb), 0.2);
+  color: var(--ink);
+}
+
+.section-field .section-title em,
+.section-field .section-head::before,
+.event .node,
+.event-name em,
+.event-facts dt,
+.author-label,
+.programme .mono,
+.section-field .form-error {
+  color: var(--ink);
+  background-color: transparent;
+}
+
+.section-field .section-head::before,
+.event .node {
+  background: var(--ink);
+}
+
+.event-side {
+  background: rgba(var(--ink-rgb), 0.07);
+}
+
+.card:hover,
+.card:hover .card-top {
+  color: var(--ink);
+}
+
+.card:hover p {
+  color: rgba(var(--ink-rgb), 0.8);
+}
+
+/* Small orange text on paper uses the deeper tone for legibility. */
+.definition-list li::before,
+.principle .mono {
+  color: var(--field-deep);
 }
 
 /* ── Ink & paper palette ─────────────────────────────
-   A monochrome variant: true ink on paper, with Danfo yellow as the only
-   colour. Indigo collapses into ink, so every indigo surface becomes ink. */
+   A monochrome variant: true ink on paper, with Lagoon aqua as the only
+   colour. Laterite collapses into ink, so every orange surface becomes ink. */
 :root[data-palette="ink"] {
   --ink: #0d0d0c;
   --ink-2: #171716;
   --ink-rgb: 13, 13, 12;
   --glow-rgb: 242, 239, 230;
-  --indigo: var(--ink);
-  --indigo-glow: var(--paper);
+  --field: var(--ink);
+  --field-glow: var(--paper);
 }
 
 [data-palette="ink"] .hero {
@@ -971,7 +1018,7 @@ em {
 }
 
 [data-palette="ink"] .waitlist-row:focus-within {
-  border-color: var(--danfo);
+  border-color: var(--signal);
 }
 
 [data-palette="ink"] .section-paper .section-title em,
@@ -1021,7 +1068,7 @@ em {
 }
 
 .palette-toggle button[aria-pressed="true"] {
-  background: var(--danfo);
+  background: var(--signal);
   color: #0d0d0c;
 }
 

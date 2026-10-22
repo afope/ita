@@ -102,18 +102,18 @@ export const literaryEvent = {
 export const palette = [
   {
     name: "Ink",
-    hex: "#08091C",
-    role: "The night sky over the junction. Primary background.",
+    hex: "#0D0D0E",
+    role: "The night over the junction. Primary background for the studio side.",
   },
   {
-    name: "Adire Indigo",
-    hex: "#3B3BFF",
-    role: "Adire cloth, pushed electric: tradition rendered as signal. Fields, highlights and the measured horizontal of the mark.",
+    name: "Laterite",
+    hex: "#FF5A1F",
+    role: "Lagos red earth, turned up bright. The art side: warmth, craft, conversations. The drawn vertical of the mark.",
   },
   {
-    name: "Danfo",
-    hex: "#FFC81F",
-    role: "Street signal. Used sparingly: the node, live states, calls to action.",
+    name: "Lagoon",
+    hex: "#5CE6D2",
+    role: "Lagoon water lit like a screen. The technology side and the signal: nodes, live states, calls to action.",
   },
   {
     name: "Paper",

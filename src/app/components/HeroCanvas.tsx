@@ -190,7 +190,7 @@ export default function HeroCanvas({ words }: { words: [string, string][] }) {
       ctx.font = `italic 24px ${serifFont}`;
       ctx.fillText(art, x, j.y - 10 + rise);
 
-      ctx.fillStyle = `rgba(255, 200, 31, ${alpha * 0.85})`;
+      ctx.fillStyle = `rgba(92, 230, 210, ${alpha * 0.9})`;
       ctx.font = `11px ${monoFont}`;
       ctx.fillText(tech.toUpperCase(), x, j.y + 20 + rise);
       ctx.textAlign = "left";
@@ -222,11 +222,12 @@ export default function HeroCanvas({ words }: { words: [string, string][] }) {
         ctx.stroke();
       }
 
-      // Signals travelling the streets: indigo, or paper in the ink palette.
+      // Signals travelling the streets: Lagoon along the measured
+      // horizontals, Laterite down the drawn verticals (paper in ink mode).
       const signal =
         document.documentElement.dataset.palette === "ink"
           ? "242, 239, 230"
-          : "108, 108, 255";
+          : "92, 230, 210";
       const pulsePoints: { x: number; y: number }[] = [];
       for (const p of pulses) {
         if (!reduceMotion) p.pos = (p.pos + p.speed / 60 + 1) % 1;
@@ -249,7 +250,10 @@ export default function HeroCanvas({ words }: { words: [string, string][] }) {
           const c = cols[p.line % cols.length];
           y = p.pos * height;
           x = colX(c, y, t);
-          ctx.fillStyle = "rgba(255, 200, 31, 0.9)";
+          ctx.fillStyle =
+            signal === "92, 230, 210"
+              ? "rgba(255, 90, 31, 0.95)"
+              : "rgba(242, 239, 230, 0.7)";
           ctx.fillRect(x - 1.5, y - 10, 3, 20);
         }
         pulsePoints.push({ x, y });
@@ -287,7 +291,7 @@ export default function HeroCanvas({ words }: { words: [string, string][] }) {
           ctx.rotate(Math.PI / 4);
           ctx.fillStyle =
             heat > 0.15
-              ? `rgba(255, 200, 31, ${0.35 + heat * 0.65})`
+              ? `rgba(92, 230, 210, ${0.35 + heat * 0.65})`
               : "rgba(242, 239, 230, 0.28)";
           ctx.fillRect(-size / 2, -size / 2, size, size);
           ctx.restore();

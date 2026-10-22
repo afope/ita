@@ -245,7 +245,7 @@ export default function Home() {
         </section>
 
         {/* ── 04 Join ──────────────────────────────────────── */}
-        <section id="join" className="section section-indigo">
+        <section id="join" className="section section-field">
           <div className="section-head" data-reveal>
             <span className="section-index mono">04</span>
             <span className="section-kicker mono">the list</span>

@@ -36,7 +36,7 @@ const voices = [
 
 const rules = [
   ["Cross two voices", "Every headline crosses the grotesk with a serif-italic word. That crossing is the brand."],
-  ["One signal per view", "Danfo yellow marks the single most important thing on screen: the node, the live state, the next action."],
+  ["One signal per view", "Lagoon aqua marks the single most important thing on screen: the node, the live state, the next action."],
   ["Square, never round", "Corners stay sharp. The only rotation is 45° — the node."],
   ["Lowercase name", "Always ita, never ITA or Ita. In Yoruba context, ìta."],
   ["Show the grid", "Lines, rules and junctions are visible. We show our working, like a city plan."],
@@ -94,9 +94,9 @@ export default function Brand() {
               <Wordmark />
               <span className="mono">wordmark / on paper</span>
             </div>
-            <div className="logo-tile tile-indigo">
+            <div className="logo-tile tile-field">
               <Wordmark />
-              <span className="mono">wordmark / on indigo</span>
+              <span className="mono">wordmark / on laterite</span>
             </div>
             <div className="logo-tile tile-mark">
               <Mark />
@@ -107,7 +107,7 @@ export default function Brand() {
             <p>
               The wordmark is drawn, not typeset: three geometric letters at a
               single stroke weight. The crossbar of the <strong>t</strong> runs
-              wide — it is the street — and a Danfo node sits where it meets
+              wide — it is the street — and a Lagoon node sits where it meets
               the stem. The junction mark isolates that moment: a measured
               horizontal crossed by a hand-drawn vertical. Use the mark for
               avatars, favicons and stamps; use the wordmark everywhere else.
@@ -129,12 +129,14 @@ export default function Brand() {
             ))}
           </div>
           <div className="proportion" aria-label="Colour proportions">
-            <span style={{ flex: 55, background: "#08091C" }}>ink 55%</span>
-            <span style={{ flex: 25, background: "#F2EFE6", color: "#08091C" }}>
+            <span style={{ flex: 55, background: "#0D0D0E" }}>ink 55%</span>
+            <span style={{ flex: 25, background: "#F2EFE6", color: "#0D0D0E" }}>
               paper 25%
             </span>
-            <span style={{ flex: 14, background: "#3B3BFF" }}>indigo 14%</span>
-            <span style={{ flex: 6, background: "#FFC81F", color: "#08091C" }}>
+            <span style={{ flex: 14, background: "#FF5A1F", color: "#0D0D0E" }}>
+              laterite 14%
+            </span>
+            <span style={{ flex: 6, background: "#5CE6D2", color: "#0D0D0E" }}>
               6%
             </span>
           </div>
