@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ita — intersection of technology and art
 
-## Getting Started
-
-First, run the development server:
+Website for **ita**, a spatial prototyping studio between Amsterdam and
+Lagos, working worldwide, and home of **ita conversations**.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev     # http://localhost:3000
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Where things live
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `src/app/content.ts` — all copy, offers, event details, palette. Edit here first.
+- `src/app/page.tsx` + `home.css` — the homepage.
+- `src/app/brand/` — brand guidelines page at `/brand`.
+- `src/app/components/HeroCanvas.tsx` — the live map of Lagos Island in the hero.
+- `src/app/data/lagos-island.json` — street data from OpenStreetMap (see its README).
+- `src/app/components/Logo.tsx` — the wordmark and junction mark (SVG).
+- `src/app/globals.css` — design tokens and shared styles.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Common updates
 
-## Learn More
+- **Announce the featured author:** in `content.ts`, set
+  `literaryEvent.featuredAuthor.confirmed` to `true`. Until then the site
+  shows "to be announced" and never prints the name.
+- **Announce the venue:** set `literaryEvent.showVenue` to `true`.
+- **Change the contact address:** `site.contactEmail` (currently
+  hello@ita.ng). It is used by every enquiry link and the footer.
 
-To learn more about Next.js, take a look at the following resources:
+## Waitlist
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Sign-ups go through `/api/submit-form`, which forwards them to
+[Formspree](https://formspree.io); Formspree emails each one to the inbox
+set on the form.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Create a free Formspree account and a new form that sends to
+   hello@ita.ng.
+2. Copy the form's ID (the part after `/f/` in its endpoint, e.g. `xyzabcd`).
+3. Set the environment variable `FORMSPREE_FORM_ID` to that ID — in
+   `.env.local` for local development, and in the hosting provider's
+   settings for the live site.
 
-## Deploy on Vercel
+If `FORMSPREE_FORM_ID` is not set, the route falls back to the Google Form
+configured by `NEXT_PUBLIC_GOOGLE_FORM_ID` and
+`NEXT_PUBLIC_GOOGLE_FORM_ENTRY_ID`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Going live on Vercel
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Sign in at [vercel.com](https://vercel.com) with GitHub and import the
+   `afope/ita` repository. The defaults for Next.js are correct.
+2. Under **Settings → Environment Variables**, add `FORMSPREE_FORM_ID`.
+3. Deploy. Every push to `main` then redeploys the site.
+4. Under **Settings → Domains**, add your domain (e.g. `ita.ng`) and follow
+   the DNS instructions shown there.

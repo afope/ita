@@ -1,0 +1,277 @@
+.brand {
+  padding: 0 var(--gutter);
+}
+
+.brand-hero {
+  padding: 180px 0 96px;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--fg-dim);
+}
+
+.brand-hero h1 {
+  font-size: clamp(52px, 9vw, 150px);
+  line-height: 0.95;
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  margin: 28px 0;
+}
+
+.brand-hero h1 em {
+  color: var(--signal);
+}
+
+.brand-lede {
+  max-width: 620px;
+  font-size: clamp(18px, 1.6vw, 21px);
+  font-weight: 300;
+  color: var(--fg-dim);
+}
+
+.brand-section {
+  padding: 72px 0 96px;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand-section > h2 {
+  color: var(--signal);
+  margin-bottom: 40px;
+}
+
+.brand-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: clamp(32px, 6vw, 96px);
+  align-items: center;
+}
+
+.brand-big {
+  font-size: clamp(140px, 22vw, 320px);
+  line-height: 0.8;
+  color: var(--field);
+}
+
+.brand-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  font-size: clamp(18px, 1.6vw, 21px);
+  font-weight: 300;
+  color: rgba(242, 239, 230, 0.8);
+  max-width: 640px;
+}
+
+.brand-copy strong {
+  color: var(--signal);
+  font-weight: 500;
+}
+
+.brand-copy-wide {
+  max-width: 820px;
+  margin-top: 40px;
+}
+
+.logo-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.logo-tile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 4 / 3;
+  padding: 48px;
+  border: 1px solid var(--line);
+}
+
+.logo-tile svg {
+  width: 62%;
+  max-width: 220px;
+  height: auto;
+}
+
+.logo-tile .mono {
+  position: absolute;
+  left: 16px;
+  bottom: 14px;
+  opacity: 0.7;
+}
+
+.tile-ink {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.tile-paper {
+  background: var(--paper);
+  color: var(--ink);
+  --node: var(--field);
+}
+
+.tile-field {
+  background: var(--field);
+  color: var(--ink);
+  --node: var(--paper);
+}
+
+.tile-mark {
+  background: var(--ink-2);
+  color: var(--paper);
+}
+
+.tile-mark svg {
+  width: 40%;
+}
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+}
+
+.swatch-chip {
+  aspect-ratio: 1;
+  border: 1px solid var(--line);
+  margin-bottom: 16px;
+}
+
+.swatch-name {
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.swatch .mono {
+  color: var(--fg-dim);
+  margin: 4px 0 10px;
+}
+
+.swatch-role {
+  font-size: 15px;
+  color: var(--fg-dim);
+}
+
+.proportion {
+  display: flex;
+  height: 56px;
+  margin-top: 48px;
+  border: 1px solid var(--line);
+}
+
+.proportion span {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.specimens {
+  display: flex;
+  flex-direction: column;
+}
+
+.specimen {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 32px;
+  align-items: end;
+  padding: 32px 0;
+  border-top: 1px solid var(--line);
+}
+
+.specimen-sample {
+  font-size: clamp(40px, 6vw, 88px);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  overflow-wrap: anywhere;
+}
+
+.spec-grotesk {
+  font-family: var(--grotesk);
+  font-weight: 500;
+}
+
+.spec-serif {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--signal);
+}
+
+.spec-mono {
+  font-family: var(--mono);
+  font-size: clamp(22px, 3vw, 40px);
+  letter-spacing: 0.04em;
+}
+
+.specimen-role {
+  color: var(--signal);
+}
+
+.specimen-family {
+  font-size: 22px;
+  font-weight: 500;
+  margin: 6px 0;
+}
+
+.specimen-use {
+  color: var(--fg-dim);
+  font-size: 16px;
+}
+
+.crossing-demo {
+  margin-top: 40px;
+  padding: 40px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: clamp(36px, 5vw, 72px);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.crossing-demo em {
+  color: var(--field);
+}
+
+.rules {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 32px;
+}
+
+.rules .mono {
+  color: var(--signal);
+}
+
+.rules h3 {
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  margin: 12px 0 8px;
+}
+
+.rules p {
+  color: var(--fg-dim);
+  font-size: 16px;
+}
+
+@media (max-width: 800px) {
+  .brand-grid,
+  .specimen {
+    grid-template-columns: 1fr;
+  }
+}

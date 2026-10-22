@@ -1,17 +1,38 @@
-import type { Metadata } from "next";
-import { Roboto_Condensed } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Instrument_Serif, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 
 import "./globals.css";
 
-const robotoCondensed = Roboto_Condensed({
+// Technology voice.
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-roboto-condensed",
+  weight: ["300", "400", "500", "700"],
+  variable: "--font-grotesk",
+});
+
+// Art voice.
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-serif",
+});
+
+// System voice: labels, coordinates, data.
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-mono",
 });
 
 export const metadata: Metadata = {
-  title: "ita",
-  description: "everything is a typo",
+  title: "ita — intersection of technology and art",
+  description:
+    "ita is a spatial prototyping studio between Amsterdam and Lagos, working worldwide, building and testing prototypes for innovation labs and organisations, and home of ita conversations, a public programme of literary and cultural gatherings.",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0D0D0E",
 };
 
 export default function RootLayout({
@@ -20,8 +41,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={robotoCondensed.variable}>{children}</body>
+    <html
+      lang="en"
+      className={`${spaceGrotesk.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable}`}
+    >
+      <body>{children}</body>
     </html>
   );
 }

@@ -1,32 +1,22 @@
+/* ita brand tokens — see /brand for the system these come from. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  --ink: #0d0d0e;
+  --ink-2: #161618;
+  --field: #ff5a1f; /* Laterite: warm, the art side */
+  --signal: #5ce6d2; /* Lagoon: cool, the technology side */
+  --paper: #f2efe6;
+  --ink-rgb: 13, 13, 14;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+  /* Contextual tokens, re-pointed by each surface below. */
+  --bg: var(--ink);
+  --fg: var(--paper);
+  --fg-dim: rgba(242, 239, 230, 0.64);
+  --line: rgba(242, 239, 230, 0.14);
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-  height: 100%;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: var(--font-roboto-condensed), Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+  --gutter: clamp(16px, 4vw, 64px);
+  --grotesk: var(--font-grotesk), "Helvetica Neue", Arial, sans-serif;
+  --serif: var(--font-serif), Georgia, serif;
+  --mono: var(--font-mono), ui-monospace, Menlo, monospace;
 }
 
 * {
@@ -35,13 +25,565 @@ body {
   margin: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--grotesk);
+  font-size: 18px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
 a {
   color: inherit;
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+/* The art voice: any emphasised word crosses into the serif italic. */
+em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+::selection {
+  background: var(--signal);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 3px;
+}
+
+.mono {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* The junction node — a rotated square, the brand's smallest unit. */
+.node {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--signal);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+  animation: pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* ── Buttons ─────────────────────────────────────────── */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 50px;
+  padding: 0 24px;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  border-radius: 0;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.button-signal {
+  background: var(--signal);
+  color: var(--ink);
+}
+
+.button-signal::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  background: currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.3s;
+}
+
+.button-signal:hover {
+  background: var(--paper);
+}
+
+.button-signal:hover::after {
+  transform: rotate(225deg);
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* ── Nav ─────────────────────────────────────────────── */
+.nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 14px var(--gutter);
+  background: rgba(var(--ink-rgb), 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(242, 239, 230, 0.08);
+}
+
+.nav-logo svg {
+  display: block;
+  height: 30px;
+  width: auto;
+  color: var(--paper);
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.nav-links a {
+  color: rgba(242, 239, 230, 0.64);
+  transition: color 0.2s;
+}
+
+.nav-links a:hover {
+  color: var(--signal);
+}
+
+.nav-cta {
+  min-height: 40px;
+  padding: 0 16px;
+}
+
+/* ── Hero ────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding: 140px var(--gutter) 110px;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse 60% 50% at 80% 30%, rgba(242, 239, 230, 0.06), transparent 70%),
+    var(--ink);
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, var(--field) 0%, rgba(255, 90, 31, 0.7) 40%, transparent 75%);
+  pointer-events: none;
+}
+
+.hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+}
+
+.hero-inner {
+  max-width: 1040px;
+}
+
+.hero-title {
+  font-size: clamp(52px, 8.4vw, 136px);
+  line-height: 0.95;
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  margin: 28px 0 0;
+}
+
+.hero-title em {
+  color: var(--signal);
+  font-size: 1.08em;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 40px;
+}
+
+.hero-meta {
+  position: absolute;
+  right: var(--gutter);
+  bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  color: rgba(242, 239, 230, 0.5);
+}
+
+.hero-meta a:hover {
+  text-decoration: underline;
+}
+
+/* ── Sections ────────────────────────────────────────── */
+.section {
+  position: relative;
+  padding: clamp(80px, 11vw, 160px) var(--gutter);
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.section-ink {
+  --bg: var(--ink);
+}
+
+.section-paper {
+  --bg: var(--paper);
+  --fg: var(--ink);
+  --fg-dim: rgba(var(--ink-rgb), 0.66);
+  --line: rgba(var(--ink-rgb), 0.16);
+  color-scheme: light;
+}
+
+.section-head {
+  --pulse: var(--signal);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 18px;
+  margin-bottom: clamp(40px, 6vw, 72px);
+  position: relative;
+}
+
+/* The section rule is a street: it draws out from the junction marker when
+   the section arrives, then a signal travels along it every few seconds. */
+.section-head::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background:
+    linear-gradient(90deg, transparent, var(--pulse), transparent) no-repeat,
+    linear-gradient(var(--line), var(--line)) no-repeat;
+  background-size: 160px 2px, 100% 1px;
+  background-position: -160px 100%, 0 100%;
+  transform-origin: left;
+  animation: rule-signal 7s ease-in-out 1.8s infinite;
+}
+
+.reveal-ready .section-head::after {
+  transform: scaleX(0);
+}
+
+.reveal-ready .section-head.is-visible::after {
+  transform: scaleX(1);
+  transition: transform 1.4s cubic-bezier(0.65, 0, 0.35, 1) 0.2s;
+}
+
+@keyframes rule-signal {
+  0% {
+    background-position: -160px 100%, 0 100%;
+  }
+  55%,
+  100% {
+    background-position: calc(100% + 160px) 100%, 0 100%;
+  }
+}
+
+.section-paper .section-head {
+  --pulse: var(--field);
+}
+
+/* A junction marker where the section rule meets the index. */
+.section-head::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  bottom: -5px;
+  width: 9px;
+  height: 9px;
+  background: var(--signal);
+  transform: rotate(45deg);
+}
+
+.section-paper .section-head::before {
+  background: var(--field);
+}
+
+.section-kicker {
+  color: var(--fg-dim);
+}
+
+.section-title {
+  font-size: clamp(44px, 6.4vw, 96px);
+  line-height: 0.98;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+
+.section-paper .section-title em {
+  color: var(--field);
+}
+
+.section-ink .section-title em {
+  color: var(--signal);
+}
+
+/* Idea: dictionary entry */
+.definition {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: clamp(32px, 6vw, 96px);
+  align-items: start;
+}
+
+.definition-word {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(120px, 20vw, 300px);
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  color: var(--field);
+}
+
+.definition-word .mono {
+  display: block;
+  margin-top: 20px;
+  font-style: normal;
+  letter-spacing: 0.08em;
+  color: var(--fg-dim);
+}
+
+.definition-list {
+  list-style: none;
+  counter-reset: def;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-top: 12px;
+}
+
+.definition-list li {
+  counter-increment: def;
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+}
+
+.definition-list li::before {
+  content: counter(def) ".";
+  font-family: var(--mono);
+  font-size: 13px;
+  padding-top: 0.5em;
+  /* Bright orange is too light for small text on paper; labels use ink. */
+  color: rgba(var(--ink-rgb), 0.6);
+}
+
+/* ── Join ────────────────────────────────────────────── */
+
+.form-label {
+  display: block;
+  color: var(--fg-dim);
+  margin-bottom: 10px;
+}
+
+.waitlist-row {
+  display: flex;
+  background: var(--ink);
+  border: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.waitlist-row:focus-within {
+  border-color: var(--signal);
+}
+
+.waitlist input {
+  flex: 1;
+  min-width: 0;
+  padding: 0 20px;
+  min-height: 64px;
+  background: transparent;
+  border: 0;
+  outline: none;
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 16px;
+}
+
+.waitlist input::placeholder {
+  color: rgba(242, 239, 230, 0.38);
+}
+
+.waitlist .button {
+  min-height: 64px;
+}
+
+.form-error {
+  margin-top: 12px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--signal);
+}
+
+.form-success {
+  padding: 24px;
+  background: var(--ink);
+  border-left: 4px solid var(--signal);
+  font-size: 20px;
+}
+
+.form-success .mono {
+  color: var(--signal);
+  margin-right: 8px;
+}
+
+/* ── Footer ──────────────────────────────────────────── */
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 32px;
+  padding: 36px var(--gutter);
+  background: var(--ink);
+  color: rgba(242, 239, 230, 0.6);
+}
+
+.footer-logo {
+  height: 40px;
+  width: auto;
+  color: var(--paper);
+}
+
+.footer-link:hover {
+  color: var(--signal);
+}
+
+/* ── Orange hero ─────────────────────────────────────
+   Bright orange carries the first impression. Ink type for legibility, the
+   serif crossing in paper, Lagoon for buttons and live junctions. */
+.hero {
+  background: var(--field);
+  color: var(--ink);
+}
+
+/* A see-through ink bar would turn brown over orange, so the nav is solid. */
+.nav {
+  background: var(--ink);
+}
+
+.hero-meta {
+  color: rgba(var(--ink-rgb), 0.78);
+}
+
+.hero-title em {
+  color: var(--paper);
+}
+
+.hero .button-signal:hover {
+  background: var(--ink);
+  color: var(--signal);
+}
+
+/* ── Reveal on scroll ────────────────────────────────── */
+.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.reveal-ready [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Responsive ──────────────────────────────────────── */
+@media (max-width: 960px) {
+  .definition {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+}
+
+@media (max-width: 700px) {
+  body {
+    font-size: 17px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .hero {
+    align-items: flex-end;
+    padding-bottom: 120px;
+  }
+
+  .hero::after {
+    background: linear-gradient(0deg, var(--field) 10%, rgba(255, 90, 31, 0.6) 60%, transparent);
+  }
+
+  /* The map credit stays visible on phones. */
+  .hero-meta {
+    bottom: 28px;
+    font-size: 10px;
+  }
+
+  .hero-meta span {
+    display: none;
+  }
+
+  .waitlist-row {
+    flex-direction: column;
+  }
+
+  .waitlist .button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal-ready [data-reveal] {
+    opacity: 1;
+    transform: none;
   }
 }
