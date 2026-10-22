@@ -4,8 +4,7 @@
 export const site = {
   name: "ita",
   expansion: "intersection of technology and art",
-  city: "Lagos",
-  reach: "based in Lagos, working worldwide",
+  reach: "Amsterdam & Lagos, working worldwide",
   // Leave empty to hide the direct email link; the waitlist form still works.
   contactEmail: "",
   // Shows a small switch for comparing the colour and ink & paper palettes.
@@ -20,7 +19,7 @@ export const idea = {
   definitions: [
     "In Lagos, the junction — the open square where streets cross and people gather. Ita Faji. Ita Balogun.",
     "The intersection of technology and art.",
-    "A studio that builds spatial prototypes, and a stage for conversations.",
+    "A studio between Amsterdam and Lagos that builds spatial prototypes, and a stage for conversations.",
   ],
   principles: [
     {
@@ -32,15 +31,15 @@ export const idea = {
       body: "Every ìta is public ground. Our work is designed to be walked through, argued over and shared — never sealed off in a lab.",
     },
     {
-      title: "Lagos is the *laboratory*",
-      body: "The most inventive city we know is our testing ground. We design from here, for everywhere.",
+      title: "Two cities, one *junction*",
+      body: "We work between Amsterdam and Lagos: two cities built on water, trade and invention. We design between them, for everywhere.",
     },
   ],
 };
 
 export const studio = {
   intro:
-    "ita is a spatial prototyping studio, based in Lagos and working worldwide. We help innovation labs and organisations test ideas in physical space before they are built — rooms that respond, objects that listen, and environments that let people feel the future instead of reading about it — with the people who will actually live in it.",
+    "ita is a spatial prototyping studio between Amsterdam and Lagos, working worldwide. We help innovation labs and organisations test ideas in physical space before they are built — rooms that respond, objects that listen, and environments that let people feel the future instead of reading about it — with the people who will actually live in it.",
   headline: "Prototypes you can *stand inside*.",
   // One-sentence version for the pared-back layout.
   short:
@@ -49,13 +48,13 @@ export const studio = {
   offers: [
     {
       title: "Test it in *Lagos*",
-      body: "Send us an idea, product or service. We build a spatial prototype and test it with the people who will actually use it in Lagos, then deliver film, findings and recommendations. You never need to travel.",
+      body: "Send us an idea, product or service. With our team in Lagos, we build a spatial prototype and test it with the people who will actually use it, then deliver film, findings and recommendations. You never need to travel.",
       meta: "remote · 3–4 weeks",
     },
     {
       title: "Prototype *sprint*",
-      body: "One idea turned into a walk-through prototype and tested with real people. Physical in our Lagos studio or as a filmed digital walk-through, with a short report at the end.",
-      meta: "remote or on site · 2–3 weeks",
+      body: "One idea turned into a walk-through prototype and tested with real people. Physical in Amsterdam or Lagos, or as a filmed digital walk-through, with a short report at the end.",
+      meta: "amsterdam, lagos or remote · 2–3 weeks",
     },
     {
       title: "Installations & *residencies*",
