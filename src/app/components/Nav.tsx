@@ -8,10 +8,9 @@ export default function Nav() {
         <Wordmark />
       </Link>
       <div className="nav-links">
-        <Link href="/#idea">idea</Link>
+        <Link href="/#about">about</Link>
         <Link href="/#studio">studio</Link>
         <Link href="/#conversations">conversations</Link>
-        <Link href="/brand">brand</Link>
       </div>
       <Link href="/#join" className="button button-signal nav-cta">
         join

@@ -51,7 +51,7 @@ export default function Home() {
           </div>
         </header>
 
-        <section id="idea" className="section section-paper">
+        <section id="about" className="section section-paper">
           <div className="definition" data-reveal>
             <p className="definition-word">
               {idea.word}

@@ -48,7 +48,7 @@
 }
 
 /* The idea: the dictionary entry alone, given room. */
-.home #idea .definition {
+.home #about .definition {
   align-items: end;
 }
 
