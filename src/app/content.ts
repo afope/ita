@@ -21,7 +21,7 @@ export const idea = {
 };
 
 export const studio = {
-  headline: "Prototypes you can *stand inside*.",
+  headline: "We also build *spaces* for others.",
   short:
     "We build spatial prototypes for innovation labs and organisations worldwide: rooms, objects and installations people can walk into before anything is built, tested with the people who will actually use them.",
   // What clients can buy. Durations are starting points; adjust freely.
@@ -42,17 +42,24 @@ export const studio = {
       meta: "worldwide · by commission",
     },
   ],
-  process: ["Listen", "Sketch in space", "Prototype", "Test with people", "Hand over"],
 };
 
+// ita conversations leads the homepage: it is what is in motion now.
 export const conversations = {
   headline: "Ideas need a *square* to meet in.",
-  short:
-    "Gatherings where writers, artists and technologists meet Lagos over a shared love of ideas.",
+  lede: "ita conversations brings writers, artists and technologists together over a shared love of ideas. First up: literary conversations, in Lagos.",
 };
 
 export const literaryEvent = {
   name: "literary conversations",
+  description:
+    "An evening of reading and conversation about words: their power, their beauty, their unparalleled ability to subvert, change and redirect.",
+  // Set `immersive: true` once the immersive experience is confirmed. The
+  // hero and the event then describe it as a space to walk through.
+  immersive: false,
+  immersiveHeadline: "Literary conversations, made into *spaces* you can walk through.",
+  immersiveDescription:
+    "An evening of words staged as an immersive space: walk through the stories, then gather to hear them read and talked about.",
   // The venue stays private until announced. Set `showVenue: true` to
   // print it in the event details.
   venue: "MILIKI",
