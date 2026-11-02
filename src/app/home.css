@@ -8,10 +8,25 @@
   margin-top: 0;
 }
 
+/* Longer headlines (the immersive one) step down a size to stay on screen. */
+.home .hero-title-long {
+  max-width: 18ch;
+  font-size: clamp(44px, 6.2vw, 100px);
+}
+
+.hero-lede {
+  max-width: 540px;
+  margin-top: 28px;
+  font-size: clamp(18px, 1.6vw, 21px);
+  font-weight: 300;
+  line-height: 1.5;
+  color: rgba(var(--ink-rgb), 0.8);
+}
+
 .home .hero-actions {
   align-items: center;
   gap: 28px;
-  margin-top: 48px;
+  margin-top: 40px;
 }
 
 .home .section {
@@ -52,10 +67,37 @@
   align-items: end;
 }
 
+/* The studio: what ita also builds for others, set smaller than the
+   conversations above it. */
+.home .studio {
+  padding-block: clamp(96px, 11vw, 160px);
+}
+
+.studio-title {
+  max-width: 20ch;
+  font-size: clamp(32px, 4vw, 56px);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+
+.studio-title em {
+  color: var(--signal);
+}
+
+.studio .lede {
+  margin-top: 24px;
+  font-size: clamp(17px, 1.4vw, 19px);
+}
+
+.studio-link {
+  margin-top: 48px;
+}
+
 /* Offers: three plain rows, divided by the rule. */
 .offer-list {
   list-style: none;
-  margin-top: 80px;
+  margin-top: 56px;
   border-top: 1px solid var(--line);
 }
 
@@ -64,12 +106,12 @@
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) 250px;
   gap: 16px 48px;
   align-items: baseline;
-  padding: 32px 0;
+  padding: 24px 0;
   border-bottom: 1px solid var(--line);
 }
 
 .offer-list h3 {
-  font-size: clamp(26px, 2.6vw, 36px);
+  font-size: clamp(22px, 2vw, 28px);
   font-weight: 500;
   letter-spacing: -0.03em;
   line-height: 1.05;
@@ -81,7 +123,7 @@
 
 .offer-list p {
   color: var(--fg-dim);
-  font-size: 17px;
+  font-size: 16px;
 }
 
 .offer-list .mono {
@@ -99,30 +141,6 @@
   }
 }
 
-/* Process as one quiet line of junctions. */
-.process-line {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px 0;
-  margin: 72px 0 56px;
-  font-size: clamp(18px, 1.6vw, 22px);
-  color: var(--fg);
-}
-
-.process-line span {
-  display: inline-flex;
-  align-items: center;
-}
-
-.process-node {
-  width: 7px;
-  height: 7px;
-  margin: 0 18px;
-  background: var(--signal);
-  transform: rotate(45deg);
-}
-
 /* The event: one calm orange block. */
 .quiet-event {
   display: flex;
@@ -134,6 +152,11 @@
   padding: clamp(32px, 5vw, 64px);
   background: var(--field);
   color: var(--ink);
+}
+
+.quiet-event h3,
+.quiet-event-side .quiet-event-meta {
+  margin-top: 14px;
 }
 
 .quiet-event h3 {
@@ -150,7 +173,6 @@
 }
 
 .quiet-event-meta {
-  margin-top: 20px;
   font-family: var(--mono);
   font-size: 13px;
   letter-spacing: 0.06em;
@@ -178,13 +200,21 @@
   letter-spacing: 0.02em;
 }
 
+/* The waitlist sits on paper: keep its messages legible there. */
+.section-paper .form-error {
+  color: var(--ink);
+}
+
+.form-success {
+  color: var(--paper);
+}
+
 .quiet-join {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: clamp(32px, 6vw, 96px);
   align-items: end;
 }
-
 
 @media (max-width: 960px) {
   .quiet-join {
