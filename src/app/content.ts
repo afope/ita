@@ -8,7 +8,17 @@ export const site = {
   // Enquiry links open an email to this address; waitlist sign-ups are
   // delivered here too (see README: Formspree).
   contactEmail: "hello@ita.ng",
+  // Match Kit: true while the "ita website" form sends a confirmation email
+  // (Settings → Incentive), false while it adds people straight away. It
+  // only changes the message people see after signing up.
+  confirmSignups: false,
 };
+
+// What people see after signing up, depending on `site.confirmSignups`.
+export const signupDone = (then: string) =>
+  site.confirmSignups
+    ? `almost there. check your inbox and tap confirm${then ? `, and ${then}` : ""}.`
+    : `you're on the list${then ? `. ${then}` : ""}.`;
 
 export const idea = {
   word: "ìta",

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { signupDone } from "../content";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -16,7 +17,7 @@ export default function Waitlist({
   id = "email",
   label = "email address",
   button = "join the list",
-  success = "almost there. check your inbox and tap confirm.",
+  success = signupDone(""),
 }: Props) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<

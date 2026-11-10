@@ -54,9 +54,10 @@ address to ita's Kit form "ita website" (form ID 10170531), and so to the
 Kit mailing list. Nothing needs configuring: the form ID is public. To use a
 different Kit form, set the environment variable `KIT_FORM_ID` in Vercel.
 
-In Kit, turn off double opt-in for the form (Settings → Incentive → "Send
-incentive email") so people are added straight away, or keep it on and
-people will get an email asking them to confirm.
+Confirmation emails: in Kit, the form's Settings → Incentive → "Send
+incentive email" decides whether new sign-ups must confirm by email. Keep
+`site.confirmSignups` in `content.ts` the same (true or false) so the
+message people see after signing up matches.
 
 ## Going live on Vercel
 
