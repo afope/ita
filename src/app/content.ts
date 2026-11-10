@@ -46,7 +46,7 @@ export const studio = {
 };
 
 export const conversations = {
-  headline: "Ideas need a *square* to meet in.",
+  headline: "Ideas will find you *outside*.",
   short:
     "Gatherings in Lagos for writers, artists, technologists and anyone who loves ideas.",
 };
