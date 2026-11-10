@@ -154,7 +154,7 @@ export function ConversationDetails({ c, past = false }: { c: Conversation; past
         ) : (
           <>
             <p className="event-soon">
-              tickets go on sale <em>soon</em>.
+              Tickets go on sale <em>soon</em>.
             </p>
             <a href="#join" className="button button-ink">
               join the list

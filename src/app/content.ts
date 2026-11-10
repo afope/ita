@@ -21,23 +21,23 @@ export const idea = {
 };
 
 export const studio = {
-  headline: "prototypes you can *stand inside*.",
+  headline: "Prototypes you can *stand inside*.",
   short:
     "We build spatial prototypes for innovation labs and organisations: rooms, objects and installations people can walk into before anything is built, tested with the people who will actually use them.",
   // What clients can buy. Durations are starting points; adjust freely.
   offers: [
     {
-      title: "test it in *lagos*",
+      title: "Test it in *Lagos*",
       body: "Send us an idea, product or service. We build a spatial prototype in Lagos and test it with the people who will actually use it, then deliver film, findings and recommendations. You never need to travel.",
       meta: "remote · 3–4 weeks",
     },
     {
-      title: "prototype *sprint*",
+      title: "Prototype *sprint*",
       body: "One idea turned into a walk-through prototype and tested with real people. Physical in Amsterdam or Lagos, or as a filmed digital walk-through, with a short report at the end.",
       meta: "amsterdam, lagos or remote · 2–3 weeks",
     },
     {
-      title: "installations & *commissions*",
+      title: "Installations & *commissions*",
       body: "Interactive installations for festivals, museums, brands and biennales, built with you in Amsterdam, Lagos or on site.",
       meta: "by commission",
     },
@@ -46,7 +46,7 @@ export const studio = {
 };
 
 export const conversations = {
-  headline: "ideas need a *square* to meet in.",
+  headline: "Ideas need a *square* to meet in.",
   short:
     "Gatherings in Lagos for writers, artists, technologists and anyone who loves ideas.",
 };
