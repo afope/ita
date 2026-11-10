@@ -516,9 +516,48 @@ em {
   color: var(--ink);
 }
 
+/* The side column holds the form; cap it so the block never wraps it
+   under the title (a long success message would otherwise do that). */
+.quiet-event-side:has(.waitlist, .form-success) {
+  flex: 0 1 460px;
+  min-width: min(100%, 300px);
+}
+
 .quiet-event .waitlist,
 .quiet-event .form-success {
-  width: min(100%, 460px);
+  width: 100%;
+}
+
+/* After signing up, on orange or paper: a quiet line with the junction
+   diamond, not a black box. */
+.quiet-event .form-success,
+.event-tickets .form-success {
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: inherit;
+  font-size: 19px;
+  line-height: 1.4;
+}
+
+.quiet-event .form-success .mono,
+.event-tickets .form-success .mono {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  margin: 0;
+  overflow: hidden;
+  color: transparent;
+  background: currentColor;
+  background: var(--ink);
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.event-tickets .form-success .mono {
+  background: var(--field);
 }
 
 .form-success .mono {

@@ -86,7 +86,7 @@ export function ConversationTeaser({ c }: { c: Conversation }) {
       </div>
       <div className="quiet-event-side">
         <p>
-          featured guest <em>to be announced</em>
+          featured author <em>to be announced</em>
         </p>
         <p className="quiet-event-meta">
           {c.showVenue ? `${c.venue}, ${c.city}` : `${c.city} · venue announced soon`}
