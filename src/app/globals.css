@@ -135,10 +135,56 @@ em {
 }
 
 /* ── Nav ─────────────────────────────────────────────── */
-.nav {
+.nav-wrap {
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 50;
+}
+
+/* The announcement strip: one line above the nav, Laterite like the event. */
+.nav-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 24px;
+  padding: 9px var(--gutter);
+  background: var(--field);
+  color: var(--ink);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.nav-strip > span:first-child {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-strip em {
+  font-family: var(--serif);
+  font-size: 17px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.nav-strip-sep {
+  width: 6px;
+  height: 6px;
+  margin: 0 12px;
+  background: currentColor;
+  transform: rotate(45deg);
+}
+
+.nav-strip-cta {
+  border-bottom: 1px solid currentColor;
+}
+
+.nav-strip:hover .nav-strip-cta {
+  border-color: transparent;
+}
+
+.nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -543,6 +589,20 @@ em {
 
   .nav-links {
     display: none;
+  }
+
+  .nav-strip {
+    justify-content: space-between;
+    font-size: 11px;
+  }
+
+  /* On phones the strip keeps the title and the call to action. */
+  .nav-strip > span:first-child > :not(em) {
+    display: none;
+  }
+
+  .nav-strip > span:first-child {
+    font-size: 0;
   }
 
   .hero {

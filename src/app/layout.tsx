@@ -28,7 +28,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "ita — intersection of technology and art",
   description:
-    "ita conversations brings writers, artists and technologists together over a shared love of ideas, starting with literary conversations in Lagos. ita also builds immersive spaces and spatial prototypes, between Amsterdam and Lagos.",
+    "ita is a spatial prototyping studio between Amsterdam and Lagos, working worldwide, building and testing prototypes for innovation labs and organisations, and home of ita conversations, a public programme of literary and cultural gatherings.",
 };
 
 export const viewport: Viewport = {

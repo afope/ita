@@ -17,14 +17,18 @@ npm run build
 - `src/app/components/HeroCanvas.tsx` — the live map of Lagos Island in the hero.
 - `src/app/data/lagos-island.json` — street data from OpenStreetMap (see its README).
 - `src/app/components/Logo.tsx` — the wordmark and junction mark (SVG).
+- `src/app/conversations/` — ita conversations: the next event and its
+  tickets, at ita.ng/conversations (the link for posters and bios).
 - `src/app/globals.css` — design tokens and shared styles.
 
 ## Common updates
 
 - **Announce ita conversations (one switch):** in `content.ts`, set
-  `literaryEvent.announced` to `true`. The hero, the event block, the
-  programme, the bios and the ticket area all appear, with the author and
-  venue shown.
+  `literaryEvent.announced` to `true`. A strip above the nav on every page
+  links to the tickets; the homepage's conversations block shows the event;
+  and /conversations shows the full event (programme, bios, tickets). The
+  homepage itself stays the studio. After the event, set it back to `false`
+  until the next one.
 - **Add the tickets:** paste the Tix Africa widget code (Marketing →
   Custom Widget) into `literaryEvent.ticketWidget`. While it is empty, the
   ticket area says tickets go on sale soon and points to the list.

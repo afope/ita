@@ -1,9 +1,9 @@
+import Link from "next/link";
 import Crossed from "./components/Crossed";
 import Footer from "./components/Footer";
 import HeroCanvas from "./components/HeroCanvas";
 import Nav from "./components/Nav";
 import Reveal from "./components/Reveal";
-import TicketWidget from "./components/TicketWidget";
 import Waitlist from "./components/Waitlist";
 import {
   conversations,
@@ -15,19 +15,11 @@ import {
 } from "./content";
 import "./home.css";
 
-// The homepage leads with ita conversations, which is what is in motion;
-// the studio follows, smaller, as what ita also builds for others.
+// The homepage: the map and the words carry the character, everything
+// else stays quiet.
 export default function Home() {
   const author = literaryEvent.featuredAuthor;
   const announced = literaryEvent.announced;
-  const showAuthor = announced || author.confirmed;
-  const showVenue = announced || literaryEvent.showVenue;
-  const headline = literaryEvent.immersive
-    ? literaryEvent.immersiveHeadline
-    : conversations.headline;
-  const description = literaryEvent.immersive
-    ? literaryEvent.immersiveDescription
-    : literaryEvent.description;
 
   return (
     <div className="home">
@@ -38,25 +30,20 @@ export default function Home() {
         <header className="hero">
           <HeroCanvas words={junctionWords} quiet />
           <div className="hero-inner">
-            <h1
-              className={`hero-title${headline.length > 40 ? " hero-title-long" : ""}`}
-            >
-              <Crossed text={headline} />
+            <h1 className="hero-title">
+              The junction where technology <em>meets</em> art.
             </h1>
-            <p className="hero-lede">
-              {announced
-                ? `${author.name} in conversation · ${literaryEvent.date} · ${literaryEvent.venue}, ${literaryEvent.city}`
-                : conversations.lede}
-            </p>
             <div className="hero-actions">
-              <a
-                href={announced ? "#tickets" : "#join"}
-                className="button button-signal"
-              >
-                {announced ? "get tickets" : "join the list"}
+              <a href="#studio" className="button button-signal">
+                work with the studio
               </a>
-              <a href="#literary" className="text-link">
-                {literaryEvent.name}
+              <a
+                href={announced ? "/conversations" : "#literary"}
+                className="text-link"
+              >
+                {announced
+                  ? `${literaryEvent.title.replace(/\*/g, "")} · ${literaryEvent.shortDate}`
+                  : literaryEvent.name}
               </a>
             </div>
           </div>
@@ -70,99 +57,6 @@ export default function Home() {
             </a>
           </div>
         </header>
-
-        <section id="conversations" className="section section-ink">
-          <div className="section-head" data-reveal>
-            <span className="section-kicker mono">ita conversations</span>
-          </div>
-          <h2 id="literary" className="section-title" data-reveal>
-            {announced ? (
-              <Crossed text={literaryEvent.title} />
-            ) : (
-              <>
-                literary <em>conversations</em>
-              </>
-            )}
-          </h2>
-          <p className="lede" data-reveal>
-            {description}
-          </p>
-
-          <article className="quiet-event" data-reveal>
-            <div>
-              <p className="quiet-event-meta">featured author</p>
-              <h3>
-                {showAuthor ? (
-                  author.name
-                ) : (
-                  <>
-                    to be <em>announced</em>
-                  </>
-                )}
-              </h3>
-              {announced && (
-                <p className="quiet-event-books">
-                  author of {literaryEvent.books.slice(0, -1).join(", ")} and{" "}
-                  {literaryEvent.books[literaryEvent.books.length - 1]}
-                </p>
-              )}
-            </div>
-            <div className="quiet-event-side">
-              {announced && (
-                <p className="quiet-event-meta">
-                  {literaryEvent.date} · {literaryEvent.time}
-                </p>
-              )}
-              <p className="quiet-event-meta">
-                {showVenue
-                  ? `${literaryEvent.venue}, ${literaryEvent.city}`
-                  : `${literaryEvent.city} · venue announced soon`}
-              </p>
-              <a
-                href={announced ? "#tickets" : "#join"}
-                className="button button-ink"
-              >
-                {announced ? "get tickets" : "save your seat"}
-              </a>
-            </div>
-          </article>
-
-          {announced && (
-            <div id="tickets" className="event-details">
-              <div className="event-about" data-reveal>
-                <p className="event-tagline">{literaryEvent.tagline}</p>
-                <ol className="event-programme">
-                  {literaryEvent.programme.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ol>
-                <div className="event-people">
-                  <p className="mono">the author</p>
-                  <p>{literaryEvent.authorBio}</p>
-                  <p className="mono">your host</p>
-                  <p>
-                    {literaryEvent.host.name}. {literaryEvent.host.bio}
-                  </p>
-                </div>
-              </div>
-              <div className="event-tickets" data-reveal>
-                <p className="mono">tickets</p>
-                {literaryEvent.ticketWidget.trim() ? (
-                  <TicketWidget html={literaryEvent.ticketWidget} />
-                ) : (
-                  <>
-                    <p className="event-soon">
-                      Tickets go on sale <em>soon</em>.
-                    </p>
-                    <a href="#join" className="button button-signal">
-                      join the list
-                    </a>
-                  </>
-                )}
-              </div>
-            </div>
-          )}
-        </section>
 
         <section id="about" className="section section-paper">
           <div className="definition" data-reveal>
@@ -178,11 +72,11 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="studio" className="section section-ink studio">
+        <section id="studio" className="section section-ink">
           <div className="section-head" data-reveal>
             <span className="section-kicker mono">studio</span>
           </div>
-          <h2 className="studio-title" data-reveal>
+          <h2 className="section-title" data-reveal>
             <Crossed text={studio.headline} />
           </h2>
           <p className="lede" data-reveal>
@@ -199,16 +93,84 @@ export default function Home() {
               </li>
             ))}
           </ul>
+          <p className="process-line" data-reveal>
+            {studio.process.map((step, i) => (
+              <span key={step}>
+                {i > 0 && <i className="process-node" aria-hidden="true" />}
+                {step.toLowerCase()}
+              </span>
+            ))}
+          </p>
           <a
-            href={`mailto:${site.contactEmail}?subject=Studio%20enquiry`}
-            className="text-link studio-link"
+            href={
+              site.contactEmail
+                ? `mailto:${site.contactEmail}?subject=Spatial%20prototype%20enquiry`
+                : "#join"
+            }
+            className="text-link"
             data-reveal
           >
             start a project
           </a>
         </section>
 
-        <section id="join" className="section section-paper">
+        <section id="conversations" className="section section-paper">
+          <div className="section-head" data-reveal>
+            <span className="section-kicker mono">conversations</span>
+          </div>
+          <h2 className="section-title" data-reveal>
+            <Crossed text={conversations.headline} />
+          </h2>
+          <p className="lede" data-reveal>
+            {conversations.short}
+          </p>
+
+          <article id="literary" className="quiet-event" data-reveal>
+            <div>
+              {announced && <p className="quiet-event-meta">next conversation</p>}
+              <h3>
+                {announced ? (
+                  <Crossed text={literaryEvent.title} />
+                ) : (
+                  <>
+                    literary <em>conversations</em>
+                  </>
+                )}
+              </h3>
+              <p className="quiet-event-meta">
+                {announced
+                  ? `${literaryEvent.date} · ${literaryEvent.venue}, ${literaryEvent.city}`
+                  : literaryEvent.showVenue
+                    ? `${literaryEvent.venue}, ${literaryEvent.city}`
+                    : `${literaryEvent.city} · venue announced soon`}
+              </p>
+            </div>
+            <div className="quiet-event-side">
+              <p>
+                {announced || author.confirmed ? (
+                  <>
+                    with <em>{author.name}</em>
+                  </>
+                ) : (
+                  <>
+                    featured author <em>to be announced</em>
+                  </>
+                )}
+              </p>
+              <a
+                href={announced ? "/conversations#tickets" : "#join"}
+                className="button button-signal"
+              >
+                {announced ? "get tickets" : "save your seat"}
+              </a>
+            </div>
+          </article>
+          <Link href="/conversations" className="text-link quiet-event-more" data-reveal>
+            {announced ? "the programme, the author and tickets" : "about ita conversations"}
+          </Link>
+        </section>
+
+        <section id="join" className="section section-ink">
           <div className="section-head" data-reveal>
             <span className="section-kicker mono">the list</span>
           </div>
