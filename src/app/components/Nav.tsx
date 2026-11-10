@@ -1,22 +1,23 @@
 import Link from "next/link";
-import { literaryEvent } from "../content";
+import { plain, upcomingConversations } from "../content";
 import { Wordmark } from "./Logo";
 
 // The strip above the nav appears on every page once the next
 // conversation is announced, and points to its tickets.
 export default function Nav({ strip = true }: { strip?: boolean }) {
-  const showStrip = strip && literaryEvent.announced;
+  const next = upcomingConversations()[0];
+  const showStrip = strip && next?.announced;
 
   return (
     <div className="nav-wrap">
       {showStrip && (
         <Link href="/conversations#tickets" className="nav-strip mono">
           <span>
-            <em>{literaryEvent.title.replace(/\*/g, "")}</em>
+            <em>{plain(next.series)}</em>
             <span className="nav-strip-sep" aria-hidden="true" />
-            {literaryEvent.featuredAuthor.name}
+            {next.guest.name}
             <span className="nav-strip-sep" aria-hidden="true" />
-            {literaryEvent.shortDate}
+            {next.shortDate}
           </span>
           <span className="nav-strip-cta">get tickets</span>
         </Link>

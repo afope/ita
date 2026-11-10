@@ -9,17 +9,22 @@ import {
   conversations,
   idea,
   junctionWords,
-  literaryEvent,
+  issue,
+  plain,
   site,
   studio,
+  upcomingConversations,
 } from "./content";
 import "./home.css";
+
+// Rebuild hourly, so the next conversation stays current.
+export const revalidate = 3600;
 
 // The homepage: the map and the words carry the character, everything
 // else stays quiet.
 export default function Home() {
-  const author = literaryEvent.featuredAuthor;
-  const announced = literaryEvent.announced;
+  const next = upcomingConversations()[0];
+  const announced = next?.announced ?? false;
 
   return (
     <div className="home">
@@ -41,9 +46,9 @@ export default function Home() {
                 href={announced ? "/conversations" : "#literary"}
                 className="text-link"
               >
-                {announced
-                  ? `${literaryEvent.title.replace(/\*/g, "")} · ${literaryEvent.shortDate}`
-                  : literaryEvent.name}
+                {next && announced
+                  ? `${plain(next.series)} · ${next.shortDate}`
+                  : "literary conversations"}
               </a>
             </div>
           </div>
@@ -129,8 +134,8 @@ export default function Home() {
             <div>
               {announced && <p className="quiet-event-meta">next conversation</p>}
               <h3>
-                {announced ? (
-                  <Crossed text={literaryEvent.title} />
+                {next && announced ? (
+                  <Crossed text={next.series} />
                 ) : (
                   <>
                     literary <em>conversations</em>
@@ -138,18 +143,20 @@ export default function Home() {
                 )}
               </h3>
               <p className="quiet-event-meta">
-                {announced
-                  ? `${literaryEvent.date} · ${literaryEvent.venue}, ${literaryEvent.city}`
-                  : literaryEvent.showVenue
-                    ? `${literaryEvent.venue}, ${literaryEvent.city}`
-                    : `${literaryEvent.city} · venue announced soon`}
+                {!next
+                  ? "Lagos · the next date announced soon"
+                  : announced
+                    ? `${issue(next)} · ${next.displayDate} · ${next.venue}, ${next.city}`
+                    : next.showVenue
+                      ? `${next.venue}, ${next.city}`
+                      : `${next.city} · venue announced soon`}
               </p>
             </div>
             <div className="quiet-event-side">
               <p>
-                {announced || author.confirmed ? (
+                {next && (announced || next.guest.confirmed) ? (
                   <>
-                    with <em>{author.name}</em>
+                    with <em>{next.guest.name}</em>
                   </>
                 ) : (
                   <>
@@ -166,7 +173,7 @@ export default function Home() {
             </div>
           </article>
           <Link href="/conversations" className="text-link quiet-event-more" data-reveal>
-            {announced ? "the programme, the author and tickets" : "about ita conversations"}
+            {announced ? "the programme, the author and tickets" : "all conversations"}
           </Link>
         </section>
 
