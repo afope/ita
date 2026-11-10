@@ -9,7 +9,7 @@ export default function JoinSection() {
       </div>
       <div className="quiet-join" data-reveal>
         <h2 className="section-title">
-          Hear about the next <em>conversation</em>.
+          hear about the next <em>conversation</em>.
         </h2>
         <div>
           <Waitlist />

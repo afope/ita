@@ -36,7 +36,7 @@ export default function Home() {
           <HeroCanvas words={junctionWords} quiet />
           <div className="hero-inner">
             <h1 className="hero-title">
-              Outside, where technology <em>meets</em> art.
+              outside, where technology <em>meets</em> art.
             </h1>
             <div className="hero-actions">
               <a href="#studio" className="button button-signal">
@@ -183,7 +183,7 @@ export default function Home() {
           </div>
           <div className="quiet-join" data-reveal>
             <h2 className="section-title">
-              Meet us <em>outside</em>.
+              meet us <em>outside</em>.
             </h2>
             <div>
               <Waitlist />
