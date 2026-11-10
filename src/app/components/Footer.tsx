@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { site } from "../content";
 import { Wordmark } from "./Logo";
 
@@ -10,9 +9,6 @@ export default function Footer() {
       <a href={`mailto:${site.contactEmail}`} className="mono footer-link">
         {site.contactEmail}
       </a>
-      <Link href="/brand" className="mono footer-link">
-        brand guidelines
-      </Link>
       <span className="mono">{site.reach.toLowerCase()}</span>
     </footer>
   );

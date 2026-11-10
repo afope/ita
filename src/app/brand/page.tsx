@@ -8,6 +8,8 @@ import "./brand.css";
 export const metadata: Metadata = {
   title: "ita — brand guidelines",
   description: "The ita identity system: name, mark, colour, type and voice.",
+  // Internal: not linked from the site and kept out of search engines.
+  robots: { index: false, follow: false },
 };
 
 const voices = [
