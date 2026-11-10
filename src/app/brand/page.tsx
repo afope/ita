@@ -69,8 +69,9 @@ export default function Brand() {
             </p>
             <div className="brand-copy">
               <p>
-                In Lagos, <strong>ìta</strong> names the junction — the open
-                square where streets meet. Ita Faji, Ita Balogun, Ita Elewa.
+                In Lagos, <strong>ìta</strong> is the open square outside,
+                where streets meet and people gather: Ita Faji, Ita Balogun,
+                Ita Elewa.
                 It is also an acronym hidden in plain sight: the{" "}
                 <strong>i</strong>ntersection of <strong>t</strong>echnology and{" "}
                 <strong>a</strong>rt.

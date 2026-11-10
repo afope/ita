@@ -1,7 +1,7 @@
 # ita — intersection of technology and art
 
 Website for **ita**, a spatial prototyping studio between Amsterdam and
-Lagos, working worldwide, and home of **ita conversations**.
+Lagos, and home of **ita conversations**.
 
 ```bash
 npm install

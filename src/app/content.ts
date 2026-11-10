@@ -4,7 +4,7 @@
 export const site = {
   name: "ita",
   expansion: "intersection of technology and art",
-  reach: "Amsterdam & Lagos, working worldwide",
+  reach: "Amsterdam & Lagos",
   // Enquiry links open an email to this address; waitlist sign-ups are
   // delivered here too (see README: Formspree).
   contactEmail: "hello@ita.ng",
@@ -14,7 +14,7 @@ export const idea = {
   word: "ìta",
   pronunciation: "/ee·tah/",
   definitions: [
-    "In Lagos, the junction — the open square where streets cross and people gather.",
+    "In Lagos, the open square outside, where streets meet and people gather: Ita Faji, Ita Balogun.",
     "The intersection of technology and art.",
     "A studio between Amsterdam and Lagos that builds spatial prototypes, and a stage for conversations.",
   ],
@@ -23,12 +23,12 @@ export const idea = {
 export const studio = {
   headline: "Prototypes you can *stand inside*.",
   short:
-    "We build spatial prototypes for innovation labs and organisations worldwide: rooms, objects and installations people can walk into before anything is built, tested with the people who will actually use them.",
+    "We build spatial prototypes for innovation labs and organisations: rooms, objects and installations people can walk into before anything is built, tested with the people who will actually use them.",
   // What clients can buy. Durations are starting points; adjust freely.
   offers: [
     {
       title: "Test it in *Lagos*",
-      body: "Send us an idea, product or service. With our team in Lagos, we build a spatial prototype and test it with the people who will actually use it, then deliver film, findings and recommendations. You never need to travel.",
+      body: "Send us an idea, product or service. We build a spatial prototype in Lagos and test it with the people who will actually use it, then deliver film, findings and recommendations. You never need to travel.",
       meta: "remote · 3–4 weeks",
     },
     {
@@ -37,9 +37,9 @@ export const studio = {
       meta: "amsterdam, lagos or remote · 2–3 weeks",
     },
     {
-      title: "Installations & *residencies*",
-      body: "Interactive installations for festivals, museums, brands and biennales. We travel to build them with you.",
-      meta: "worldwide · by commission",
+      title: "Installations & *commissions*",
+      body: "Interactive installations for festivals, museums, brands and biennales, built with you in Amsterdam, Lagos or on site.",
+      meta: "by commission",
     },
   ],
   process: ["Listen", "Sketch in space", "Prototype", "Test with people", "Hand over"],
@@ -48,7 +48,7 @@ export const studio = {
 export const conversations = {
   headline: "Ideas need a *square* to meet in.",
   short:
-    "Gatherings where writers, artists and technologists meet Lagos over a shared love of ideas.",
+    "Gatherings in Lagos for writers, artists, technologists and anyone who loves ideas.",
 };
 
 // ìwé is the way: the literary series within ita conversations.
@@ -132,10 +132,10 @@ export const conversationList: Conversation[] = [
       "Women Rent Men and Secrets Here",
     ],
     description:
-      "An evening of reading and conversation about words: their power, their beauty, their unparalleled ability to subvert, change and redirect.",
+      "Lagos, men, money, love and the things women say out loud: an evening with the writer who said them first, and said them funnier than anyone.",
     tagline: "come for the conversation, stay for the music",
     programme: [
-      "An introduction, then a conversation with the author and questions from the audience",
+      "A short introduction, then a conversation with Damilare and questions from the audience",
       "Book signing with the author",
       "Music and drinks in the garden",
     ],
