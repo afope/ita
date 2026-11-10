@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Crossed from "../components/Crossed";
 import TicketWidget from "../components/TicketWidget";
+import Waitlist from "../components/Waitlist";
 import { issue, type Conversation } from "../content";
 
 const joinList = (items: string[]) =>
@@ -90,9 +91,12 @@ export function ConversationTeaser({ c }: { c: Conversation }) {
         <p className="quiet-event-meta">
           {c.showVenue ? `${c.venue}, ${c.city}` : `${c.city} · venue announced soon`}
         </p>
-        <a href="#join" className="button button-ink">
-          save your seat
-        </a>
+        <Waitlist
+          id="notify-next"
+          label="be the first to know when tickets go on sale"
+          button="notify me"
+          success="you're on the list. we'll email you when tickets go on sale."
+        />
       </div>
     </article>
   );
@@ -156,9 +160,12 @@ export function ConversationDetails({ c, past = false }: { c: Conversation; past
             <p className="event-soon">
               Tickets go on sale <em>soon</em>.
             </p>
-            <a href="#join" className="button button-ink">
-              join the list
-            </a>
+            <Waitlist
+              id="notify-tickets"
+              label="we'll email you the moment they do"
+              button="notify me"
+              success="you're on the list. we'll email you when tickets go on sale."
+            />
           </>
         )}
       </div>

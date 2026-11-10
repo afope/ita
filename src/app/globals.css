@@ -505,8 +505,20 @@ em {
 .form-success {
   padding: 24px;
   background: var(--ink);
+  color: var(--paper);
   border-left: 4px solid var(--signal);
   font-size: 20px;
+}
+
+/* On the orange event block, labels and errors stay ink. */
+.quiet-event .form-label,
+.quiet-event .form-error {
+  color: var(--ink);
+}
+
+.quiet-event .waitlist,
+.quiet-event .form-success {
+  width: min(100%, 460px);
 }
 
 .form-success .mono {
@@ -587,7 +599,8 @@ em {
     font-size: 17px;
   }
 
-  .nav-links {
+  /* On phones the nav keeps one link: conversations. */
+  .nav-links a:not(:last-child) {
     display: none;
   }
 

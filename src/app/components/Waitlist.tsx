@@ -4,7 +4,20 @@ import React, { useState } from "react";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export default function Waitlist() {
+type Props = {
+  // Each form on a page needs its own id.
+  id?: string;
+  label?: string;
+  button?: string;
+  success?: string;
+};
+
+export default function Waitlist({
+  id = "email",
+  label = "email address",
+  button = "join the list",
+  success = "you're on the list. we'll be in touch.",
+}: Props) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<
     "idle" | "submitting" | "success" | "error"
@@ -47,21 +60,20 @@ export default function Waitlist() {
   if (status === "success") {
     return (
       <p className="form-success" role="status">
-        <span className="mono">[ok]</span> you&apos;re on the list. we&apos;ll be in
-        touch before december.
+        <span className="mono">[ok]</span> {success}
       </p>
     );
   }
 
   return (
     <form className="waitlist" onSubmit={handleSubmit} noValidate>
-      <label htmlFor="email" className="mono form-label">
-        email address
+      <label htmlFor={id} className="mono form-label">
+        {label}
       </label>
       <div className="waitlist-row">
         <input
           type="email"
-          id="email"
+          id={id}
           name="email"
           value={email}
           onChange={(e) => {
@@ -71,7 +83,7 @@ export default function Waitlist() {
           placeholder="you@somewhere.com"
           autoComplete="email"
           aria-invalid={!!errorMessage}
-          aria-describedby={errorMessage ? "email-error" : undefined}
+          aria-describedby={errorMessage ? `${id}-error` : undefined}
           required
         />
         <button
@@ -79,11 +91,11 @@ export default function Waitlist() {
           className="button button-signal"
           disabled={status === "submitting"}
         >
-          {status === "submitting" ? "sending…" : "join the list"}
+          {status === "submitting" ? "sending…" : button}
         </button>
       </div>
       {errorMessage && (
-        <p id="email-error" className="form-error" role="alert">
+        <p id={`${id}-error`} className="form-error" role="alert">
           {errorMessage}
         </p>
       )}

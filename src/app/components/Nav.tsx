@@ -31,9 +31,6 @@ export default function Nav({ strip = true }: { strip?: boolean }) {
           <Link href="/#studio">studio</Link>
           <Link href="/conversations">conversations</Link>
         </div>
-        <Link href="/#join" className="button button-signal nav-cta">
-          join
-        </Link>
       </nav>
     </div>
   );
