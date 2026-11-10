@@ -21,6 +21,14 @@ npm run build
 
 ## Common updates
 
+- **Announce ita conversations (one switch):** in `content.ts`, set
+  `literaryEvent.announced` to `true`. The hero, the event block, the
+  programme, the bios and the ticket area all appear, with the author and
+  venue shown.
+- **Add the tickets:** paste the Tix Africa widget code (Marketing →
+  Custom Widget) into `literaryEvent.ticketWidget`. While it is empty, the
+  ticket area says tickets go on sale soon and points to the list.
+
 - **Announce the featured author:** in `content.ts`, set
   `literaryEvent.featuredAuthor.confirmed` to `true`. Until then the site
   shows "to be announced" and never prints the name.

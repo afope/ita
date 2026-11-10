@@ -3,6 +3,7 @@ import Footer from "./components/Footer";
 import HeroCanvas from "./components/HeroCanvas";
 import Nav from "./components/Nav";
 import Reveal from "./components/Reveal";
+import TicketWidget from "./components/TicketWidget";
 import Waitlist from "./components/Waitlist";
 import {
   conversations,
@@ -18,6 +19,9 @@ import "./home.css";
 // the studio follows, smaller, as what ita also builds for others.
 export default function Home() {
   const author = literaryEvent.featuredAuthor;
+  const announced = literaryEvent.announced;
+  const showAuthor = announced || author.confirmed;
+  const showVenue = announced || literaryEvent.showVenue;
   const headline = literaryEvent.immersive
     ? literaryEvent.immersiveHeadline
     : conversations.headline;
@@ -39,10 +43,17 @@ export default function Home() {
             >
               <Crossed text={headline} />
             </h1>
-            <p className="hero-lede">{conversations.lede}</p>
+            <p className="hero-lede">
+              {announced
+                ? `${author.name} in conversation · ${literaryEvent.date} · ${literaryEvent.venue}, ${literaryEvent.city}`
+                : conversations.lede}
+            </p>
             <div className="hero-actions">
-              <a href="#join" className="button button-signal">
-                join the list
+              <a
+                href={announced ? "#tickets" : "#join"}
+                className="button button-signal"
+              >
+                {announced ? "get tickets" : "join the list"}
               </a>
               <a href="#literary" className="text-link">
                 {literaryEvent.name}
@@ -65,7 +76,13 @@ export default function Home() {
             <span className="section-kicker mono">ita conversations</span>
           </div>
           <h2 id="literary" className="section-title" data-reveal>
-            literary <em>conversations</em>
+            {announced ? (
+              <Crossed text={literaryEvent.title} />
+            ) : (
+              <>
+                literary <em>conversations</em>
+              </>
+            )}
           </h2>
           <p className="lede" data-reveal>
             {description}
@@ -75,7 +92,7 @@ export default function Home() {
             <div>
               <p className="quiet-event-meta">featured author</p>
               <h3>
-                {author.confirmed ? (
+                {showAuthor ? (
                   author.name
                 ) : (
                   <>
@@ -83,18 +100,68 @@ export default function Home() {
                   </>
                 )}
               </h3>
+              {announced && (
+                <p className="quiet-event-books">
+                  author of {literaryEvent.books.slice(0, -1).join(", ")} and{" "}
+                  {literaryEvent.books[literaryEvent.books.length - 1]}
+                </p>
+              )}
             </div>
             <div className="quiet-event-side">
+              {announced && (
+                <p className="quiet-event-meta">
+                  {literaryEvent.date} · {literaryEvent.time}
+                </p>
+              )}
               <p className="quiet-event-meta">
-                {literaryEvent.showVenue
+                {showVenue
                   ? `${literaryEvent.venue}, ${literaryEvent.city}`
                   : `${literaryEvent.city} · venue announced soon`}
               </p>
-              <a href="#join" className="button button-signal">
-                save your seat
+              <a
+                href={announced ? "#tickets" : "#join"}
+                className="button button-ink"
+              >
+                {announced ? "get tickets" : "save your seat"}
               </a>
             </div>
           </article>
+
+          {announced && (
+            <div id="tickets" className="event-details">
+              <div className="event-about" data-reveal>
+                <p className="event-tagline">{literaryEvent.tagline}</p>
+                <ol className="event-programme">
+                  {literaryEvent.programme.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ol>
+                <div className="event-people">
+                  <p className="mono">the author</p>
+                  <p>{literaryEvent.authorBio}</p>
+                  <p className="mono">your host</p>
+                  <p>
+                    {literaryEvent.host.name}. {literaryEvent.host.bio}
+                  </p>
+                </div>
+              </div>
+              <div className="event-tickets" data-reveal>
+                <p className="mono">tickets</p>
+                {literaryEvent.ticketWidget.trim() ? (
+                  <TicketWidget html={literaryEvent.ticketWidget} />
+                ) : (
+                  <>
+                    <p className="event-soon">
+                      Tickets go on sale <em>soon</em>.
+                    </p>
+                    <a href="#join" className="button button-signal">
+                      join the list
+                    </a>
+                  </>
+                )}
+              </div>
+            </div>
+          )}
         </section>
 
         <section id="about" className="section section-paper">

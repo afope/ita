@@ -52,6 +52,34 @@ export const conversations = {
 
 export const literaryEvent = {
   name: "literary conversations",
+  // Announcement switch. While false, the site keeps the author, venue and
+  // date private and invites people to join the list. On announcement day,
+  // set it to true: the full event, the programme and the tickets appear.
+  announced: false,
+  title: "*ìwé* is the way",
+  date: "Sunday 13 December 2026",
+  time: "5:00 pm",
+  tagline: "come for the conversation, stay for the music",
+  programme: [
+    "An introduction, then a conversation with the author and questions from the audience",
+    "Book signing with the author",
+    "Music and drinks in the garden",
+  ],
+  books: [
+    "Nearly All the Men in Lagos Are Mad",
+    "Only Big Bumbum Matters Tomorrow",
+    "Women Rent Men and Secrets Here",
+  ],
+  authorBio:
+    "Damilare Kuku is a Nigerian author, writer and creative artist whose work spans literature, film and broadcasting. Her debut collection, Nearly All the Men in Lagos Are Mad, became a runaway bestseller, and her debut novel, Only Big Bumbum Matters Tomorrow, was a number-one fiction bestseller published internationally by Picador, Simon & Schuster and HarperCollins. She is known for her sharp wit, fierce honesty and fearless writing about modern relationships and women's lives in Nigeria.",
+  host: {
+    name: "Afopefoluwa Ojo",
+    bio: "Writer and creative technologist, based between Lagos and Amsterdam, and founder of ita.",
+  },
+  // Paste the ticket widget code from Tix Africa (Marketing > Custom
+  // Widget) between the backticks. While it is empty, the ticket area
+  // says tickets are coming soon and points to the list.
+  ticketWidget: ``,
   description:
     "An evening of reading and conversation about words: their power, their beauty, their unparalleled ability to subvert, change and redirect.",
   // Set `immersive: true` once the immersive experience is confirmed. The
