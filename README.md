@@ -47,22 +47,16 @@ npm run build
 - **Change the contact address:** `site.contactEmail` (currently
   hello@ita.ng). It is used by every enquiry link and the footer.
 
-## Waitlist
+## Mailing list
 
-Sign-ups go through `/api/submit-form`, which forwards them to
-[Formspree](https://formspree.io); Formspree emails each one to the inbox
-set on the form.
+Every sign-up form on the site posts to `/api/submit-form`, which adds the
+address to ita's Kit form "ita website" (form ID 10170531), and so to the
+Kit mailing list. Nothing needs configuring: the form ID is public. To use a
+different Kit form, set the environment variable `KIT_FORM_ID` in Vercel.
 
-1. Create a free Formspree account and a new form that sends to
-   hello@ita.ng.
-2. Copy the form's ID (the part after `/f/` in its endpoint, e.g. `xyzabcd`).
-3. Set the environment variable `FORMSPREE_FORM_ID` to that ID — in
-   `.env.local` for local development, and in the hosting provider's
-   settings for the live site.
-
-If `FORMSPREE_FORM_ID` is not set, the route falls back to the Google Form
-configured by `NEXT_PUBLIC_GOOGLE_FORM_ID` and
-`NEXT_PUBLIC_GOOGLE_FORM_ENTRY_ID`.
+In Kit, turn off double opt-in for the form (Settings → Incentive → "Send
+incentive email") so people are added straight away, or keep it on and
+people will get an email asking them to confirm.
 
 ## Going live on Vercel
 
