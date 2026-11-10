@@ -16,7 +16,7 @@ export default function Waitlist({
   id = "email",
   label = "email address",
   button = "join the list",
-  success = "you're on the list. we'll be in touch.",
+  success = "almost there. check your inbox and tap confirm.",
 }: Props) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<

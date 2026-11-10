@@ -173,7 +173,7 @@ export default function Home() {
                   id="notify-home"
                   label="be the first to know when tickets go on sale"
                   button="notify me"
-                  success="you're on the list. we'll email you when tickets go on sale."
+                  success="almost there. check your inbox and tap confirm, and we'll email you when tickets go on sale."
                 />
               )}
             </div>
