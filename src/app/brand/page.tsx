@@ -109,9 +109,9 @@ export default function Brand() {
           <div className="brand-copy brand-copy-wide">
             <p>
               The wordmark is drawn, not typeset: three geometric letters at a
-              single stroke weight. The crossbar of the <strong>t</strong> runs
-              wide — it is the street — and a Lagoon node sits where it meets
-              the stem. The junction mark isolates that moment: a measured
+              single stroke weight. The dot of the <strong>i</strong> is the
+              tone mark from <em>ìta</em>, in Laterite (Paper on a Laterite
+              ground). The junction mark is the crossing on its own: a measured
               horizontal crossed by a hand-drawn vertical. Use the mark for
               avatars, favicons and stamps; use the wordmark everywhere else.
               Keep clear space equal to the height of the node on all sides.
