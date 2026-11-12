@@ -196,3 +196,26 @@
   display: inline-block;
   margin-top: 32px;
 }
+
+/* /welcome: where people land after confirming their email. */
+.welcome {
+  min-height: 82svh;
+}
+
+.welcome-kicker {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.welcome-lede {
+  max-width: 34ch;
+  margin-top: 28px;
+  font-size: clamp(19px, 1.8vw, 24px);
+  line-height: 1.45;
+}
+
+.welcome-lede em {
+  font-family: var(--serif);
+  font-size: 1.12em;
+}
