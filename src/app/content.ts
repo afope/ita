@@ -11,7 +11,7 @@ export const site = {
   // Match Kit: true while the "ita website" form sends a confirmation email
   // (Settings → Incentive), false while it adds people straight away. It
   // only changes the message people see after signing up.
-  confirmSignups: false,
+  confirmSignups: true,
 };
 
 // What people see after signing up, depending on `site.confirmSignups`.
