@@ -1,17 +1,18 @@
 // The ita wordmark. Built from strokes rather than a font: three geometric
 // letters at one stroke weight. The dot of the "i" is the Yoruba tone mark
-// from ìta, in Laterite (Paper on an orange ground: set --node).
+// from ìta, in Laterite (Paper on an orange ground: set --node): it starts
+// at the stem's own width and tapers up and to the left.
 export function Wordmark({ className }: { className?: string }) {
   return (
     <svg
       className={className}
-      viewBox="-6 0 116 68"
+      viewBox="-10 0 120 68"
       role="img"
       aria-label="ita"
       fill="currentColor"
     >
       {/* tone mark */}
-      <polygon points="-6,2 3.5,0 11.5,17 7.5,18.5" fill="var(--node, #FF5A1F)" />
+      <polygon points="0,18 10,18 -6.5,0 -10,1.5" fill="var(--node, #FF5A1F)" />
       {/* i */}
       <rect x="0" y="28" width="10" height="40" />
       {/* t */}
