@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Crossed from "./components/Crossed";
 import Footer from "./components/Footer";
 import HeroCanvas from "./components/HeroCanvas";
@@ -8,16 +9,23 @@ import {
   conversations,
   idea,
   junctionWords,
-  literaryEvent,
+  issue,
+  plain,
+  signupDone,
   site,
   studio,
+  upcomingConversations,
 } from "./content";
 import "./home.css";
+
+// Rebuild hourly, so the next conversation stays current.
+export const revalidate = 3600;
 
 // The homepage: the map and the words carry the character, everything
 // else stays quiet.
 export default function Home() {
-  const author = literaryEvent.featuredAuthor;
+  const next = upcomingConversations()[0];
+  const announced = next?.announced ?? false;
 
   return (
     <div className="home">
@@ -29,14 +37,19 @@ export default function Home() {
           <HeroCanvas words={junctionWords} quiet />
           <div className="hero-inner">
             <h1 className="hero-title">
-              The junction where technology <em>meets</em> art.
+              Outside, where technology <em>meets</em> art.
             </h1>
             <div className="hero-actions">
               <a href="#studio" className="button button-signal">
                 work with the studio
               </a>
-              <a href="#literary" className="text-link">
-                {literaryEvent.name}
+              <a
+                href={announced ? "/conversations" : "#literary"}
+                className="text-link"
+              >
+                {next && announced
+                  ? `${plain(next.series)} · ${next.shortDate}`
+                  : "literary conversations"}
               </a>
             </div>
           </div>
@@ -120,20 +133,31 @@ export default function Home() {
 
           <article id="literary" className="quiet-event" data-reveal>
             <div>
+              {announced && <p className="quiet-event-meta">next conversation</p>}
               <h3>
-                literary <em>conversations</em>
+                {next && announced ? (
+                  <Crossed text={next.series} />
+                ) : (
+                  <>
+                    literary <em>conversations</em>
+                  </>
+                )}
               </h3>
               <p className="quiet-event-meta">
-                {literaryEvent.showVenue
-                  ? `${literaryEvent.venue}, ${literaryEvent.city}`
-                  : `${literaryEvent.city} · venue announced soon`}
+                {!next
+                  ? "Lagos · the next date announced soon"
+                  : announced
+                    ? `${issue(next)} · ${next.displayDate} · ${next.venue}, ${next.city}`
+                    : next.showVenue
+                      ? `${next.venue}, ${next.city}`
+                      : `${next.city} · venue announced soon`}
               </p>
             </div>
             <div className="quiet-event-side">
               <p>
-                {author.confirmed ? (
+                {next && (announced || next.guest.confirmed) ? (
                   <>
-                    with <em>{author.name}</em>
+                    with <em>{next.guest.name}</em>
                   </>
                 ) : (
                   <>
@@ -141,11 +165,23 @@ export default function Home() {
                   </>
                 )}
               </p>
-              <a href="#join" className="button button-signal">
-                save your seat
-              </a>
+              {announced ? (
+                <Link href="/conversations#tickets" className="button button-signal">
+                  get tickets
+                </Link>
+              ) : (
+                <Waitlist
+                  id="notify-home"
+                  label="be the first to know when tickets go on sale"
+                  button="notify me"
+                  success={signupDone("we'll email you when tickets go on sale")}
+                />
+              )}
             </div>
           </article>
+          <Link href="/conversations" className="text-link quiet-event-more" data-reveal>
+            {announced ? "the programme, the author and tickets" : "all conversations"}
+          </Link>
         </section>
 
         <section id="join" className="section section-ink">
@@ -154,7 +190,7 @@ export default function Home() {
           </div>
           <div className="quiet-join" data-reveal>
             <h2 className="section-title">
-              Meet us at the <em>junction</em>.
+              Meet us <em>outside</em>.
             </h2>
             <div>
               <Waitlist />

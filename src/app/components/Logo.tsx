@@ -1,31 +1,28 @@
-// The ita wordmark. Built from strokes rather than a font so the "t" can
-// carry the brand device: its crossbar is the junction, marked by a node.
+// The ita wordmark. Built from strokes rather than a font: three geometric
+// letters at one stroke weight. The dot of the "i" is the Yoruba tone mark
+// from ìta, in Laterite (Paper on an orange ground: set --node).
 export function Wordmark({ className }: { className?: string }) {
   return (
     <svg
       className={className}
-      viewBox="0 0 108 60"
+      viewBox="-6 0 116 68"
       role="img"
       aria-label="ita"
-      fill="none"
+      fill="currentColor"
     >
+      {/* tone mark */}
+      <polygon points="-6,2 3.5,0 11.5,17 7.5,18.5" fill="var(--node, #FF5A1F)" />
       {/* i */}
-      <path d="M6 24V56" stroke="currentColor" strokeWidth="9" />
-      <rect x="1.5" y="3.5" width="9" height="9" fill="currentColor" />
+      <rect x="0" y="28" width="10" height="40" />
       {/* t */}
-      <path d="M34 4V56" stroke="currentColor" strokeWidth="9" />
-      <path d="M18 26H52" stroke="currentColor" strokeWidth="9" />
-      <rect
-        x="29"
-        y="21"
-        width="10"
-        height="10"
-        fill="var(--node, #5CE6D2)"
-        transform="rotate(45 34 26)"
-      />
+      <rect x="34" y="8" width="10" height="60" />
+      <rect x="22" y="28" width="36" height="10" />
       {/* a */}
-      <circle cx="79" cy="41" r="13.5" stroke="currentColor" strokeWidth="9" />
-      <path d="M97 24V56" stroke="currentColor" strokeWidth="9" />
+      <path
+        fillRule="evenodd"
+        d="M66,48 a20,20 0 1,0 40,0 a20,20 0 1,0 -40,0 Z M76,48 a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0 Z"
+      />
+      <rect x="100" y="28" width="10" height="40" />
     </svg>
   );
 }

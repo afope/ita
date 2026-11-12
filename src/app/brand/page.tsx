@@ -8,6 +8,8 @@ import "./brand.css";
 export const metadata: Metadata = {
   title: "ita — brand guidelines",
   description: "The ita identity system: name, mark, colour, type and voice.",
+  // Internal: not linked from the site and kept out of search engines.
+  robots: { index: false, follow: false },
 };
 
 const voices = [
@@ -69,8 +71,9 @@ export default function Brand() {
             </p>
             <div className="brand-copy">
               <p>
-                In Lagos, <strong>ìta</strong> names the junction — the open
-                square where streets meet. Ita Faji, Ita Balogun, Ita Elewa.
+                In Lagos, <strong>ìta</strong> is the open square outside,
+                where streets meet and people gather: Ita Faji, Ita Balogun,
+                Ita Elewa.
                 It is also an acronym hidden in plain sight: the{" "}
                 <strong>i</strong>ntersection of <strong>t</strong>echnology and{" "}
                 <strong>a</strong>rt.
@@ -106,9 +109,9 @@ export default function Brand() {
           <div className="brand-copy brand-copy-wide">
             <p>
               The wordmark is drawn, not typeset: three geometric letters at a
-              single stroke weight. The crossbar of the <strong>t</strong> runs
-              wide — it is the street — and a Lagoon node sits where it meets
-              the stem. The junction mark isolates that moment: a measured
+              single stroke weight. The dot of the <strong>i</strong> is the
+              tone mark from <em>ìta</em>, in Laterite (Paper on a Laterite
+              ground). The junction mark is the crossing on its own: a measured
               horizontal crossed by a hand-drawn vertical. Use the mark for
               avatars, favicons and stamps; use the wordmark everywhere else.
               Keep clear space equal to the height of the node on all sides.

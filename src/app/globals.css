@@ -135,10 +135,56 @@ em {
 }
 
 /* ── Nav ─────────────────────────────────────────────── */
-.nav {
+.nav-wrap {
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 50;
+}
+
+/* The announcement strip: one line above the nav, Laterite like the event. */
+.nav-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 24px;
+  padding: 9px var(--gutter);
+  background: var(--field);
+  color: var(--ink);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.nav-strip > span:first-child {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-strip em {
+  font-family: var(--serif);
+  font-size: 17px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.nav-strip-sep {
+  width: 6px;
+  height: 6px;
+  margin: 0 12px;
+  background: currentColor;
+  transform: rotate(45deg);
+}
+
+.nav-strip-cta {
+  border-bottom: 1px solid currentColor;
+}
+
+.nav-strip:hover .nav-strip-cta {
+  border-color: transparent;
+}
+
+.nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -459,8 +505,59 @@ em {
 .form-success {
   padding: 24px;
   background: var(--ink);
+  color: var(--paper);
   border-left: 4px solid var(--signal);
   font-size: 20px;
+}
+
+/* On the orange event block, labels and errors stay ink. */
+.quiet-event .form-label,
+.quiet-event .form-error {
+  color: var(--ink);
+}
+
+/* The side column holds the form; cap it so the block never wraps it
+   under the title (a long success message would otherwise do that). */
+.quiet-event-side:has(.waitlist, .form-success) {
+  flex: 0 1 460px;
+  min-width: min(100%, 300px);
+}
+
+.quiet-event .waitlist,
+.quiet-event .form-success {
+  width: 100%;
+}
+
+/* After signing up, on orange or paper: a quiet line with the junction
+   diamond, not a black box. */
+.quiet-event .form-success,
+.event-tickets .form-success {
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: inherit;
+  font-size: 19px;
+  line-height: 1.4;
+}
+
+.quiet-event .form-success .mono,
+.event-tickets .form-success .mono {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  margin: 0;
+  overflow: hidden;
+  color: transparent;
+  background: currentColor;
+  background: var(--ink);
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.event-tickets .form-success .mono {
+  background: var(--field);
 }
 
 .form-success .mono {
@@ -541,8 +638,23 @@ em {
     font-size: 17px;
   }
 
-  .nav-links {
+  /* On phones the nav keeps one link: conversations. */
+  .nav-links a:not(:last-child) {
     display: none;
+  }
+
+  .nav-strip {
+    justify-content: space-between;
+    font-size: 11px;
+  }
+
+  /* On phones the strip keeps the title and the call to action. */
+  .nav-strip > span:first-child > :not(em) {
+    display: none;
+  }
+
+  .nav-strip > span:first-child {
+    font-size: 0;
   }
 
   .hero {
