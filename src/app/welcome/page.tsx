@@ -24,9 +24,8 @@ export default function Welcome() {
               You&apos;re <em>outside</em>.
             </h1>
             <p className="welcome-lede">
-              Thank you for confirming. We&apos;ll write when tickets for{" "}
-              <em>ìwé is the way</em> go on sale, and before every conversation
-              after that.
+              Thank you for confirming. We&apos;ll write when tickets go on
+              sale, and before every conversation after that.
             </p>
             <div className="hero-actions">
               <Link href="/conversations" className="button button-signal">
