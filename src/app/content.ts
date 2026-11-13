@@ -105,9 +105,10 @@ export type Conversation = {
   tagline: string;
   programme: string[];
   host: { name: string; bio: string };
-  // Paste the ticket widget code from Tix Africa (Marketing > Custom
-  // Widget) between the backticks. While it is empty, the ticket area says
-  // tickets go on sale soon and points to the list.
+  // RSVP embed: paste the widget code for the free RSVP (e.g. a free
+  // ticket on Tix Africa, Marketing > Custom Widget) between the backticks.
+  // While it is empty, the RSVP area says RSVPs open soon and points to
+  // the list.
   ticketWidget: string;
   // After the event: a few lines on how it went, photos and a recording.
   recap?: string;

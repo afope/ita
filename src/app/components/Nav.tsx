@@ -19,7 +19,7 @@ export default function Nav({ strip = true }: { strip?: boolean }) {
             <span className="nav-strip-sep" aria-hidden="true" />
             {next.shortDate}
           </span>
-          <span className="nav-strip-cta">get tickets</span>
+          <span className="nav-strip-cta">RSVP</span>
         </Link>
       )}
       <nav className="nav" aria-label="Main">
