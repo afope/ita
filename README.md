@@ -39,9 +39,10 @@ npm run build
   conversations block shows it, and its page goes live. The homepage itself
   stays the studio. While `false`, no guest, date or venue appears anywhere,
   even at its own link.
-- **Add the tickets:** paste the Tix Africa widget code (Marketing →
-  Custom Widget) into the conversation's `ticketWidget`. While it is empty,
-  the ticket area says tickets go on sale soon and points to the list.
+- **Open RSVPs:** entry is free, RSVP essential. Paste the RSVP widget
+  code (e.g. a free ticket on Tix Africa, Marketing → Custom Widget) into
+  the conversation's `ticketWidget`. While it is empty, the RSVP area says
+  RSVPs open soon and points to the list.
 - **After the evening:** add a `recap`, a `gallery` of photos and a
   `recordingUrl`; its page becomes the record of the night.
 - **Change the contact address:** `site.contactEmail` (currently

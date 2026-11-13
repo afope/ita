@@ -66,7 +66,7 @@ export function ConversationFeature({
         </p>
         {!past && (
           <a href={ticketsHref} className="button button-ink">
-            get tickets
+            RSVP
           </a>
         )}
       </div>
@@ -93,16 +93,16 @@ export function ConversationTeaser({ c }: { c: Conversation }) {
         </p>
         <Waitlist
           id="notify-next"
-          label="be the first to know when tickets go on sale"
+          label="be the first to know when RSVPs open"
           button="notify me"
-          success={signupDone("we'll email you when tickets go on sale")}
+          success={signupDone("we'll email you when RSVPs open")}
         />
       </div>
     </article>
   );
 }
 
-// Programme, people and tickets; or, once it has happened, the recap.
+// Programme, people and RSVP; or, once it has happened, the recap.
 export function ConversationDetails({ c, past = false }: { c: Conversation; past?: boolean }) {
   const people = (
     <div className="event-people">
@@ -152,19 +152,19 @@ export function ConversationDetails({ c, past = false }: { c: Conversation; past
         {people}
       </div>
       <div className="event-tickets" data-reveal>
-        <p className="mono">tickets</p>
+        <p className="mono">free entry · RSVP essential</p>
         {c.ticketWidget.trim() ? (
           <TicketWidget html={c.ticketWidget} />
         ) : (
           <>
             <p className="event-soon">
-              Tickets go on sale <em>soon</em>.
+              RSVPs open <em>soon</em>.
             </p>
             <Waitlist
               id="notify-tickets"
-              label="we'll email you the moment they do"
+              label="we'll email you the moment they open"
               button="notify me"
-              success={signupDone("we'll email you when tickets go on sale")}
+              success={signupDone("we'll email you when RSVPs open")}
             />
           </>
         )}

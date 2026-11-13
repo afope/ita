@@ -167,20 +167,20 @@ export default function Home() {
               </p>
               {announced ? (
                 <Link href="/conversations#tickets" className="button button-signal">
-                  get tickets
+                  RSVP
                 </Link>
               ) : (
                 <Waitlist
                   id="notify-home"
-                  label="be the first to know when tickets go on sale"
+                  label="be the first to know when RSVPs open"
                   button="notify me"
-                  success={signupDone("we'll email you when tickets go on sale")}
+                  success={signupDone("we'll email you when RSVPs open")}
                 />
               )}
             </div>
           </article>
           <Link href="/conversations" className="text-link quiet-event-more" data-reveal>
-            {announced ? "the programme, the author and tickets" : "all conversations"}
+            {announced ? "the programme, the author and RSVPs" : "all conversations"}
           </Link>
         </section>
 
